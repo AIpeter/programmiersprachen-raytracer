@@ -8,6 +8,7 @@ class Sphere: public Shape
 {
   public:
     Sphere();
+    Sphere(glm::vec3 const& center, float radius);
 
     /*virtual*/ float area() const;
     /*virtual*/ float volume() const;

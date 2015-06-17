@@ -2,8 +2,12 @@
 #include <cmath>
 
 Sphere::Sphere() :
-    center_{0, 0, 0},
-    radius_{1.0} {}
+  center_{0, 0, 0},
+  radius_{1.0} {}
+
+Sphere::Sphere(glm::vec3 const& center, float radius) :
+  center_{center},
+  radius_{radius} {}
 
 float Sphere::area() const {return (4 * M_PI * radius_ * radius_);}
 float Sphere::volume() const
