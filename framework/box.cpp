@@ -4,7 +4,7 @@ Box::Box():
   min_{0, 0, 0},
   max_{1, 1, 1} {}
 
-Box::Box(glm::ve3 const& min, glm::ve3 const& max) :
+Box::Box(glm::vec3 const& min, glm::vec3 const& max) :
   min_{min},
   max_{max} {}
 
