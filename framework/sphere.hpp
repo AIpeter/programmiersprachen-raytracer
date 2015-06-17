@@ -8,14 +8,16 @@ class Sphere: public Shape
 {
   public:
     Sphere();
-    Sphere(std::string name);
-    Sphere(Color color);
-    Sphere(std::string name, Color color);
+    Sphere(std::string const& name);
+    Sphere(Color const& color);
+    Sphere(std::string const& name, Color const& color);
     Sphere(glm::vec3 const& center, float radius);
-    Sphere(glm::vec3 const& center, float radius, std::string name);
-    Sphere(glm::vec3 const& center, float radius, Color color);
     Sphere(glm::vec3 const& center, float radius,
-           std::string name, Color color);
+           std::string const& name);
+    Sphere(glm::vec3 const& center, float radius,
+           Color const& color);
+    Sphere(glm::vec3 const& center, float radius,
+           std::string const& name, Color const& color);
 
     /*virtual*/ float area() const;
     /*virtual*/ float volume() const;
@@ -25,8 +27,6 @@ class Sphere: public Shape
   private:
     glm::vec3 center_;
     float radius_;
-    std::string name_;
-    Color color_;
 };
 
 #endif // BUW_SPHERE_HPP

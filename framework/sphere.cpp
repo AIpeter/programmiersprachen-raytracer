@@ -4,51 +4,45 @@
 Sphere::Sphere():
   center_{0, 0, 0},
   radius_{1.0},
-  name_{},
-  color_{0.0, 0.0, 0.0} {}
+  Shape() {}
 
-Sphere::Sphere(std::string name):
+Sphere::Sphere(std::string const& name):
   center_{0, 0, 0},
   radius_{1.0},
-  name_{name},
-  color_{0.0, 0.0, 0.0} {}
+  Shape(name) {}
 
-Sphere::Sphere(Color color):
+Sphere::Sphere(Color const& color):
   center_{0, 0, 0},
   radius_{1.0},
-  name_{},
-  color_{color} {}
+  Shape(color) {}
 
-Sphere::Sphere(std::string name, Color color):
+Sphere::Sphere(std::string const& name, Color const& color):
   center_{0, 0, 0},
   radius_{1.0},
-  name_{name},
-  color_{color} {}
+  Shape(name, color) {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius):
   center_{center},
   radius_{radius},
-  name_{},
-  color_{0.0, 0.0, 0.0} {}
-
-Sphere::Sphere(glm::vec3 const& center, float radius, std::string name):
-  center_{center},
-  radius_{radius},
-  name_{name},
-  color_{0.0, 0.0, 0.0} {}
-
-Sphere::Sphere(glm::vec3 const& center, float radius, Color color):
-  center_{center},
-  radius_{radius},
-  name_{},
-  color_{color} {}
+  Shape() {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius,
-               std::string name, Color color):
+               std::string const& name):
   center_{center},
   radius_{radius},
-  name_{name},
-  color_{color} {}
+  Shape(name) {}
+
+Sphere::Sphere(glm::vec3 const& center, float radius,
+               Color const& color):
+  center_{center},
+  radius_{radius}
+  Shape(color) {}
+
+Sphere::Sphere(glm::vec3 const& center, float radius,
+               std::string const& name, Color const& color):
+  center_{center},
+  radius_{radius}
+  Shape(name, color) {}
 
 
 float Sphere::area() const {return (4 * M_PI * radius_ * radius_);}

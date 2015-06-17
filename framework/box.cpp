@@ -3,44 +3,46 @@
 Box::Box():
   min_{0, 0, 0},
   max_{1, 1, 1},
-  name_{},
-  color_{0.0, 0.0, 0.0} {}
+  Shape() {}
 
-Box::Box(std::string name):
+Box::Box(std::string const& name):
   min_{0, 0, 0},
   max_{1, 1, 1},
-  name_{name},
-  color_{0.0, 0.0, 0.0} {}
+  Shape(name) {}
 
-Box::Box(Color color):
+Box::Box(std::string const& name, Color const& color):
   min_{0, 0, 0},
   max_{1, 1, 1},
-  name_{},
-  color_{color} {}
+  Shape(name, color) {}
+
+Box::Box(Color const& color):
+  min_{0, 0, 0},
+  max_{1, 1, 1},
+  Shape(color) {}
 
 Box::Box(glm::vec3 const& min, glm::vec3 const& max):
   min_{min},
   max_{max},
-  name_{},
-  color_{0.0, 0.0, 0.0} {}
+  Shape() {}
 
-Box::Box(glm::vec3 const& min, glm::vec3 const& max, std::string name):
+Box::Box(glm::vec3 const& min, glm::vec3 const& max,
+         std::string const& name):
   min_{min},
   max_{max},
-  name_{name},
-  color_{0.0, 0.0, 0.0} {}
+  Shape(name) {}
 
-Box::Box(glm::vec3 const& min, glm::vec3 const& max, Color color):
+Box::Box(glm::vec3 const& min, glm::vec3 const& max,
+         Color const& color):
+  min_{min},
+  max_{max}
+  Shape(color) {}
+
+Box::Box(glm::vec3 const& min, glm::vec3 const& max,
+         std::string const& name, Color const& color):
   min_{min},
   max_{max},
-  name_{},
-  color_{color} {}
-
-Box::Box(glm::vec3 const& min, glm::vec3 const& max, std::string name, Color color):
-  min_{min},
-  max_{max},
-  name_{name},
-  color_{color} {}
+  Shape(name, color) {}
+  
 
 float Box::area() const {}
 float Box::volume() const {}
