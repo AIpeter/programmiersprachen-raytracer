@@ -5,7 +5,7 @@ Box::Box():
   max_{1} {}
 
 float Box::area() const {}
-float Box::volume() const {return 2*min_+2*max_;}
+float Box::volume() const {}
 
-float   Rectangle::min() const {return min_;}
-float   Rectangle::max() const {return max_;}
+float   Box::min() const {return min_;}
+float   Box::max() const {return max_;}
