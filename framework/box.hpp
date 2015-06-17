@@ -8,6 +8,7 @@ class Box: public Shape
 {
   public:
     Box();
+    Box(glm::ve3 const& min, glm::ve3 const& max);
 
     /*virtual*/ float area() const;
     /*virtual*/ float volume() const;
