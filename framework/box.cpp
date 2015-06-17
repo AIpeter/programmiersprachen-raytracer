@@ -1,11 +1,11 @@
 #include "box.hpp"
 
 Box::Box():
-  min_{1},
-  max_{1} {}
+  min_{0, 0, 0},
+  max_{1, 1, 1} {}
 
 float Box::area() const {}
 float Box::volume() const {}
 
-float   Box::min() const {return min_;}
-float   Box::max() const {return max_;}
+glm::vec3 Box::min() const {return min_;}
+glm::vec3 Box::max() const {return max_;}

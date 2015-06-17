@@ -8,3 +8,5 @@ class Shape
     virtual float volume() const = 0; // pure virual
 
 };
+
+#endif // BUW_SHAPE_HPP
