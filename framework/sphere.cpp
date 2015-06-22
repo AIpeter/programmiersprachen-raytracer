@@ -1,10 +1,15 @@
 #include "sphere.hpp"
 #include <cmath>
 
-Sphere::Sphere():
+Sphere::Sphere(): // default constructor
   Shape(),
   center_{0, 0, 0},
   radius_{1.0} {}
+
+Sphere::Sphere(Sphere const& s): // copy constructor
+  Shape(s.name(), s.color()),
+  center_{s.center_},
+  radius_{s.radius_} {}
 
 Sphere::Sphere(std::string const& name):
   Shape(name),

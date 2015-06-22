@@ -7,7 +7,8 @@
 class Sphere : public Shape
 {
   public:
-    Sphere();
+    Sphere(); // default constructor
+    Sphere(Sphere const& s); // copy constructor
     Sphere(std::string const& name);
     Sphere(Color const& color);
     Sphere(std::string const& name, Color const& color);
