@@ -2,47 +2,47 @@
 #include <cmath>
 
 Sphere::Sphere():
+  Shape(),
   center_{0, 0, 0},
-  radius_{1.0},
-  Shape() {}
+  radius_{1.0} {}
 
 Sphere::Sphere(std::string const& name):
+  Shape(name),
   center_{0, 0, 0},
-  radius_{1.0},
-  Shape(name) {}
+  radius_{1.0} {}
 
 Sphere::Sphere(Color const& color):
+  Shape(color),
   center_{0, 0, 0},
-  radius_{1.0},
-  Shape(color) {}
+  radius_{1.0} {}
 
 Sphere::Sphere(std::string const& name, Color const& color):
+  Shape(name, color),
   center_{0, 0, 0},
-  radius_{1.0},
-  Shape(name, color) {}
+  radius_{1.0} {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius):
+  Shape(),
   center_{center},
-  radius_{radius},
-  Shape() {}
+  radius_{radius} {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius,
                std::string const& name):
+  Shape(name),
   center_{center},
-  radius_{radius},
-  Shape(name) {}
+  radius_{radius} {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius,
                Color const& color):
+  Shape(color),
   center_{center},
-  radius_{radius}
-  Shape(color) {}
+  radius_{radius} {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius,
                std::string const& name, Color const& color):
+  Shape(name, color),
   center_{center},
-  radius_{radius}
-  Shape(name, color) {}
+  radius_{radius} {}
 
 
 float Sphere::area() const {return (4 * M_PI * radius_ * radius_);}

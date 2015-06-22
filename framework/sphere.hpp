@@ -4,7 +4,7 @@
 #include <glm/vec3.hpp>
 #include "shape.hpp"
 
-class Sphere: public Shape
+class Sphere : public Shape
 {
   public:
     Sphere();
@@ -19,10 +19,11 @@ class Sphere: public Shape
     Sphere(glm::vec3 const& center, float radius,
            std::string const& name, Color const& color);
 
-    /*virtual*/ float area() const;
-    /*virtual*/ float volume() const;
+
     glm::vec3 center() const;
     float radius() const;
+    /*virtual*/ float area() const;
+    /*virtual*/ float volume() const;
 
   private:
     glm::vec3 center_;

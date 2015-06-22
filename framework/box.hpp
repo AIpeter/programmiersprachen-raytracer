@@ -4,13 +4,14 @@
 #include <glm/vec3.hpp>
 #include "shape.hpp"
 
-class Box: public Shape
+class Box : public Shape
 {
   public:
-    Box();
+    Box(); // default constructor
+    Box(Box const& b); // copy constructor
     Box(std::string const& name);
     Box(Color const& color);
-    Box(std::string const& name, Color const& color)
+    Box(std::string const& name, Color const& color);
     Box(glm::vec3 const& min, glm::vec3 const& max);
     Box(glm::vec3 const& min, glm::vec3 const& max,
         std::string const& name);
@@ -19,10 +20,11 @@ class Box: public Shape
     Box(glm::vec3 const& min, glm::vec3 const& max,
         std::string const& name, Color const& color);
 
-    /*virtual*/ float area() const;
-    /*virtual*/ float volume() const;
+
     glm::vec3 min() const;
     glm::vec3 max() const;
+    /*virtual*/ float area() const;
+    /*virtual*/ float volume() const;
 
   private:
     glm::vec3 min_;
