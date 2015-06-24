@@ -59,7 +59,8 @@ float   Sphere::radius() const {return radius_;}
 
 std::ostream& Sphere::print(std::ostream& os) const
 {
-  os << "Center: (" << center_.x << ", " << center_.y << ", " << center_.z
+  os << "Name: " << name_ << ", Color: " << color_ << "Center: ("
+     << center_.x << ", " << center_.y << ", " << center_.z
      << "), Radius: " << radius_ << "\n";
       return os;
 }

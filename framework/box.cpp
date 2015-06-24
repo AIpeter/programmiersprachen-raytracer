@@ -67,8 +67,8 @@ glm::vec3 Box::max() const {return max_;}
 
 std::ostream& Box::print(std::ostream& os) const
 {
-  os << "Minimum: (" << min_.x << ", " << min_.y << ", "<< min_.z
-     << "), Maximum: (" << max_.x << ", " << max_.y << ", " << max_.z
-     << ")" << "\n";
+  os << "Name: " << name_ << ", Color: " << color_ << "Minimum: ("
+     << min_.x << ", " << min_.y << ", "<< min_.z << "), Maximum: ("
+     << max_.x << ", " << max_.y << ", " << max_.z << ")" << "\n";
       return os;
 }
