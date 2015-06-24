@@ -77,6 +77,12 @@ TEST_CASE("user-defined constructor of box", "[Box()]")
   REQUIRE(b1.max() == max);
 }
 
+TEST_CASE("print name and color of Sphere", "[print()]")
+{
+  Sphere s1{"Sphere1", Color{1, 1, 1}};
+  std::cout<<"Name und Color der Sphere: "<<s1<<"\n";
+}
+
 
 int main(int argc, char *argv[])
 {

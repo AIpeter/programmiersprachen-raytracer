@@ -7,28 +7,20 @@
 class Shape
 {
   public:
-    Shape():
-      name_{},
-      color_{0.0, 0.0, 0.0} {};
+    Shape();
 
-    Shape(std::string const& name):
-      name_{name},
-      color_{0.0, 0.0, 0.0} {};
+    Shape(std::string const& name);
 
-    Shape(Color const& color):
-      name_{},
-      color_{color} {};
+    Shape(Color const& color);
 
-    Shape(std::string const& name, Color const& color):
-      name_{name},
-      color_{color} {};
+    Shape(std::string const& name, Color const& color);
 
-    virtual std::string name() const {return name_;}
-    virtual Color color() const {return color_;}
+    virtual std::string name() const;
+    virtual Color color() const;
     virtual float area() const = 0; // pure virtual
     virtual float volume() const = 0; // pure virual
 
-    //virtual std::ostream& print(std::ostream& os) const;
+    virtual std::ostream& print(std::ostream& os) const;
 
   protected:
     std::string name_;
@@ -36,6 +28,6 @@ class Shape
 
 };
 
-//std::ostream& operator<<(std::ostream& os, Shape const& s);
+std::ostream& operator<<(std::ostream& os, Shape const& s);
 
 #endif // BUW_SHAPE_HPP
