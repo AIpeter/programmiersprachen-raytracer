@@ -3,6 +3,7 @@
 
 #include "color.hpp"
 #include <string>
+#include <iostream>
 
 class Shape
 {

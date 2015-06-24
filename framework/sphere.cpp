@@ -56,3 +56,10 @@ float Sphere::volume() const
 
 glm::vec3 Sphere::center() const {return center_;}
 float   Sphere::radius() const {return radius_;}
+
+std::ostream& Sphere::print(std::ostream& os) const
+{
+  os << "Center: (" << center_.x << ", " << center_.y << ", " << center_.z
+     << "), Radius: " << radius_ << "\n";
+      return os;
+}

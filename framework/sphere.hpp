@@ -25,6 +25,7 @@ class Sphere : public Shape
     float radius() const;
     /*virtual*/ float area() const;
     /*virtual*/ float volume() const;
+    /*virtual*/ std::ostream& print(std::ostream& os) const;
 
   private:
     glm::vec3 center_;
