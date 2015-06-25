@@ -111,6 +111,13 @@ TEST_CASE("intersectRaySphere", "[intersect]")
   REQUIRE(distance == Approx(4.0f));
 }
 
+TEST_CASE("intersectRaySphere II", "[intersectRaySphere]")
+{
+  Ray r1{{0.0,0.0,0.0}, {0.0,0.0,1.0}};
+  Sphere s1{glm::vec3{0.0,0.0,5.0}, 1.0};
+  REQUIRE(s1.intersect(r1) == true);
+}
+
 
 int main(int argc, char *argv[])
 {

@@ -55,12 +55,20 @@ float Sphere::volume() const
   {return ((4.0/3.0) * M_PI * radius_ * radius_ *radius_);}
 
 glm::vec3 Sphere::center() const {return center_;}
-float   Sphere::radius() const {return radius_;}
+float Sphere::radius() const {return radius_;}
 
 std::ostream& Sphere::print(std::ostream& os) const
 {
   os << "Name: " << name_ << ", Color: " << color_ << "Center: ("
-     << center_.x << ", " << center_.y << ", " << center_.z
+     << center_.x << "," << center_.y << "," << center_.z
      << "), Radius: " << radius_ << "\n";
       return os;
+}
+
+bool Sphere::intersect(Ray & r) const
+{
+  r.direction = glm::normalize(r.direction);
+  float distance(0.0);
+  return glm::intersectRaySphere(r.origin, r.direction,
+          center_, radius_, distance);
 }

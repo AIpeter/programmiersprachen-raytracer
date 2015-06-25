@@ -3,6 +3,9 @@
 
 #include <glm/vec3.hpp>
 #include "shape.hpp"
+#include <ray.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/intersect.hpp>
 
 class Sphere : public Shape
 {
@@ -26,6 +29,7 @@ class Sphere : public Shape
     /*virtual*/ float area() const;
     /*virtual*/ float volume() const;
     /*virtual*/ std::ostream& print(std::ostream& os) const;
+    bool intersect(Ray & r) const;
 
   private:
     glm::vec3 center_;
