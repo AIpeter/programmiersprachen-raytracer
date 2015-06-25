@@ -1,20 +1,39 @@
 #include "shape.hpp"
 
-Shape::Shape():
+Shape::Shape(): // default constructor
       name_{},
-      color_{0.0, 0.0, 0.0} {};
+      color_{0.0, 0.0, 0.0}
+      {std::cout <<
+        "Shape constructed."
+            << std::endl;}
 
 Shape::Shape(std::string const& name):
       name_{name},
-      color_{0.0, 0.0, 0.0} {};
+      color_{0.0, 0.0, 0.0}
+      {std::cout <<
+        "Shape constructed."
+            << std::endl;}
 
 Shape::Shape(Color const& color):
       name_{},
-      color_{color} {};
+      color_{color}
+      {std::cout <<
+        "Shape constructed."
+            << std::endl;}
 
 Shape::Shape(std::string const& name, Color const& color):
       name_{name},
-      color_{color} {};
+      color_{color}
+      {std::cout <<
+        "Shape constructed."
+            << std::endl;}
+
+Shape::~Shape() //destructor
+{
+    std::cout <<
+        "Shape destroyed."
+            << std::endl;
+}
 
 std::string Shape::name() const {return name_;}
 Color Shape::color() const {return color_;}

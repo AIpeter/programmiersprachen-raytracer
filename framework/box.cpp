@@ -72,3 +72,13 @@ std::ostream& Box::print(std::ostream& os) const
      << max_.x << "," << max_.y << "," << max_.z << ")" << "\n";
       return os;
 }
+
+/*
+bool Sphere::intersect(Ray & r) const
+{
+  r.direction = glm::normalize(r.direction);
+  float distance(0.0);
+  return glm::intersectRayPlane(r.origin, r.direction,
+          planeOrig, planeNormal, distance);
+}
+*/

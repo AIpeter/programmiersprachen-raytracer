@@ -22,6 +22,7 @@ class Sphere : public Shape
            Color const& color);
     Sphere(glm::vec3 const& center, float radius,
            std::string const& name, Color const& color);
+    ~Sphere(); //destructor
 
 
     glm::vec3 center() const;
