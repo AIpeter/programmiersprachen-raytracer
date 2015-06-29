@@ -93,7 +93,7 @@ float Sphere::radius() const {return radius_;}
 
 std::ostream& Sphere::print(std::ostream& os) const
 {
-  os << "Name: " << name_ << ", Color: " << color_ << "Center: ("
+  os << Shape::print(os) << "Center: ("
      << center_.x << "," << center_.y << "," << center_.z
      << "), Radius: " << radius_ << "\n";
       return os;
@@ -104,5 +104,5 @@ bool Sphere::intersect(Ray & r) const
   r.direction = glm::normalize(r.direction);
   float distance(0.0);
   return glm::intersectRaySphere(r.origin, r.direction,
-          center_, radius_, distance);
+          center_, radius_ * radius_, distance);
 }

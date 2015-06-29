@@ -97,7 +97,6 @@ TEST_CASE("intersectRaySphere", "[intersect]")
   // Ray
   glm::vec3 ray_origin(0.0, 0.0, 0.0);
   // ray direction has to be normalized!
-  // you can use: v = glm::normalize(some_vector)
   glm::vec3 ray_direction(0.0, 0.0, 1.0);
 
   // Sphere
@@ -118,9 +117,22 @@ TEST_CASE("intersectRaySphere II", "[intersectRaySphere]")
   REQUIRE(s1.intersect(r1) == true);
 }
 
-TEST_CASE("destructor", "[delete]")
+TEST_CASE("static and dynamic variables", "[static and dynamic]")
 {
   std::cout<<std::endl<<"Hier gehts los!"<<std::endl<<std::endl;
+  Color red(255, 0, 0);
+  glm::vec3 position(0.0);
+  std::shared_ptr<Sphere> s1 =
+  std::make_shared<Sphere>(position, 1.2,"sphere0", red);
+  std::shared_ptr<Shape> s2 =
+  std::make_shared<Sphere>(position, 1.2, "sphere1", red);
+  s1-> print(std::cout);
+  s2-> print(std::cout);
+}
+
+TEST_CASE("destructor", "[delete]")
+{
+  std::cout<<std::endl<<"Hier gehts wieder los!"<<std::endl<<std::endl;
   Color red(255, 0, 0);
   glm::vec3 position(0.0);
 

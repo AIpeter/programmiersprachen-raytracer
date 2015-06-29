@@ -23,9 +23,9 @@ class Box : public Shape
 
     glm::vec3 min() const;
     glm::vec3 max() const;
-    /*virtual*/ float area() const;
-    /*virtual*/ float volume() const;
-    /*virtual*/ std::ostream& print(std::ostream& os) const;
+    float area() const; // override
+    float volume() const; // override
+    std::ostream& print(std::ostream& os) const; // override
     //bool intersect(Ray & r) const;
 
   private:

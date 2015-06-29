@@ -14,8 +14,8 @@ class Shape
     Shape(std::string const& name, Color const& color);
     virtual ~Shape(); //destructor
 
-    virtual std::string name() const;
-    virtual Color color() const;
+    virtual std::string name() const; // getter
+    virtual Color color() const; // getter
     virtual float area() const = 0; // pure virtual
     virtual float volume() const = 0; // pure virual
 
