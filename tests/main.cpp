@@ -4,6 +4,7 @@
 #include "sphere.hpp"
 #include "box.hpp"
 #include "material.hpp"
+#include "sdfloader.hpp"
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
@@ -155,14 +156,9 @@ TEST_CASE("streamoperator class Material", "[operator<<]")
   std::cout<<mat1<<std::endl;
 }
 
-TEST_CASE("read a file", "[read_file]")
+TEST_CASE("read a file", "[file]")
 {
-  std::ifstream input("read_mat.txt");
-
-  for(std::string line; getline( input, line );)
-    {
-        //...for each line in input...
-    }
+  loadSDF("read_mat.sdf");
 }
 
 

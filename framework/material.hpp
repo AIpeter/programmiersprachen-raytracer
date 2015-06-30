@@ -27,4 +27,4 @@ class Material
 
 std::ostream& operator<<(std::ostream& os, Material const& mat);
 
-#endif // BUW_SHAPE_HPP
+#endif // BUW_MATERIAL_HPP
