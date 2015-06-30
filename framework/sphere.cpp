@@ -5,83 +5,32 @@ Sphere::Sphere(): // default constructor
   Shape(),
   center_{0, 0, 0},
   radius_{1.0}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
+  {}
 
 Sphere::Sphere(Sphere const& s): // copy constructor
-  Shape(s.name(), s.color()),
+  Shape(s.name(), s.mat()),
   center_{s.center_},
   radius_{s.radius_}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
+  {}
 
-Sphere::Sphere(std::string const& name):
-  Shape(name),
+Sphere::Sphere(std::string const& name, Material const& mat):
+  Shape(name, mat),
   center_{0, 0, 0},
   radius_{1.0}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
-
-Sphere::Sphere(Color const& color):
-  Shape(color),
-  center_{0, 0, 0},
-  radius_{1.0}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
-
-Sphere::Sphere(std::string const& name, Color const& color):
-  Shape(name, color),
-  center_{0, 0, 0},
-  radius_{1.0}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
+  {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius):
   Shape(),
   center_{center},
   radius_{radius}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
+  {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius,
-               std::string const& name):
-  Shape(name),
+               std::string const& name, Material const& mat):
+  Shape(name, mat),
   center_{center},
   radius_{radius}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
-
-Sphere::Sphere(glm::vec3 const& center, float radius,
-               Color const& color):
-  Shape(color),
-  center_{center},
-  radius_{radius}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
-
-Sphere::Sphere(glm::vec3 const& center, float radius,
-               std::string const& name, Color const& color):
-  Shape(name, color),
-  center_{center},
-  radius_{radius}
-  {std::cout <<
-        "Sphere constructed."
-            << std::endl;}
-
-Sphere::~Sphere() //destructor
-{
-    std::cout <<
-        "Sphere destroyed."
-            << std::endl;
-}
+  {}
 
 
 float Sphere::area() const {return (4 * M_PI * radius_ * radius_);}

@@ -12,18 +12,10 @@ class Sphere : public Shape
   public:
     Sphere(); // default constructor
     Sphere(Sphere const& s); // copy constructor
-    Sphere(std::string const& name);
-    Sphere(Color const& color);
-    Sphere(std::string const& name, Color const& color);
+    Sphere(std::string const& name, Material const& mat);
     Sphere(glm::vec3 const& center, float radius);
     Sphere(glm::vec3 const& center, float radius,
-           std::string const& name);
-    Sphere(glm::vec3 const& center, float radius,
-           Color const& color);
-    Sphere(glm::vec3 const& center, float radius,
-           std::string const& name, Color const& color);
-    ~Sphere(); //destructor
-
+           std::string const& name, Material const& mat);
 
     glm::vec3 center() const;
     float radius() const;

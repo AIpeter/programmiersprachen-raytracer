@@ -8,6 +8,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 
+/*
 TEST_CASE("default constructor of sphere", "[Sphere]")
 {
   Sphere s1{};
@@ -146,6 +147,7 @@ TEST_CASE("destructor", "[delete]")
   delete s1;
   delete s2;
 }
+*/
 
 TEST_CASE("streamoperator class Material", "[operator<<]")
 {

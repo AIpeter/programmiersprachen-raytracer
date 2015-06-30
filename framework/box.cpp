@@ -6,23 +6,12 @@ Box::Box(): // default constructor
   max_{1, 1, 1} {}
 
 Box::Box(Box const& b): // copy constructor
-  Shape(b.name(), b.color()),
+  Shape(b.name(), b.mat()),
   min_{b.min_},
   max_{b.max_} {}
 
-
-Box::Box(std::string const& name):
-  Shape(name),
-  min_{0, 0, 0},
-  max_{1, 1, 1} {}
-
-Box::Box(Color const& color):
-  Shape(color),
-  min_{0, 0, 0},
-  max_{1, 1, 1} {}
-
-Box::Box(std::string const& name, Color const& color):
-  Shape(name, color),
+Box::Box(std::string const& name, Material const& mat):
+  Shape(name, mat),
   min_{0, 0, 0},
   max_{1, 1, 1} {}
 
@@ -32,20 +21,8 @@ Box::Box(glm::vec3 const& min, glm::vec3 const& max):
   max_{max} {}
 
 Box::Box(glm::vec3 const& min, glm::vec3 const& max,
-         std::string const& name):
-  Shape(name),
-  min_{min},
-  max_{max} {}
-
-Box::Box(glm::vec3 const& min, glm::vec3 const& max,
-         Color const& color):
-  Shape(color),
-  min_{min},
-  max_{max} {}
-
-Box::Box(glm::vec3 const& min, glm::vec3 const& max,
-         std::string const& name, Color const& color):
-  Shape(name, color),
+         std::string const& name, Material const& mat):
+  Shape(name, mat),
   min_{min},
   max_{max} {}
 
