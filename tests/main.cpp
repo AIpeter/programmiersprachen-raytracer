@@ -155,6 +155,16 @@ TEST_CASE("streamoperator class Material", "[operator<<]")
   std::cout<<mat1<<std::endl;
 }
 
+TEST_CASE("read a file", "[read_file]")
+{
+  std::ifstream input("read_mat.txt");
+
+  for(std::string line; getline( input, line );)
+    {
+        //...for each line in input...
+    }
+}
+
 
 int main(int argc, char *argv[])
 {
