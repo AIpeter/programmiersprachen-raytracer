@@ -35,8 +35,8 @@ Shape::~Shape() //destructor
             << std::endl;
 }
 
-std::string Shape::name() const {return name_;}
-Color Shape::color() const {return color_;}
+std::string const& Shape::name() const {return name_;}
+Color const& Shape::color() const {return color_;}
 
 std::ostream& Shape::print(std::ostream& os) const
     {

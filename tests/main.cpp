@@ -3,6 +3,7 @@
 #include "shape.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
+#include "material.hpp"
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
@@ -144,6 +145,12 @@ TEST_CASE("destructor", "[delete]")
 
   delete s1;
   delete s2;
+}
+
+TEST_CASE("streamoperator class Material", "[operator<<]")
+{
+  Material mat1{"Material_1", {1,1,1}, {0,0,0}, {1,0,1}, 1.5};
+  std::cout<<mat1<<std::endl;
 }
 
 
