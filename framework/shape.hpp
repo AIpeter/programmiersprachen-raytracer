@@ -2,6 +2,8 @@
 #define BUW_SHAPE_HPP
 
 #include "material.hpp"
+#include "ray.hpp"
+#include <glm/glm.hpp>
 #include <string>
 #include <iostream>
 
@@ -17,6 +19,7 @@ class Shape
     virtual Material const& mat() const; // getter
     virtual float area() const = 0; // pure virtual
     virtual float volume() const = 0; // pure virual
+    virtual bool intersect(Ray const& r, float& t) = 0; // pure virtual
 
     virtual std::ostream& print(std::ostream& os) const;
 

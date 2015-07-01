@@ -50,12 +50,17 @@ std::ostream& Box::print(std::ostream& os) const
       return os;
 }
 
-/*
-bool Sphere::intersect(Ray & r) const
+bool Box::intersect(Ray const& r, float& t)
 {
-  r.direction = glm::normalize(r.direction);
-  float distance(0.0);
-  return glm::intersectRayPlane(r.origin, r.direction,
-          planeOrig, planeNormal, distance);
+  auto v = glm::normalize(r.direction);
+  t = (min_.x - r.origin.x) / v.x;
+  glm::vec3 s = r.origin + (t * v);
+
+  if((s.y >= min_.y && s.y <= max_.y)&&
+     (s.z >= min_.z && s.z <= max_.z))
+  {
+    return true;
+  }
+
+  else return false;
 }
-*/

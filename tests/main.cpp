@@ -156,6 +156,16 @@ TEST_CASE("streamoperator class Material", "[operator<<]")
   std::cout<<mat1<<std::endl;
 }
 
+TEST_CASE("intersect Ray and Box", "[intersect]")
+{
+  // Box im Ursprung, Seitenlängen = 1
+  Box b1{glm::vec3{1, 0, 0}, glm::vec3{0, 1, 1}};
+  // Ray geht von min aus durch max
+  Ray r1{{1, 0, 0}, {-1, 1, 1}};
+  float t = 0;
+  REQUIRE(b1.intersect(r1, t) == true);
+}
+
 TEST_CASE("read a file", "[file]")
 {
   loadSDF("read_mat.sdf");
