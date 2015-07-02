@@ -3,14 +3,10 @@
 
 #include <string>
 #include <iostream>
-#include <iterator>
-#include <vector>
 #include <fstream>
 #include <sstream>
-#include <unordered_map>
-#include <utility>
-#include <material.hpp>
+#include "scene.hpp"
 
-std::vector<Material> loadSDF(std::string const& file);
+Scene* loadSDF(std::string const& file);
 
 #endif

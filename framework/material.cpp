@@ -23,7 +23,8 @@ float Material::m() const {return m_;}
 
 std::ostream& operator<<(std::ostream& os, Material const& mat)
 {
-  os<<"Name: "<<mat.name()<<"\n"<<"ka: "<<mat.ka()<<"kd: "
+  os<<"--------"<<"\n"<<"Material"<<"\n"<<"--------"<<"\n"
+  <<"Name: "<<mat.name()<<"\n"<<"ka: "<<mat.ka()<<"kd: "
   <<mat.kd()<<"ks: "<<mat.ks()<<"m: "<<mat.m()<<"\n";
   return os;
 }

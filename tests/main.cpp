@@ -168,7 +168,12 @@ TEST_CASE("intersect Ray and Box", "[intersect]")
 
 TEST_CASE("read a file", "[file]")
 {
-  loadSDF("read_mat.sdf");
+  Scene* scene = loadSDF("read_mat.sdf");
+  for(auto i : scene->materials)
+  {
+    std::cout << i << "\n";
+  }
+  delete scene;
 }
 
 
