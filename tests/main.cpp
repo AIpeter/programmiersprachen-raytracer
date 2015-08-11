@@ -37,6 +37,10 @@ TEST_CASE("read a file", "[file]")
   delete scene;
 }
 
+TEST_CASE("jetzt wird's ernst", "[renderer]") {
+  Scene* scene = loadSDF("sdfdatei.sdf");
+  scene->render.render(scene->shapes);
+}
 
 int main(int argc, char *argv[])
 {
