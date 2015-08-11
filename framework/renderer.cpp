@@ -45,26 +45,33 @@ void Renderer::render() {
 
 void Renderer::render(std::vector<Shape*> const& shapes)
 {
-  // const std::size_t checkersize = 20;
-
-  for (unsigned y = 0; y < height_; ++y) {
-    for (unsigned x = 0; x < width_; ++x) {
+  for (unsigned y = 0; y < height_; ++y) 
+  {
+    for (unsigned x = 0; x < width_; ++x) 
+    {
       Pixel p(x,y);
-      /*
-      if ( ((x/checkersize)%2) != ((y/checkersize)%2)) {
-        p.color = Color(0.0, 1.0, float(x)/height_);
-      } else {
-        p.color = Color(1.0, 0.0, float(y)/width_);
+      float infinity = std::numeric_limits<float>::infinity();
+      float t;
+      float tmin = infinity;
+      Shape* closest_o;
+      for(auto i : shapes) 
+      {
+        if(i->intersect(Ray{glm::vec3{x, y, 0}, glm::vec3{0, 0, -1}}, t) == true)
+        {
+          if(t < tmin) 
+          {
+            tmin = t;
+            closest_o = i;
+          }
+        }
       }
-      */
-      for(auto i : shapes) {
-        float t = 0;
-        if(i->intersect(Ray{glm::vec3{x, y, 0}, glm::vec3{0, 0, -1}}, t) == true) {
-          p.color = i->mat().ka();
-        }
-        else {
-          p.color = Color{0.0, 0.0, 0.0};
-        }
+      if(closest_o != nullptr) 
+      {
+        p.color = closest_o->mat().ka();
+      }
+      else 
+      {
+        p.color = Color{0.0, 0.0, 0.0};
       }
       write(p);
     }

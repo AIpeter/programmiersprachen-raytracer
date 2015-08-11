@@ -17,6 +17,7 @@
 #include "box.hpp"
 #include "sphere.hpp"
 #include <string>
+#include <limits>
 #include <glm/glm.hpp>
 
 class Renderer
