@@ -11,9 +11,6 @@ class Sphere : public Shape
 {
   public:
     Sphere(); // default constructor
-    Sphere(Sphere const& s); // copy constructor
-    Sphere(std::string const& name, Material const& mat);
-    Sphere(glm::vec3 const& center, float radius);
     Sphere(glm::vec3 const& center, float radius,
            std::string const& name, Material const& mat);
 
@@ -22,7 +19,7 @@ class Sphere : public Shape
     float area() const; // override
     float volume() const; // override
     std::ostream& print(std::ostream& os) const; // override
-    bool intersect(Ray & r);
+    bool intersect(Ray const& r, float & d);
 
   private:
     glm::vec3 center_;
