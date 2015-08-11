@@ -53,7 +53,7 @@ void Renderer::render(std::vector<Shape*> const& shapes)
       float infinity = std::numeric_limits<float>::infinity();
       float t;
       float tmin = infinity;
-      Shape* closest_o;
+      Shape* closest_o = NULL;
       for(auto i : shapes) 
       {
         if(i->intersect(Ray{glm::vec3{x, y, 0}, glm::vec3{0, 0, -1}}, t) == true)
@@ -65,7 +65,7 @@ void Renderer::render(std::vector<Shape*> const& shapes)
           }
         }
       }
-      if(closest_o != nullptr) 
+      if(closest_o != NULL) 
       {
         p.color = closest_o->mat().ka();
       }
