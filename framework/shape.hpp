@@ -11,8 +11,6 @@ class Shape
 {
   public:
     Shape(); // default constructor
-    Shape(std::string const& name);
-    Shape(Material const& mat);
     Shape(std::string const& name, Material const& mat);
 
     std::string const& name() const; // getter
