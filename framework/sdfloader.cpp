@@ -72,7 +72,9 @@ Scene* loadSDF(std::string const& file) {
                                         words[2] << std::endl;
                                 }
                         }
-                        /*
+                        else if(words[1] == "camera") {
+                                out->camera = Camera{words[2], std::stof(words[3])};
+                        }
                         else if(words[1] == "light") {
                                 glm::vec3 pos{std::stof(words[3]),
                                         std::stof(words[4]),
@@ -86,7 +88,6 @@ Scene* loadSDF(std::string const& file) {
                                 out->lights.push_back(Light{words[3], pos, La,
                                         Ld});
                         }
-                        */
                         else {
                                 std::cout << "Syntax error in line " << i <<
                                 "!" << std::endl;
@@ -95,17 +96,12 @@ Scene* loadSDF(std::string const& file) {
                         }
                 }
                 /*
-                else if(words[0] == "camera") {
-                        out->camera.name = words[1];
-                        out->camera.fov-x = std::stof(words[2]);
-                }
-
                 else if(words[0] == "render") {
                         ----
                         TODO: write parser for rendering
                         ----
                 }
-                */
+                */      
                 else {
                         std::cout << "Syntax error in line " << i << "!" <<
                         std::endl;
