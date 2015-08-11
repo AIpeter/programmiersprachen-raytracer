@@ -37,6 +37,7 @@ bool Box::intersect(Ray const& r, float& t)
 {
   bool cut = false;
   auto d = glm::normalize(r.direction);
+  float tmin;
   //check x_min-plane:
   t = (min_.x - r.origin.x)/(d.x); //parameter zur berechnung d schnittpunkts x-ebene =po + t * d
   glm::vec3 intersection_xmin = r.origin+(t*d);
@@ -52,7 +53,7 @@ bool Box::intersect(Ray const& r, float& t)
     intersection_xmin.z <= max_.z)
   {
     cut = true;
-    return cut;
+    tmin = t;
   }
   //check x_max-plane
   t = (max_.x - r.origin.x)/(d.x);
@@ -69,7 +70,9 @@ bool Box::intersect(Ray const& r, float& t)
     intersection_xmax.z <= max_.z)
   {
     cut = true;
-    return cut;
+    if(t <= tmin) {
+      tmin = t;
+    }
   }
 
   //check y-min-plane
@@ -87,7 +90,9 @@ bool Box::intersect(Ray const& r, float& t)
     intersection_ymin.z <= max_.z)
   {
     cut = true;
-    return cut;
+    if(t <= tmin) {
+      tmin = t;
+    }
   }
   //check y_max-plane
   t = (max_.y - r.origin.y)/(d.y);
@@ -104,7 +109,9 @@ bool Box::intersect(Ray const& r, float& t)
     intersection_ymax.z <= max_.z)
   {
     cut = true;
-    return cut;
+    if(t <= tmin) {
+      tmin = t;
+    }
   }
 
   //check z_min-plane
@@ -122,7 +129,9 @@ bool Box::intersect(Ray const& r, float& t)
     intersection_zmin.z <= max_.z)
   {
     cut = true;
-    return cut;
+    if(t <= tmin) {
+      tmin = t;
+    }
   }
   //check z_max-plane
   t = (max_.z - r.origin.z)/(d.z);
@@ -139,7 +148,10 @@ bool Box::intersect(Ray const& r, float& t)
     intersection_zmax.z <= max_.z)
   {
     cut = true;
-    return cut;
+    if(t <= tmin) {
+      tmin = t;
+    }
   }
+    t = tmin;
     return cut;
 }
