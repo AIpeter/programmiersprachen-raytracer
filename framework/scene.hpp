@@ -2,19 +2,18 @@
 #define BUW_SCENE_HPP
 
 #include <vector>
+#include <map>
+#include "material.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
-#include "material.hpp"
-//#include "light.hpp"
-//#include "camera.hpp"
+// #include "light.hpp"
+// #include "camera.hpp"
 
-struct Scene
-{
-  std::vector<Sphere> spheres;
-  std::vector<Box> boxes;
-  std::vector<Material> materials;
-  //std::vector<Light> lights;
-  //Camera camera;
+struct Scene {
+        std::map<std::string, Material> materials;
+        std::vector<Shape*> shapes;
+        // std::vector<Light> lights;
+        // Camera camera;
 };
 
 
