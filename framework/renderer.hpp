@@ -13,6 +13,9 @@
 #include "color.hpp"
 #include "pixel.hpp"
 #include "ppmwriter.hpp"
+#include "ray.hpp"
+#include "box.hpp"
+#include "sphere.hpp"
 #include <string>
 #include <glm/glm.hpp>
 
@@ -23,6 +26,7 @@ public:
   Renderer(unsigned w, unsigned h, std::string const& file);
 
   void render();
+  void render(std::vector<Shape*> const& shapes);
   void write(Pixel const& p);
 
   inline std::vector<Color> const& colorbuffer() const
