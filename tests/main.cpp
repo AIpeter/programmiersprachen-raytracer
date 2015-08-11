@@ -26,10 +26,13 @@ TEST_CASE("intersectBox", "[intersect]") {
 
 TEST_CASE("read a file", "[file]")
 {
-  Scene* scene = loadSDF("read_mat.sdf");
+  Scene* scene = loadSDF("sdfdatei.sdf");
   for(auto i : scene->materials)
   {
     std::cout << i.second << "\n";
+  }
+  for(auto i : scene->shapes) {
+    std::cout << *i << "\n";
   }
   delete scene;
 }
