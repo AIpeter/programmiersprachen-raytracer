@@ -9,6 +9,14 @@
 
 #include "renderer.hpp"
 
+Renderer::Renderer():
+  width_(200),
+  height_(200),
+  colorbuffer_(width_*height_, Color{0.0, 0.0, 0.0}),
+  filename_("standard.ppm"),
+  ppm_(width_, height_)
+  {}
+
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
   , height_(h)

@@ -19,6 +19,7 @@
 class Renderer
 {
 public:
+  Renderer();
   Renderer(unsigned w, unsigned h, std::string const& file);
 
   void render();
