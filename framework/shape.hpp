@@ -15,8 +15,8 @@ class Shape
     Shape(Material const& mat);
     Shape(std::string const& name, Material const& mat);
 
-    virtual std::string const& name() const; // getter
-    virtual Material const& mat() const; // getter
+    std::string const& name() const; // getter
+    Material const& mat() const; // getter
     virtual float area() const = 0; // pure virtual
     virtual float volume() const = 0; // pure virual
     virtual bool intersect(Ray const& r, float& t) = 0; // pure virtual

@@ -26,12 +26,12 @@ Scene* loadSDF(std::string const& file)
 
   for(auto line:lines)
   {
-    std::stringstream stream(line);
+    std::stringstream stream(line); // aus jeder Zeile wird stream
     std::string word;
     std::vector<std::string> words;
-    while(stream.good())
+    while(stream.good()) // solange stream nicht zu Ende und alles ok
     {
-      stream >> word;
+      stream >> word; // Wort für Wort, durch Leerzeichen getrennt
       words.push_back(word);
     }
 
