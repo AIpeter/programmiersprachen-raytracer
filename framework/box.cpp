@@ -155,3 +155,8 @@ bool Box::intersect(Ray const& r, float& t)
     t = tmin;
     return cut;
 }
+
+float Box::closer_z()
+{
+  return min_.z;
+}

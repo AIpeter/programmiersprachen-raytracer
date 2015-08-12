@@ -52,15 +52,15 @@ void Renderer::render(std::vector<Shape*> const& shapes)
       Pixel p(x,y);
       float infinity = std::numeric_limits<float>::infinity();
       float t;
-      float tmin = infinity;
+      float tmin = -infinity;
       Shape* closest_o = NULL;
       for(auto i : shapes) 
       {
         if(i->intersect(Ray{glm::vec3{x, y, 0}, glm::vec3{0, 0, -1}}, t) == true)
         {
-          if(t < tmin) 
+          if(i->closer_z() > tmin) 
           {
-            tmin = t;
+            tmin = i->closer_z();
             closest_o = i;
           }
         }

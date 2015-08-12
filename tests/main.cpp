@@ -8,12 +8,12 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
-
+/*
 TEST_CASE("streamoperator class Material", "[operator<<]")
 {
   Material mat1{"Material_1", {1,1,1}, {0,0,0}, {1,0,1}, 1.5};
   std::cout<<mat1<<std::endl;
-}
+}*/
 
 TEST_CASE("intersectBox", "[intersect]") {
         Material m{"Testmaterial", Color{1,0,0}, Color{0,1,0}, Color{0,0,1},

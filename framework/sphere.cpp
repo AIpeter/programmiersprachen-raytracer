@@ -1,5 +1,6 @@
 #include "sphere.hpp"
 #include <cmath>
+#include <iostream>
 
 Sphere::Sphere(): // default constructor
   Shape(),
@@ -34,4 +35,9 @@ bool Sphere::intersect(Ray const& r, float & d) {
 
         return glm::intersectRaySphere(r.origin, v, center_,
                 radius_*radius_, d);
+}
+
+float Sphere::closer_z()
+{
+  return center_.z;
 }
