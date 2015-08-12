@@ -158,5 +158,5 @@ bool Box::intersect(Ray const& r, float& t)
 
 float Box::closer_z()
 {
-  return min_.z;
+  return max_.z;
 }
