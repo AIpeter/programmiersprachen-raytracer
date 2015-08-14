@@ -1,4 +1,4 @@
-#ifndef BUW_COMPOSITE_HPP
+/*#ifndef BUW_COMPOSITE_HPP
 #define BUW_COMPOSITE_HPP
 #include "sphere.hpp"
 #include "box.hpp"
@@ -43,4 +43,4 @@ struct Node {
 
 std::ostream& operator<<(std::ostream& os, Composite const& c);
 
-#endif // BUW_COMPOSITE_HPP
+#endif // BUW_COMPOSITE_HPP*/

@@ -78,7 +78,7 @@ void Renderer::render(std::vector<Shape*> const& shapes)
       Shape* closest_o = NULL;
       for(auto i : shapes) 
       {
-        if(i->intersect(Ray{glm::vec3{x, y, 0}, glm::vec3{0, 0, -1}}, t) == true)
+        if(i->intersect(ComputeCameraRay(x, y), t) == true)
         {
           if(i->closer_z() > tmin) 
           {

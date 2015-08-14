@@ -42,13 +42,13 @@ TEST_CASE("jetzt wird's ernst", "[renderer]") {
   Scene* scene = loadSDF("sdfdatei.sdf");
   scene->render.render(scene->shapes);
 }
-
+/*
 TEST_CASE("composite", "[composite]") {
   Material m{"Testmaterial", Color{1,0,0}, Color{0,1,0}, Color{0,0,1}, 15};
   Box b{glm::vec3{0.0, 0.0, 0.0}, glm::vec3{1.0, 1.0, 1.0}, "testbox", m};
   Sphere s{};
   Composite c{b, s};
-}
+}*/
 
 int main(int argc, char *argv[])
 {
