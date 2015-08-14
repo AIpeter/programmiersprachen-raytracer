@@ -74,7 +74,10 @@ Scene* loadSDF(std::string const& file) {
                         }
                         else if(words[1] == "camera") {
                                 out->camera = Camera{words[2],
-                                                        std::stof(words[3])};
+                                                        std::stof(words[3]),
+                                                        glm::vec3{0, 0, 0},
+                                                        glm::vec3{0, 0, -1},
+                                                        glm::vec3{0, 1, 0}};
                         }
                         else if(words[1] == "light") {
                                 glm::vec3 pos{std::stof(words[3]),
