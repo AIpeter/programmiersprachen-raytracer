@@ -1,4 +1,4 @@
-/*#ifndef BUW_COMPOSITE_HPP
+#ifndef BUW_COMPOSITE_HPP
 #define BUW_COMPOSITE_HPP
 #include "node.hpp"
 #include "sphere.hpp"
@@ -30,4 +30,4 @@ private:
 
 // std::ostream& operator<<(std::ostream& os, Composite const& c);
 
-#endif // BUW_COMPOSITE_HPP*/
+#endif // BUW_COMPOSITE_HPP
