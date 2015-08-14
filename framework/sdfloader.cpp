@@ -73,11 +73,18 @@ Scene* loadSDF(std::string const& file) {
                                 }
                         }
                         else if(words[1] == "camera") {
-                                out->camera = Camera{words[2],
+                                glm::vec3 eye{std::stof(words[4]),
+                                                std::stof(words[5]),
+                                                std::stof(words[6])};
+                                glm::vec3 dir{std::stof(words[7]),
+                                                std::stof(words[8]),
+                                                std::stof(words[9])};
+                                glm::vec3 up{std::stof(words[10]),
+                                                std::stof(words[11]),
+                                                std::stof(words[12])};
+                                out->cameras[words[2]] = Camera{words[2],
                                                         std::stof(words[3]),
-                                                        glm::vec3{0, 0, 0},
-                                                        glm::vec3{0, 0, -1},
-                                                        glm::vec3{0, 1, 0}};
+                                                        eye, dir, up};
                         }
                         else if(words[1] == "light") {
                                 glm::vec3 pos{std::stof(words[3]),
@@ -101,7 +108,6 @@ Scene* loadSDF(std::string const& file) {
                 }
                 
                 else if(words[0] == "render") {
-                        out->camera_name = words[1];
                         out->render = Renderer{
                                         (unsigned int) std::stof(words[3]),
                                         (unsigned int) std::stof(words[4]), 
