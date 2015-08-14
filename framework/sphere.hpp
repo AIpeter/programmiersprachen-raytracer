@@ -20,7 +20,7 @@ class Sphere : public Shape
     float volume() const; // override
     std::ostream& print(std::ostream& os) const; // override
     bool intersect(Ray const& r, float & d);
-    float closer_z(); // override
+    float closer_z() const; // override
 
   private:
     glm::vec3 center_;
