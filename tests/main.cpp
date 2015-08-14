@@ -48,7 +48,6 @@ TEST_CASE("composite", "[composite]") {
   auto b = std::make_shared<Box>(glm::vec3{0.0, 0.0, 0.0}, glm::vec3{1.0, 1.0, 1.0}, "testbox", m);
   auto s = std::make_shared<Sphere>(glm::vec3{1.0, 1.0, 1.0}, 1, "testsphere", m);
   Composite c{b, s};
-<<<<<<< HEAD
   // std::cout << c << std::endl;
   Ray r{{0.0, 0.0, 0.0}, {1.0, 1.0, 1.0}};
   float t = 0;
@@ -56,10 +55,7 @@ TEST_CASE("composite", "[composite]") {
   std::cout << c.volume() << std::endl;
 }
 */
-=======
-}*/
 
->>>>>>> bc43b1790431e0a25f70c351ebd14f63b6b3a0e9
 int main(int argc, char *argv[])
 {
   return Catch::Session().run(argc, argv);
