@@ -1,19 +1,25 @@
 #include "composite.hpp"
 
 Composite::Composite(std::shared_ptr<const Node> const& node):
+        Shape(),
         root_{node}
         {}
 
 Composite::Composite():
-        Shape(name)
+        Shape(),
+        root_{NULL}
         {}
 
 Composite::Composite(std::string const& name, Composite const& left,
                         std::shared_ptr<Shape> shape, Composite const& right):
+        Shape(name),
         root_{std::make_shared<const Node>(left.root_, shape, right.root_)}
         {}
 
-Composite::Composite(std::initializer_list<std::shared_ptr<Shape>> list) {
+Composite::Composite(std::initializer_list<std::shared_ptr<Shape>> list):
+        Shape(),
+        root_{NULL}
+        {
         Composite c;
         for (auto i : list) {
                 c = c.insert(i);
@@ -25,8 +31,8 @@ bool Composite::isEmpty() const {
         return !root_;
 }
 
-std::shared_ptr<Shape> Composite::root() const {
-        return root_->shape_;
+std::shared_ptr<const Node> Composite::root() const {
+        return root_;
 }
 
 Composite Composite::left() const {
@@ -39,16 +45,16 @@ Composite Composite::right() const {
 
 Composite Composite::insert(std::shared_ptr<Shape> shape) const {
         if (isEmpty()) {
-                return Composite(Composite(), shape, Composite());
+                return Composite(name_, Composite(), shape, Composite());
         }
         if (left().isEmpty()) {
-                return Composite(left().insert(shape), root(), right());
+                return Composite(name_, left().insert(shape), root()->shape_, right());
         }
         else if (right().isEmpty()) {
-                return Composite(left(), root(), right().insert(shape));
+                return Composite(name_, left(), root()->shape_, right().insert(shape));
         }
         else {
-                return Composite(left().insert(shape), root(), right());       
+                return Composite(name_,left().insert(shape), root()->shape_, right());       
         }
 }
 
@@ -56,8 +62,8 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
         float area = root()->shape_->area();
         auto n = root();
         if (n) {
-                area += n->left()->volume();
-                area += n->right()->volume();
+                area += left().volume();
+                area += right().volume();
         }
         return area;
 }
@@ -66,27 +72,32 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
         float volume = root()->shape_->volume();
         auto n = root();
         if (n) {
-                volume += n->left()->volume();
-                volume += n->right()->volume();
+                volume += left().volume();
+                volume += right().volume();
         }
         return volume;
 }
 
-/* virtual */ bool Composite::intersect(Ray const& r, float & t) const {
+/* virtual */ bool Composite::intersect(Ray const& r, float & t) {
         bool intersect = root()->shape_->intersect(r, t);
         if (intersect == true) {
                 return intersect;
         }
-        auto n = root();
-        if (n) {
-                if (n->left()->intersect(r, t)) {
-                        return true;
-                }
-                else if (n->right()->intersect(r, t)) {
-                        return true;
+        else {
+                auto n = root();
+                if (n) {
+                        if (left().intersect(r, t)) {
+                                return true;
+                        }
+                        else if (right().intersect(r, t)) {
+                                return true;
+                        }
+                        else {
+                                return false;
+                        }
                 }
                 else {
-                        return false
+                        return false;
                 }
         }
 }
@@ -95,27 +106,27 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
         float z = root()->shape_->closer_z();
         auto n = root();
         if (n) {
-                if (n->left()->closer_z() < z) {
-                        z = n->left()->closer_z();
+                if (left().closer_z() < z) {
+                        z = left().closer_z();
                 }
-                else if (n->right()->closer_z() < z) {
-                        z = n->right()->closer_z();
+                else if (right().closer_z() < z) {
+                        z = right().closer_z();
                 }
         }
         return z;
 }
 
-/* virtual */ std::ostream& Composite::print(std::ostream& os) {
+/* virtual */ std::ostream& Composite::print(std::ostream& os) const {
         root()->shape_->print(os);
         auto n = root();
         if (n) {
-                n->left()->print(os);
-                n->right()->print(os);
+                left().print(os);
+                right().print(os);
         }
         return os;
 }
-
+/*
 std::ostream& operator<<(std::ostream& os, Composite const& c) {
         c.print(os);
         return os;
-}
+} */
