@@ -156,7 +156,7 @@ bool Box::intersect(Ray const& r, float& t)
     return cut;
 }
 
-float Box::closer_z()
+float Box::closer_z() const
 {
   if (max_.z > min_.z) {
     return min_.z;
