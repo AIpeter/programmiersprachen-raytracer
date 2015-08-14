@@ -44,7 +44,7 @@ Ray Renderer::ComputeCameraRay(int i, int j)
                         + cam_.getPosition()
                         + cam_.getDirection();
   glm::vec3 ray_dir = image_point - cam_.getPosition();
-  return Ray{cam_.getPosition(), ray_dir}; 
+  return Ray{cam_.getPosition(), ray_dir};
 }
 
 void Renderer::render() {

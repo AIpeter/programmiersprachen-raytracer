@@ -17,7 +17,7 @@ Camera::Camera(std::string const& name, double const fov_x,
   name_{name},
   fov_x_{fov_x},
   position_{position},
-  direction_{direction},
+  direction_{glm::normalize(direction)},
   cam_up_{up}
   {
     cam_right_ = glm::cross(direction_, cam_up_);
