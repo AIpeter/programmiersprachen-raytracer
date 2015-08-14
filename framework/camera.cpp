@@ -39,17 +39,17 @@ glm::vec3 const& Camera::getPostion() const
 	return position_;
 }
 	
-glm::vec3 const& getDirection() const
+glm::vec3 const& Camera::getDirection() const
 {
   return direction_;
 }
 
-glm::vec3 const& getCamUp() const
+glm::vec3 const& Camera::getCamUp() const
 {
   return cam_up_;
 }
 
-glm::vec3 const& getCamRight() const
+glm::vec3 const& Camera::getCamRight() const
 {
   return cam_right_;
 }
