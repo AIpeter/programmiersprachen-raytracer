@@ -18,7 +18,7 @@ class Box : public Shape
     float volume() const; // override
     std::ostream& print(std::ostream& os) const; // override
     bool intersect(Ray const& r, float& t);
-    float closer_z(); // override
+    float closer_z() const; // override
 
   private:
     glm::vec3 min_;
