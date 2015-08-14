@@ -5,6 +5,11 @@ Shape::Shape(): // default constructor
       mat_{}
       {}
 
+Shape::Shape(std::string const& name):
+      name_{name},
+      mat_{}
+      {}
+
 Shape::Shape(std::string const& name, Material const& mat):
       name_{name},
       mat_{mat}

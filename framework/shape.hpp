@@ -11,6 +11,7 @@ class Shape
 {
   public:
     Shape(); // default constructor
+    Shape(std::string const& name);
     Shape(std::string const& name, Material const& mat);
 
     std::string const& name() const; // getter
@@ -18,7 +19,7 @@ class Shape
     virtual float area() const = 0; // pure virtual
     virtual float volume() const = 0; // pure virual
     virtual bool intersect(Ray const& r, float& t) = 0; // pure virtual
-    virtual float closer_z() = 0; // pure virtual getter
+    virtual float closer_z() const = 0; // pure virtual getter
 
     virtual std::ostream& print(std::ostream& os) const;
 
