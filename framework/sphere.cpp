@@ -37,7 +37,7 @@ bool Sphere::intersect(Ray const& r, float & d) {
                 radius_*radius_, d);
 }
 
-float Sphere::closer_z()
+float Sphere::closer_z() const
 {
   return center_.z;
 }
