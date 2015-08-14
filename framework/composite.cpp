@@ -1,4 +1,4 @@
-#include "composite.hpp"
+/*#include "composite.hpp"
 
 Composite::Composite(std::shared_ptr<const Node> const& node):
         Shape(),
@@ -57,8 +57,8 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
                 return Composite(name_,left().insert(shape), root()->shape_, right());       
         }
 }
-
-/* virtual */ float Composite::area() const { // Überlappung?!
+*/
+/* virtual */ /*float Composite::area() const { // Überlappung?!
         float area = root()->shape_->area();
         auto n = root();
         if (n) {
@@ -67,8 +67,8 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
         }
         return area;
 }
-
-/* virtual */ float Composite::volume() const { // Überlappung?!
+*/
+/* virtual */ /*float Composite::volume() const { // Überlappung?!
         float volume = root()->shape_->volume();
         auto n = root();
         if (n) {
@@ -76,9 +76,13 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
                 volume += right().volume();
         }
         return volume;
-}
+}*/
 
+<<<<<<< HEAD
 /* virtual */ bool Composite::intersect(Ray const& r, float & t) {
+=======
+/* virtual */ /* bool Composite::intersect(Ray const& r, float & t) const {
+>>>>>>> bc43b1790431e0a25f70c351ebd14f63b6b3a0e9
         bool intersect = root()->shape_->intersect(r, t);
         if (intersect == true) {
                 return intersect;
@@ -100,9 +104,9 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
                         return false;
                 }
         }
-}
+}*/
 
-/* virtual */ float Composite::closer_z() const {
+/* virtual */ /*float Composite::closer_z() const {
         float z = root()->shape_->closer_z();
         auto n = root();
         if (n) {
@@ -114,9 +118,13 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
                 }
         }
         return z;
-}
+}*/
 
+<<<<<<< HEAD
 /* virtual */ std::ostream& Composite::print(std::ostream& os) const {
+=======
+/* virtual */ /*std::ostream& Composite::print(std::ostream& os) {
+>>>>>>> bc43b1790431e0a25f70c351ebd14f63b6b3a0e9
         root()->shape_->print(os);
         auto n = root();
         if (n) {
@@ -129,4 +137,8 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
 std::ostream& operator<<(std::ostream& os, Composite const& c) {
         c.print(os);
         return os;
+<<<<<<< HEAD
 } */
+=======
+}*/
+>>>>>>> bc43b1790431e0a25f70c351ebd14f63b6b3a0e9

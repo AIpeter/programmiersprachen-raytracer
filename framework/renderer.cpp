@@ -17,13 +17,35 @@ Renderer::Renderer():
   ppm_(width_, height_)
   {}
 
-Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
-  : width_(w)
-  , height_(h)
-  , colorbuffer_(w*h, Color(0.0, 0.0, 0.0))
-  , filename_(file)
-  , ppm_(width_, height_)
-{}
+Renderer::Renderer(unsigned w, unsigned h, std::string const& file):
+  width_(w),
+  height_(h),
+  colorbuffer_(w*h, Color(0.0, 0.0, 0.0)),
+  filename_(file),
+  ppm_(width_, height_)
+  {}
+
+Renderer::Renderer(unsigned w, unsigned h,
+                    std::string const& file, Camera cam):
+  width_(w),
+  height_(h),
+  colorbuffer_(w*h, Color(0.0, 0.0, 0.0)),
+  filename_(file),
+  ppm_(width_, height_),
+  cam_(cam)
+  {}
+
+Ray Renderer::ComputeCameraRay(int i, int j)
+{
+  float norm_i = (i/width_) - 0.5;
+  float norm_j = (j/height_) - 0.5;
+  glm::vec3 image_point = norm_i * cam_.getCamRight()
+                        + norm_j * cam_.getCamUp()
+                        + cam_.getPosition()
+                        + cam_.getDirection();
+  glm::vec3 ray_dir = image_point - cam_.getPosition();
+  return Ray{cam_.getPosition(), ray_dir};
+}
 
 void Renderer::render() {
   const std::size_t checkersize = 20;
@@ -56,7 +78,7 @@ void Renderer::render(std::vector<Shape*> const& shapes)
       Shape* closest_o = NULL;
       for(auto i : shapes) 
       {
-        if(i->intersect(Ray{glm::vec3{x, y, 0}, glm::vec3{0, 0, -1}}, t) == true)
+        if(i->intersect(ComputeCameraRay(x, y), t) == true)
         {
           if(i->closer_z() > tmin) 
           {

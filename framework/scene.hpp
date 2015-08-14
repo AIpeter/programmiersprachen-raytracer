@@ -16,7 +16,6 @@ struct Scene {
         std::vector<Light> lights;
         Camera camera;
         Renderer render;
-        std::string camera_name;
 };
 
 
