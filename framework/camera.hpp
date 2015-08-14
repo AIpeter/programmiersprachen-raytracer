@@ -16,7 +16,7 @@ public:
           glm::vec3 up);
 	std::string const& getName() const;
   double const& getFov_x() const;
-  glm::vec3 const& getPostion() const;
+  glm::vec3 const& getPosition() const;
   glm::vec3 const& getDirection() const;
   glm::vec3 const& getCamUp() const;
 	glm::vec3 const& getCamRight() const;

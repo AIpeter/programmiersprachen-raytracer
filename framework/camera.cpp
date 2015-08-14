@@ -34,7 +34,7 @@ double const& Camera::getFov_x() const
   return fov_x_;
 }
 
-glm::vec3 const& Camera::getPostion() const
+glm::vec3 const& Camera::getPosition() const
 {
 	return position_;
 }
