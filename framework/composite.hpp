@@ -4,6 +4,7 @@
 #include "sphere.hpp"
 #include "box.hpp"
 #include <vector>
+#include <memory>
 
 class Composite : public Shape
 {

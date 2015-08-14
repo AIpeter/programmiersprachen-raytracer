@@ -1,6 +1,7 @@
 #ifndef BUW_NODE_HPP
 #define BUW_NODE_HPP
 #include "shape.hpp"
+#include <memory>
 
 struct Node {
         Node(std::shared_ptr<const Node> left, std::shared_ptr<Shape> shape,
