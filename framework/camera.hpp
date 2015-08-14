@@ -18,13 +18,15 @@ public:
   double const& getFov_x() const;
   glm::vec3 const& getPostion() const;
   glm::vec3 const& getDirection() const;
-	glm::vec3 const& getUp() const;
+  glm::vec3 const& getCamUp() const;
+	glm::vec3 const& getCamRight() const;
 
 private:
 	std::string name_;
   double fov_x_;
 	glm::vec3 position_;
 	glm::vec3 direction_;
-  glm::vec3 up_;
+  glm::vec3 cam_up_;
+  glm::vec3 cam_right_;
 };
 #endif
