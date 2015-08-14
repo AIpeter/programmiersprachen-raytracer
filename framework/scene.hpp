@@ -14,7 +14,7 @@ struct Scene {
         std::map<std::string, Material> materials;
         std::vector<Shape*> shapes;
         std::vector<Light> lights;
-        Camera camera;
+        std::map<std::string, Camera> cameras;
         Renderer render;
 };
 
