@@ -14,7 +14,8 @@ Renderer::Renderer():
   height_(200),
   colorbuffer_(width_*height_, Color{0.0, 0.0, 0.0}),
   filename_("standard.ppm"),
-  ppm_(width_, height_)
+  ppm_(width_, height_),
+  cam_(Camera())
   {}
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file):
@@ -22,7 +23,8 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file):
   height_(h),
   colorbuffer_(w*h, Color(0.0, 0.0, 0.0)),
   filename_(file),
-  ppm_(width_, height_)
+  ppm_(width_, height_),
+  cam_(Camera())
   {}
 
 Renderer::Renderer(unsigned w, unsigned h,
