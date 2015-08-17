@@ -37,7 +37,7 @@ Renderer::Renderer(unsigned w, unsigned h,
   cam_(cam)
   {}
 
-Ray Renderer::ComputeCameraRay(int i, int j)
+Ray Renderer::ComputeCameraRay(float i, float j)
 {
   float norm_i = (i/width_) - 0.5;
   float norm_j = (j/height_) - 0.5;
@@ -46,7 +46,7 @@ Ray Renderer::ComputeCameraRay(int i, int j)
                         + cam_.getPosition()
                         + cam_.getDirection();
   glm::vec3 ray_dir = image_point - cam_.getPosition();
-  return Ray{cam_.getPosition(), ray_dir};
+  return Ray{cam_.getPosition(), ray_dir}; 
 }
 
 void Renderer::render() {
@@ -69,18 +69,22 @@ void Renderer::render() {
 
 void Renderer::render(std::vector<Shape*> const& shapes)
 {
+  float a = 0;
+  float b = 0;
   for (unsigned y = 0; y < height_; ++y) 
   {
     for (unsigned x = 0; x < width_; ++x) 
     {
       Pixel p(x,y);
+      Ray r = ComputeCameraRay(b, a);
+      std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << std::endl;
       float infinity = std::numeric_limits<float>::infinity();
       float t;
       float tmin = -infinity;
       Shape* closest_o = NULL;
       for(auto i : shapes) 
       {
-        if(i->intersect(ComputeCameraRay(x, y), t) == true)
+        if(i->intersect(r, t) == true)
         {
           if(i->closer_z() > tmin) 
           {
@@ -98,9 +102,12 @@ void Renderer::render(std::vector<Shape*> const& shapes)
         p.color = Color{0.0, 0.0, 0.0};
       }
       write(p);
+      b = b+1;
     }
+    a = a+1;
   }
   ppm_.save(filename_);
+
 }
 
 void Renderer::write(Pixel const& p)

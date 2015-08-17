@@ -9,6 +9,7 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
+#include <renderer.hpp>
 /*
 TEST_CASE("streamoperator class Material", "[operator<<]")
 {
@@ -55,6 +56,35 @@ TEST_CASE("composite", "[composite]") {
   std::cout << c.volume() << std::endl;
 }
 */
+
+/*  glm::vec3 camright{0,1,0};
+  glm::vec3 camup{1,0,0};
+  glm::vec3 position{0,0,0};
+  glm::vec3 direction{0,0,-1};
+  float width_ = 200;
+  float height_ = 200;
+
+  Ray ComputeCameraRay(int i, int j)
+  {
+  float norm_i = (i/width_) - 0.5;
+  float norm_j = (j/height_) - 0.5;
+  glm::vec3 image_point = norm_i * camright
+                        + norm_j * camup
+                        + position
+                        + direction;
+  glm::vec3 ray_dir = image_point - position;
+  return Ray{position, ray_dir};
+  }
+
+TEST_CASE("computecameraray", "[computecameraray]") 
+{
+
+  std::cout << "computecameraray" << std::endl;
+  Ray result = ComputeCameraRay(0, 100);
+  std::cout << result.origin.x << result.origin.y << result.origin.z << std::endl;
+  std::cout << result.direction.x << result.direction.y << result.direction.z << std::endl;
+  
+}*/
 
 int main(int argc, char *argv[])
 {

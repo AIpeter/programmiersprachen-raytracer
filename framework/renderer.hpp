@@ -20,6 +20,7 @@
 #include <string>
 #include <limits>
 #include <glm/glm.hpp>
+#include <iostream>
 
 class Renderer
 {
@@ -29,7 +30,7 @@ public:
   Renderer(unsigned w, unsigned h,
             std::string const& file, Camera cam);
 
-  Ray ComputeCameraRay(int i, int j);
+  Ray ComputeCameraRay(float i, float j);
   void render();
   void render(std::vector<Shape*> const& shapes);
   void write(Pixel const& p);
