@@ -69,15 +69,16 @@ void Renderer::render() {
 
 void Renderer::render(std::vector<Shape*> const& shapes)
 {
-  float a = 0;
-  float b = 0;
+  // float a = 0;
+  // float b = 0;
+  float aspect = (float) width_ / (float) height_;
   for (unsigned y = 0; y < height_; ++y) 
   {
     for (unsigned x = 0; x < width_; ++x) 
     {
       Pixel p(x,y);
-      Ray r = ComputeCameraRay(b, a);
-      std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << std::endl;
+      Ray r = ComputeCameraRay(x*aspect, y);
+      // std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << "\n";
       float infinity = std::numeric_limits<float>::infinity();
       float t;
       float tmin = -infinity;
@@ -102,9 +103,9 @@ void Renderer::render(std::vector<Shape*> const& shapes)
         p.color = Color{0.0, 0.0, 0.0};
       }
       write(p);
-      b = b+1;
+      // b = b+1;
     }
-    a = a+1;
+    // a = a+1;
   }
   ppm_.save(filename_);
 
