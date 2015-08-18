@@ -5,6 +5,11 @@ Shape::Shape(): // default constructor
       mat_{}
       {}
 
+Shape::Shape(Shape const& s):
+      name_{s.name()},
+      mat_{s.mat()}
+      {}
+
 Shape::Shape(std::string const& name):
       name_{name},
       mat_{}
@@ -29,4 +34,14 @@ std::ostream& operator<<(std::ostream& os, Shape const& s)
 {
   s.print(os);
   return os;
+}
+
+glm::vec3 const& Shape::center() const
+{
+  return glm::vec3{0,0,0};
+}
+
+float Shape::radius() const
+{
+  return 0;
 }

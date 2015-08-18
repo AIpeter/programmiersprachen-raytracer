@@ -41,7 +41,7 @@ TEST_CASE("read a file", "[file]")
 
 TEST_CASE("jetzt wird's ernst", "[renderer]") {
   Scene* scene = loadSDF("sdfdatei.sdf");
-  scene->render.render(scene->shapes);
+  scene->render.render(scene->shapes, scene->lights);
 }
 /*
 TEST_CASE("composite", "[composite]") {

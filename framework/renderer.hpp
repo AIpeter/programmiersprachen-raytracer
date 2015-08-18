@@ -21,6 +21,7 @@
 #include <limits>
 #include <glm/glm.hpp>
 #include <iostream>
+#include <light.hpp>
 
 class Renderer
 {
@@ -32,7 +33,7 @@ public:
 
   Ray ComputeCameraRay(float i, float j);
   void render();
-  void render(std::vector<Shape*> const& shapes);
+  void render(std::vector<Shape*> const& shapes, std::vector<Light> const& lights);
   void write(Pixel const& p);
 
   inline std::vector<Color> const& colorbuffer() const

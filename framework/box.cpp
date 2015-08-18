@@ -5,6 +5,12 @@ Box::Box(): // default constructor
   min_{0, 0, 0},
   max_{1, 1, 1} {}
 
+Box::Box(Box const& b):
+  Shape(b.name(), b.mat()),
+  min_{b.min()},
+  max_{b.max()}
+  {}
+
 Box::Box(glm::vec3 const& min, glm::vec3 const& max,
          std::string const& name, Material const& mat):
   Shape(name, mat),

@@ -6,15 +6,17 @@
 #include <ray.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
+#include <cmath>
 
 class Sphere : public Shape
 {
   public:
     Sphere(); // default constructor
+    Sphere(Sphere const& s);
     Sphere(glm::vec3 const& center, float radius,
            std::string const& name, Material const& mat);
 
-    glm::vec3 center() const;
+    glm::vec3 const& center() const;
     float radius() const;
     float area() const; // override
     float volume() const; // override

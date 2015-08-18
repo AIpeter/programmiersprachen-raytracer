@@ -19,7 +19,7 @@ std::string const& Light::getname() const
 	return name_;
 }
 
-glm::vec3 const& Light::getpostion() const
+glm::vec3 const& Light::getposition() const
 {
 	return position_;
 }
@@ -32,4 +32,11 @@ Color const& Light::getla() const
 Color const& Light::getld() const
 {
 	return ld_;
+}
+
+Color const& Light::getLight(float & d, Ray const& r, Shape* const& shape) const
+{
+	Sphere sphere{shape->center(), shape->radius(), shape->name(), shape->mat()};
+	float cosin = computeArc(sphere, d, r, *this);
+	return (ld_ * sphere.mat().kd() * cosin);
 }

@@ -8,6 +8,7 @@ class Box : public Shape
 {
   public:
     Box(); // default constructor
+    Box(Box const& b);
     Box(glm::vec3 const& min, glm::vec3 const& max,
         std::string const& name, Material const& mat);
 

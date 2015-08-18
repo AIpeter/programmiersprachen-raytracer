@@ -67,10 +67,8 @@ void Renderer::render() {
   ppm_.save(filename_);
 }
 
-void Renderer::render(std::vector<Shape*> const& shapes)
+void Renderer::render(std::vector<Shape*> const& shapes, std::vector<Light> const& lights)
 {
-  // float a = 0;
-  // float b = 0;
   float aspect = (float) width_ / (float) height_;
   for (unsigned y = 0; y < height_; ++y) 
   {
@@ -78,7 +76,7 @@ void Renderer::render(std::vector<Shape*> const& shapes)
     {
       Pixel p(x,y);
       Ray r = ComputeCameraRay(x*aspect, y);
-      // std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << "\n";
+      //std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << "\n";
       float infinity = std::numeric_limits<float>::infinity();
       float t;
       float tmin = -infinity;
@@ -92,20 +90,19 @@ void Renderer::render(std::vector<Shape*> const& shapes)
             tmin = i->closer_z();
             closest_o = i;
           }
+          // std::cout << t << std::endl;
         }
       }
       if(closest_o != NULL) 
       {
-        p.color = closest_o->mat().ka();
+        p.color = lights[0].getLight(t, r, closest_o);
       }
       else 
       {
         p.color = Color{0.0, 0.0, 0.0};
       }
       write(p);
-      // b = b+1;
     }
-    // a = a+1;
   }
   ppm_.save(filename_);
 
