@@ -171,3 +171,8 @@ float Box::closer_z() const
     return max_.z;
   }
 }
+
+Color const& Box::getLight(float & d, Ray const& r, Light const& light) const
+{
+  
+}

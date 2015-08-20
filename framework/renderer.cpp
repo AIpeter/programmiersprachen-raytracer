@@ -95,7 +95,10 @@ void Renderer::render(std::vector<Shape*> const& shapes, std::vector<Light> cons
       }
       if(closest_o != NULL) 
       {
-        p.color = lights[0].getLight(t, r, closest_o);
+        for(auto i: lights)
+        {
+          p.color += closest_o->getLight(t, r, i);
+        }
       }
       else 
       {

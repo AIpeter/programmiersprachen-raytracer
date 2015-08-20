@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <iostream>
+#include "light.hpp"
 
 class Shape
 {
@@ -23,8 +24,9 @@ class Shape
     virtual float closer_z() const = 0; // pure virtual getter
     virtual glm::vec3 const& center() const;
     virtual float radius() const;
-
     virtual std::ostream& print(std::ostream& os) const;
+
+    virtual Color const& getLight(float & d, Ray const& r, Light const& light) const = 0; //pure virtual
 
   protected:
     std::string name_;

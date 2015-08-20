@@ -21,6 +21,8 @@ class Box : public Shape
     bool intersect(Ray const& r, float& t);
     float closer_z() const; // override
 
+    Color const& getLight(float & d, Ray const& r, Light const& light) const; // override
+
   private:
     glm::vec3 min_;
     glm::vec3 max_;

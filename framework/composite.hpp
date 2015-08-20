@@ -23,8 +23,10 @@ public:
         float volume() const;
         bool intersect(Ray const& r, float & t);
         float closer_z() const;
-
         std::ostream& print(std::ostream& os) const;
+
+        Color const& getLight(float & d, Ray const& r, Light const& light) const;
+
 private:
         std::shared_ptr<const Node> root_;
 };

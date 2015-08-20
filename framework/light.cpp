@@ -33,7 +33,7 @@ Color const& Light::getld() const
 {
 	return ld_;
 }
-
+/*
 Color const& Light::getLight(float & d, Ray const& r, Shape* const& shape) const
 {
 	Sphere sphere{shape->center(), shape->radius(), shape->name(), shape->mat()};
@@ -43,4 +43,4 @@ Color const& Light::getLight(float & d, Ray const& r, Shape* const& shape) const
                 + (ld_ * sphere.mat().ks() * (pow(specularCos, sphere.mat().m()))
                 + (la_* sphere.mat().ka()));
   return light;
-}
+}*/

@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <cmath>
+#include "computearc.hpp"
 
 class Sphere : public Shape
 {
@@ -23,6 +24,8 @@ class Sphere : public Shape
     std::ostream& print(std::ostream& os) const; // override
     bool intersect(Ray const& r, float & d);
     float closer_z() const; // override
+
+    Color const& getLight(float & d, Ray const& r, Light const& light) const; // override
 
   private:
     glm::vec3 center_;
