@@ -9,6 +9,7 @@ class Light;
 class Sphere;
 struct Ray;
 
-float computeArc(Sphere const& sphere, float & d, Ray const& r, Light const& light);
+float computeDiffuseArc(Sphere const& sphere, float & d, Ray const& r, Light const& light);
+float computeSpecularArc(Sphere const& sphere, float & d, Ray const& r, Light const& light);
 
 #endif // BUW_COMPUTEARC_HPP
