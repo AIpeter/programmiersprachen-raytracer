@@ -8,7 +8,7 @@ float computeDiffuseArc(Sphere const& sphere, float & d, Ray const& r, Light con
   Ray l{surfacePoint, surfacePoint - light.getposition()};
   float n_length = glm::length(n.direction);
   float l_length = glm::length(l.direction);
-  float diffuseArc = (glm::dot(n.direction, l.direction))/(n_length*l_length);
+  float diffuseArc = (std::max(glm::dot(n.direction, l.direction), 0.0f))/(n_length*l_length);
   /*
   float deg = (360.0 / (2*M_PI)) * arc;
   std::cout << "Arc: " << deg << "°" << "\n";
@@ -37,7 +37,8 @@ float computeSpecularArc(Sphere const& sphere, float & d, Ray const& r, Light co
               n.direction.y - l.direction.y + n.direction.y,
               n.direction.z - l.direction.z + n.direction.z};
   */
-  glm::vec3 s = (2 * glm::dot(l.direction, n.direction))*n.direction - l.direction;
+  //glm::vec3 s = (2 * glm::dot(l.direction, n.direction))*n.direction - l.direction;
+  glm::vec3 s = (2 * std::max(glm::dot(n.direction, l.direction), 0.0f))*n.direction - l.direction;
   s = glm::normalize(s);
   auto c = glm::normalize(r.direction);
   float specularArc = glm::acos(glm::dot(s, c));
