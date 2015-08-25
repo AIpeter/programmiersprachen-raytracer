@@ -79,17 +79,23 @@ void Renderer::render(std::vector<Shape*> const& shapes, std::vector<Light> cons
       //std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << "\n";
       float infinity = std::numeric_limits<float>::infinity();
       float t;
-      float tmin = -infinity;
+      float tmin = infinity;
       Shape* closest_o = NULL;
       for(auto i : shapes) 
       {
         if(i->intersect(r, t) == true)
         {
+          if(t < tmin) {
+            tmin = t;
+            closest_o = i;
+          }
+          /*
           if(i->closer_z() > tmin) 
           {
             tmin = i->closer_z();
             closest_o = i;
           }
+          */
           // std::cout << t << std::endl;
         }
       }
@@ -97,7 +103,7 @@ void Renderer::render(std::vector<Shape*> const& shapes, std::vector<Light> cons
       {
         for(auto i: lights)
         {
-          p.color += closest_o->getLight(t, r, i);
+          p.color += closest_o->getLight(tmin, r, i);
         }
       }
       else 
