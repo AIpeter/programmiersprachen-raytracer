@@ -1,9 +1,11 @@
 #ifndef BUW_COMPUTEARC_HPP
 #define BUW_COMPUTEARC_HPP
+#define _USE_MATH_DEFINES
 
 #include "ray.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
+#include <cmath>
 
 class Light;
 class Sphere;

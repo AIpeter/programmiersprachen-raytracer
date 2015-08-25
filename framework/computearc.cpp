@@ -41,15 +41,17 @@ float computeSpecularArc(Sphere const& sphere, float & d, Ray const& r, Light co
   glm::vec3 s = (2 * std::max(glm::dot(n.direction, l.direction), 0.0f))*n.direction - l.direction;
   s = glm::normalize(s);
   auto c = glm::normalize(r.direction);
-  float specularArc = glm::acos(glm::dot(s, c));
-  std::cout << specularArc << std::endl;
-  if(glm::sin(specularArc) >= 0) 
+  float specularCos = glm::dot(s, c);
+  float specularArc = glm::acos(specularCos);
+  float specularSin = glm::sin(specularArc);
+  // std::cout << specularArc << std::endl;
+  if(specularSin > 0) 
   {
-    return glm::cos(specularArc);
+    return specularCos;
   }
   else 
   {
-    return (0 - glm::cos(specularArc));
+    return (0 - specularCos);
   }
   
 
