@@ -1,5 +1,6 @@
 #ifndef BUW_SHAPE_HPP
 #define BUW_SHAPE_HPP
+#define _USE_MATH_DEFINES
 
 #include "material.hpp"
 #include "ray.hpp"
@@ -26,7 +27,7 @@ class Shape
     virtual float radius() const;
     virtual std::ostream& print(std::ostream& os) const;
 
-    virtual Color const& getLight(float & d, Ray const& r, Light const& light) const = 0; //pure virtual
+    virtual Color getLight(float & d, Ray const& r, Light const& light) const = 0; //pure virtual
 
   protected:
     std::string name_;

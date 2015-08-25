@@ -172,7 +172,7 @@ float Box::closer_z() const
   }
 }
 
-Color const& Box::getLight(float & d, Ray const& r, Light const& light) const
+Color Box::getLight(float & d, Ray const& r, Light const& light) const
 {
   
 }

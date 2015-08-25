@@ -25,7 +25,7 @@ class Sphere : public Shape
     bool intersect(Ray const& r, float & d);
     float closer_z() const; // override
 
-    Color const& getLight(float & d, Ray const& r, Light const& light) const; // override
+    Color getLight(float & d, Ray const& r, Light const& light) const; // override
 
   private:
     glm::vec3 center_;

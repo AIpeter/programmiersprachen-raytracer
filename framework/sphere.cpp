@@ -48,7 +48,7 @@ float Sphere::closer_z() const
   return center_.z;
 }
 
-Color const& Sphere::getLight(float & d, Ray const& r, Light const& light) const
+Color Sphere::getLight(float & d, Ray const& r, Light const& light) const
 {
   float diffuseCos = computeDiffuseArc(*this, d, r, light);
   float specularCos = computeSpecularArc(*this, d, r, light);
