@@ -16,7 +16,7 @@ TEST_CASE("streamoperator class Material", "[operator<<]")
   Material mat1{"Material_1", {1,1,1}, {0,0,0}, {1,0,1}, 1.5};
   std::cout<<mat1<<std::endl;
 }*/
-
+/*
 TEST_CASE("intersectBox", "[intersect]") {
         Material m{"Testmaterial", Color{1,0,0}, Color{0,1,0}, Color{0,0,1},
                     15};
@@ -38,7 +38,27 @@ TEST_CASE("read a file", "[file]")
   }
   delete scene;
 }
-
+*/
+/*
+TEST_CASE("animation", "[renderer]") {
+  Scene* scene = loadSDF("sdfdatei.sdf");
+  int picturecount = 0;
+  for (int i = 0; i <= 360; ++i)
+  {
+    for (auto j: scene->shapes)
+    {
+      j.second->rotate(1, {0,0,1});
+    }
+    for (int k = 0; k < 2; ++k)
+    {
+      std::string filename = "image" + std::to_string(picturecount) + ".ppm";
+      scene->render.filename(filename);
+      scene->render.render(scene->shapes, scene->lights);
+      picturecount++;
+    }
+  }
+}
+*/
 TEST_CASE("jetzt wird's ernst", "[renderer]") {
   Scene* scene = loadSDF("sdfdatei.sdf");
   scene->render.render(scene->shapes, scene->lights);
