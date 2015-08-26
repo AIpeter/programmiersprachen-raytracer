@@ -66,119 +66,104 @@ float computeSpecularArc(Sphere const& sphere, float & d, Ray const& r, Light co
 }
 
 float computeDiffuseArc(Box const& box, float & d, Ray const& r, Light const& light)
-{/*
+{
+  glm::vec3 n;
   glm::vec3 surfacePoint{d*r.direction};
-  auto diffuseArc = [](glm::vec3 const& surfacePoint, Ray const& r, Light const& light)
-  {
+  Ray l{surfacePoint, glm::normalize(surfacePoint - light.getposition())};
 
-  }
-
-  if( intersection_xmin.x >= min_.x && 
-    intersection_xmin.x <= max_.x && 
-    intersection_xmin.y >= min_.y && 
-    intersection_xmin.y <= max_.y && 
-    intersection_xmin.z >= min_.z && 
-    intersection_xmin.z <= max_.z)
+//if surfacepoint on x-min-plane glm::vec3 n{-1, 0, 0}
+  if( surfacePoint.x >= box.min().x && 
+    surfacePoint.x <= box.max().x && 
+    surfacePoint.y >= box.min().y && 
+    surfacePoint.y <= box.max().y && 
+    surfacePoint.z >= box.min().z && 
+    surfacePoint.z <= box.max().z)
   {
-    cut = true;
-    tmin = t;
+    //std::cout << "i'm here" << std::endl;
+    /*n.x = -1;
+    n.y = 0;
+    n.z = 0;*/
+    glm::vec3 n{-1, 0, 0};
   }
-  //check x_max-plane
-  t = (max_.x - r.origin.x)/(d.x);
-  glm::vec3 intersection_xmax = r.origin+(t*d);
-  /*std::cout << "intersection_xmax.x = " << intersection_xmax.x << std::endl;
-  std::cout << "intersection_xmax.y = " << intersection_xmax.y << std::endl;
-  std::cout << "intersection_xmax.z = " << intersection_xmax.z << std::endl;*/
-  /*
-  if( intersection_xmax.x >= min_.x && 
-    intersection_xmax.x <= max_.x && 
-    intersection_xmax.y >= min_.y && 
-    intersection_xmax.y <= max_.y && 
-    intersection_xmax.z >= min_.z && 
-    intersection_xmax.z <= max_.z)
+//if surfacepoint on x-max-plane glm::vec3 n{1, 0, 0}
+  if( surfacePoint.x >= box.min().x && 
+    surfacePoint.x <= box.max().x && 
+    surfacePoint.y >= box.min().y && 
+    surfacePoint.y <= box.max().y && 
+    surfacePoint.z >= box.min().z && 
+    surfacePoint.z <= box.max().z)
   {
-    cut = true;
-    if(t <= tmin) {
-      tmin = t;
-    }
+    //std::cout << "i'm here" << std::endl;
+    /*n.x = 1;
+    n.y = 0;
+    n.z = 0;*/
+    glm::vec3 n{1, 0, 0};
   }
 
-  //check y-min-plane
-  t = (min_.y - r.origin.y)/(d.y); //parameter zur berechnung d schnittpunkts x-ebene =po + t * d
-  glm::vec3 intersection_ymin = r.origin+(t*d);
-  /*std::cout << "intersection_ymin.x = " << intersection_ymin.x << std::endl;
-  std::cout << "intersection_ymin.y = " << intersection_ymin.y << std::endl;
-  std::cout << "intersection_ymin.z = " << intersection_ymin.z << std::endl;*/
-  /*
-  if( intersection_ymin.x >= min_.x && 
-    intersection_ymin.x <= max_.x && 
-    intersection_ymin.y >= min_.y && 
-    intersection_ymin.y <= max_.y && 
-    intersection_ymin.z >= min_.z && 
-    intersection_ymin.z <= max_.z)
+  //if surfacepoint on y-min-plane glm::vec3 n{0, -1, 0}
+  if( surfacePoint.x >= box.min().x && 
+    surfacePoint.x <= box.max().x &&
+    surfacePoint.y >= box.min().y && 
+    surfacePoint.y <= box.max().y && 
+    surfacePoint.z >= box.min().z && 
+    surfacePoint.z <= box.max().z)
   {
-    cut = true;
-    if(t <= tmin) {
-      tmin = t;
-    }
+    //std::cout << "i'm here" << std::endl;
+    /*n.x = 0;
+    n.y = -1;
+    n.z = 0;*/
+    glm::vec3 n{0, -1, 0};
   }
-  //check y_max-plane
-  t = (max_.y - r.origin.y)/(d.y);
-  glm::vec3 intersection_ymax = r.origin+(t*d);
-  /*std::cout << "intersection_ymax.x = " << intersection_ymax.x << std::endl;
-  std::cout << "intersection_ymax.y = " << intersection_ymax.y << std::endl;
-  std::cout << "intersection_ymax.z = " << intersection_ymax.z << std::endl;*/
-  /*
-  if( intersection_ymax.x >= min_.x && 
-    intersection_ymax.x <= max_.x && 
-    intersection_ymax.y >= min_.y && 
-    intersection_ymax.y <= max_.y && 
-    intersection_ymax.z >= min_.z && 
-    intersection_ymax.z <= max_.z)
+  //if surfacepoint on y-max-plane glm::vec3 n{0, 1, 0}
+  if( surfacePoint.x >= box.min().x && 
+    surfacePoint.x <= box.max().x && 
+    surfacePoint.y >= box.min().y && 
+    surfacePoint.y <= box.max().y && 
+    surfacePoint.z >= box.min().z && 
+    surfacePoint.z <= box.max().z)
   {
-    cut = true;
-    if(t <= tmin) {
-      tmin = t;
-    }
+    //std::cout << "i'm here" << std::endl;
+    /*n.x = 0;
+    n.y = 1;
+    n.z = 0;*/
+    glm::vec3 n{0, 1, 0};
   }
 
-  //check z_min-plane
-  t = (min_.z - r.origin.z)/(d.z); //parameter zur berechnung d schnittpunkts x-ebene =po + t * d
-  glm::vec3 intersection_zmin = r.origin+(t*d);
-  /*std::cout << "intersection_zmin.x = " << intersection_zmin.x << std::endl;
-  std::cout << "intersection_zmin.y = " << intersection_zmin.y << std::endl;
-  std::cout << "intersection_zmin.z = " << intersection_zmin.z << std::endl;*/
-  /*
-  if( intersection_zmin.x >= min_.x && 
-    intersection_zmin.x <= max_.x && 
-    intersection_zmin.y >= min_.y && 
-    intersection_zmin.y <= max_.y && 
-    intersection_zmin.z >= min_.z && 
-    intersection_zmin.z <= max_.z)
+  //if surfacepoint on z-min-plane glm::vec3 n{0, 0, -1}
+  if( surfacePoint.x >= box.min().x && 
+    surfacePoint.x <= box.max().x && 
+    surfacePoint.y >= box.min().y && 
+    surfacePoint.y <= box.max().y &&
+    surfacePoint.z >= box.min().z&& 
+    surfacePoint.z <= box.max().z)
   {
-    cut = true;
-    if(t <= tmin) {
-      tmin = t;
-    }
+    //std::cout << "i'm here" << std::endl;
+    /*n.x = 0;
+    n.y = 0;
+    n.z = -1;*/
+    glm::vec3 n{0, 0, -1};
   }
-  //check z_max-plane
-  t = (max_.z - r.origin.z)/(d.z);
-  glm::vec3 intersection_zmax = r.origin+(t*d);
-  /*std::cout << "intersection_zmax.x = " << intersection_zmax.x << std::endl;
-  std::cout << "intersection_zmax.y = " << intersection_zmax.y << std::endl;
-  std::cout << "intersection_zmax.z = " << intersection_zmax.z << std::endl;*/
-  /*
-  if( intersection_zmax.x >= min_.x && 
-    intersection_zmax.x <= max_.x && 
-    intersection_zmax.y >= min_.y && 
-    intersection_zmax.y <= max_.y && 
-    intersection_zmax.z >= min_.z && 
-    intersection_zmax.z <= max_.z)
+  //if surfacepoint on z-max-plane glm::vec3 n{0, 0, 1}
+  if( surfacePoint.x >= box.min().x && 
+    surfacePoint.x <= box.max().x && 
+    surfacePoint.y >= box.min().y && 
+    surfacePoint.y <= box.max().y && 
+    surfacePoint.z >= box.min().z && 
+    surfacePoint.z <= box.max().z)
   {
-    cut = true;
-    if(t <= tmin) {
-      tmin = t;
-    }*/
+    //std::cout << "i'm here" << std::endl;
+    /*n.x = 0;
+    n.y = 0;
+    n.z = 1;*/
+    glm::vec3 n{0, 0, 1};
+  }
+
+  std::cout << n.x << n.y << n.z << std::endl;
+  float n_length = glm::length(n);
+  float l_length = glm::length(l.direction);
+  float diffuseArc = (std::max(glm::dot(n, l.direction), 0.0f))/(n_length*l_length);
+
+  return diffuseArc;
 }
 
 float computeSpecularArc(Box const& box, float & d, Ray const& r, Light const& light)
