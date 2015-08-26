@@ -103,7 +103,32 @@ void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<L
       {
         for(auto i: lights)
         {
-          p.color += closest_o->getLight(tmin, r, i);
+          float shade = 1; // kein Schatten
+          glm::vec3 surfacePoint{tmin*r.direction};
+          Ray shadowRay{i.getposition(), glm::normalize(surfacePoint - i.getposition())};
+          float d;
+          float dmin = infinity;
+          Shape* closest_o_light = NULL;
+
+          if(closest_o->intersect(shadowRay, d) == true)
+          {
+            for(auto j : shapes) 
+            {
+              if(j.second->intersect(shadowRay, d) == true)
+              {
+                if(d < dmin) 
+                {
+                  dmin = d;
+                  closest_o_light = j.second;
+                }
+              }
+            }
+            if(closest_o_light != closest_o)
+            {
+              shade = 0;
+            }
+          } 
+          p.color += closest_o->getLight(tmin, r, i, shade);
         }
       }
       else 

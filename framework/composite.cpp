@@ -131,7 +131,7 @@ std::ostream& operator<<(std::ostream& os, Composite const& c) {
         return os;
 } */
 
-Color Composite::getLight(float & d, Ray const& r, Light const& light) const
+Color Composite::getLight(float & d, Ray const& r, Light const& light, float shade) const
 {
 
 }

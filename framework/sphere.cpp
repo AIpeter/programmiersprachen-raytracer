@@ -48,14 +48,23 @@ float Sphere::closer_z() const
   return center_.z;
 }
 
-Color Sphere::getLight(float & d, Ray const& r, Light const& light) const
+Color Sphere::getLight(float & d, Ray const& r, Light const& light, float shade) const
 {
-  float diffuseCos = computeDiffuseArc(*this, d, r, light);
-  float specularCos = computeSpecularArc(*this, d, r, light);
-  Color licht = (light.getld() * mat_.kd() * diffuseCos)
-                + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m())))
-                + (light.getla()* mat_.ka());
-  return licht;
+  if(shade == 0) // Schatten
+  {
+    Color licht = (light.getla()* mat_.ka());
+    return licht;
+  }
+  
+  else // kein Schatten
+  {
+    float diffuseCos = computeDiffuseArc(*this, d, r, light);
+    float specularCos = computeSpecularArc(*this, d, r, light);
+    Color licht = (light.getld() * mat_.kd() * diffuseCos)
+                  + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m())))
+                  + (light.getla()* mat_.ka());
+    return licht;
+  }
 }
 
 void Sphere::translate(glm::vec3 const& direction)
