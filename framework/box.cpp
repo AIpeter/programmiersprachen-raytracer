@@ -174,7 +174,9 @@ float Box::closer_z() const
 
 Color Box::getLight(float & d, Ray const& r, Light const& light) const
 {
-  
+    float diffuseCos = computeDiffuseArc(*this, d, r, light);
+  Color licht = (light.getld() * mat_.kd() * diffuseCos);
+   return licht;
 }
 
 void Box::translate(glm::vec3 const& direction)
@@ -185,7 +187,5 @@ void Box::translate(glm::vec3 const& direction)
 void Box::scale(glm::vec3 const& scale)
 {
 
-  float diffuseCos = computeDiffuseArc(*this, d, r, light);
-  Color licht = (light.getld() * mat_.kd() * diffuseCos);
-   return licht;
+
 }
