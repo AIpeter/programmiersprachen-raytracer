@@ -172,7 +172,7 @@ float Box::closer_z() const
   }
 }
 
-Color Box::getLight(float & d, Ray const& r, Light const& light) const
+Color Box::getLight(float & d, Ray const& r, Light const& light, float shade) const
 {
     float diffuseCos = computeDiffuseArc(*this, d, r, light);
   Color licht = (light.getld() * mat_.kd() * diffuseCos);

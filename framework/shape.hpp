@@ -29,7 +29,7 @@ class Shape
     virtual float radius() const;
     virtual std::ostream& print(std::ostream& os) const;
 
-    virtual Color getLight(float & d, Ray const& r, Light const& light) const = 0; //pure virtual
+    virtual Color getLight(float & d, Ray const& r, Light const& light, float shade) const = 0; //pure virtual
 
     virtual void translate(glm::vec3 const& direction) = 0; // pure virtual
     virtual void scale(glm::vec3 const& scale) = 0; // pure virtual

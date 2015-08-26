@@ -25,7 +25,7 @@ public:
         float closer_z() const;
         std::ostream& print(std::ostream& os) const;
 
-        Color getLight(float & d, Ray const& r, Light const& light) const;
+        Color getLight(float & d, Ray const& r, Light const& light, float shade) const;
 
         void translate(glm::vec3 const& direction);
         void scale(glm::vec3 const& scale);

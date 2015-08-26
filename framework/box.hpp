@@ -22,7 +22,7 @@ class Box : public Shape
     bool intersect(Ray const& r, float& t);
     float closer_z() const; // override
 
-    Color getLight(float & d, Ray const& r, Light const& light) const; // override
+    Color getLight(float & d, Ray const& r, Light const& light, float shade) const; // override
 
     void translate(glm::vec3 const& direction);
     void scale(glm::vec3 const& scale);
