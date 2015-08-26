@@ -50,9 +50,9 @@ Scene* loadSDF(std::string const& file) {
                                         glm::vec3 center{std::stof(words[4]),
                                                 std::stof(words[5]),
                                                 std::stof(words[6])};
-                                        out->shapes.push_back(new Sphere{center,
+                                        out->shapes[words[3]] = new Sphere{center,
                                                 std::stof(words[7]), words[3],
-                                                out->materials[words[8]]});
+                                                out->materials[words[8]]};
                                 }
                                 else if(words[2] == "box") {
                                         glm::vec3 min{std::stof(words[4]),
@@ -61,9 +61,9 @@ Scene* loadSDF(std::string const& file) {
                                         glm::vec3 max{std::stof(words[7]),
                                                 std::stof(words[8]),
                                                 std::stof(words[9])};
-                                        out->shapes.push_back(new Box{min, max,
+                                        out->shapes[words[3]] = new Box{min, max,
                                                 words[3],
-                                                out->materials[words[10]]});
+                                                out->materials[words[10]]};
                                 }
                                 else {
                                         std::cout << "Syntax error in line " << 
@@ -107,11 +107,51 @@ Scene* loadSDF(std::string const& file) {
                         }
                 }
                 
-                else if(words[0] == "render") {
-                        out->render = Renderer{
-                                        (unsigned int) std::stof(words[3]),
-                                        (unsigned int) std::stof(words[4]), 
-                                        words[2]};
+                else if(words[0] == "render")
+                {
+                        out->render = Renderer
+                        {
+                                (unsigned int) std::stof(words[3]),
+                                (unsigned int) std::stof(words[4]), 
+                                words[2],
+                                out->cameras[words[1]]
+                        };
+                }
+
+                else if(words[0] == "transform") {
+                        if(words[2] == "scale"){
+                                if(words.size() == 4) {
+                                        glm::vec3 scale{std::stof(words[3]),
+                                                        std::stof(words[3]),
+                                                        std::stof(words[3])};
+                                        out->shapes[words[1]]->scale(scale);
+                                }
+                                else if(words.size() == 6) {
+                                        glm::vec3 scale{std::stof(words[3]),
+                                                        std::stof(words[4]),
+                                                        std::stof(words[5])};
+                                        out->shapes[words[1]]->scale(scale);
+                                }
+                                else {
+                                        std::cout << "Syntax error in line "
+                                        << i << "!" << std::endl;
+                                        std::cout <<
+                                        "Invalid number of arguments." <<
+                                        std::endl;
+                                }
+                        }
+                        else if(words[2] == "translate") {
+                                glm::vec3 direction{std::stof(words[3]),
+                                                std::stof(words[4]),
+                                                std::stof(words[5])};
+                                out->shapes[words[1]]->translate(direction);
+                        }
+                        else {
+                                std::cout << "Syntax error in line " << i << "!" <<
+                                std::endl;
+                                std::cout << "Unknown object: " << words[2] <<
+                                std::endl;
+                        }
                 }
                      
                 else {
