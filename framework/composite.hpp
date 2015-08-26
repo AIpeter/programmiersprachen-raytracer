@@ -29,6 +29,7 @@ public:
 
         void translate(glm::vec3 const& direction);
         void scale(glm::vec3 const& scale);
+        void rotate(float angle, glm::vec3 const& axis);
 
 private:
         std::shared_ptr<const Node> root_;

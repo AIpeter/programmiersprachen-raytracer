@@ -145,3 +145,8 @@ void Composite::scale(glm::vec3 const& scale)
 {
 
 }
+
+void Composite::rotate(float angle, glm::vec3 const& axis)
+{
+        
+}
