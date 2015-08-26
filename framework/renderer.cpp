@@ -132,3 +132,8 @@ void Renderer::write(Pixel const& p)
 
   ppm_.write(p);
 }
+
+void Renderer::filename(std::string const& filename)
+{
+  filename_ = filename;
+}
