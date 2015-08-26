@@ -146,6 +146,14 @@ Scene* loadSDF(std::string const& file) {
                                                 std::stof(words[5])};
                                 out->shapes[words[1]]->translate(direction);
                         }
+                        else if(words[2] == "rotate") {
+                                glm::vec3 axis{std::stof(words[4]),
+                                                std::stof(words[5]),
+                                                std::stof(words[6])};
+                                out->shapes[words[1]]->rotate(
+                                                        std::stof(words[3]),
+                                                        axis);
+                        }
                         else {
                                 std::cout << "Syntax error in line " << i << "!" <<
                                 std::endl;
