@@ -3,6 +3,7 @@
 
 #include <glm/vec3.hpp>
 #include "shape.hpp"
+#include "computearc.hpp"
 
 class Box : public Shape
 {
