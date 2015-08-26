@@ -1,6 +1,7 @@
 #ifndef BUW_BOX_HPP
 #define BUW_BOX_HPP
 
+#include <limits>
 #include <glm/vec3.hpp>
 #include "shape.hpp"
 #include "computearc.hpp"
