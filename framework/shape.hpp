@@ -1,10 +1,12 @@
 #ifndef BUW_SHAPE_HPP
 #define BUW_SHAPE_HPP
 #define _USE_MATH_DEFINES
+#define GLM_FORCE_RADIANS
 
 #include "material.hpp"
 #include "ray.hpp"
 #include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 #include <string>
 #include <iostream>
 #include "light.hpp"
@@ -31,6 +33,7 @@ class Shape
 
     virtual void translate(glm::vec3 const& direction) = 0; // pure virtual
     virtual void scale(glm::vec3 const& scale) = 0; // pure virtual
+    virtual void rotate(float angle, glm::vec3 const& axis) = 0; // pure virtual
 
   protected:
     std::string name_;

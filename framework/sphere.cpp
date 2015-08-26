@@ -67,3 +67,11 @@ void Sphere::scale(glm::vec3 const& scale)
 {
   radius_ = radius_ * scale.x;
 }
+
+void Sphere::rotate(float angle, glm::vec3 const& axis)
+{
+  glm::vec4 c4{center_, 1};
+  glm::vec4 rotatedCenter = glm::rotate((angle * (float) (M_PI/180.0f)), axis) * c4;
+  glm::vec3 newCenter{rotatedCenter};
+  center_ = newCenter;
+}

@@ -26,6 +26,7 @@ class Box : public Shape
 
     void translate(glm::vec3 const& direction);
     void scale(glm::vec3 const& scale);
+    void rotate(float angle, glm::vec3 const& axis);
 
   private:
     glm::vec3 min_;

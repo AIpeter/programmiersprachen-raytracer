@@ -181,11 +181,25 @@ Color Box::getLight(float & d, Ray const& r, Light const& light) const
 
 void Box::translate(glm::vec3 const& direction)
 {
-
+  min_ = min_ + direction;
+  max_ = max_ + direction;
 }
 
 void Box::scale(glm::vec3 const& scale)
 {
+  max_ = max_ * scale;
+}
 
-
+void Box::rotate(float angle, glm::vec3 const& axis)
+{
+  glm::vec4 min4{min_, 1};
+  glm::vec4 max4{max_, 1};
+  glm::vec4 rotatedMin = glm::rotate((angle * (float) (M_PI/180.0f)), axis)
+                        * min4;
+  glm::vec4 rotatedMax = glm::rotate((angle * (float) (M_PI/180.0f)), axis)
+                        * max4;
+  glm::vec3 newMin{rotatedMin};
+  glm::vec3 newMax{rotatedMax};
+  min_ = newMin;
+  max_ = newMax;
 }
