@@ -23,6 +23,9 @@ class Box : public Shape
 
     Color getLight(float & d, Ray const& r, Light const& light) const; // override
 
+    void translate(glm::vec3 const& direction);
+    void scale(glm::vec3 const& scale);
+
   private:
     glm::vec3 min_;
     glm::vec3 max_;

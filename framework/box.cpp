@@ -176,3 +176,13 @@ Color Box::getLight(float & d, Ray const& r, Light const& light) const
 {
   
 }
+
+void Box::translate(glm::vec3 const& direction)
+{
+
+}
+
+void Box::scale(glm::vec3 const& scale)
+{
+
+}

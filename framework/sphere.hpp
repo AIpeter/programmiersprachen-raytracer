@@ -27,6 +27,9 @@ class Sphere : public Shape
 
     Color getLight(float & d, Ray const& r, Light const& light) const; // override
 
+    void translate(glm::vec3 const& direction);
+    void scale(glm::vec3 const& scale);
+
   private:
     glm::vec3 center_;
     float radius_;

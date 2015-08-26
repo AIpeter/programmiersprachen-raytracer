@@ -29,6 +29,9 @@ class Shape
 
     virtual Color getLight(float & d, Ray const& r, Light const& light) const = 0; //pure virtual
 
+    virtual void translate(glm::vec3 const& direction) = 0; // pure virtual
+    virtual void scale(glm::vec3 const& scale) = 0; // pure virtual
+
   protected:
     std::string name_;
     Material mat_;

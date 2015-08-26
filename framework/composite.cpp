@@ -135,3 +135,13 @@ Color Composite::getLight(float & d, Ray const& r, Light const& light) const
 {
 
 }
+
+void Composite::translate(glm::vec3 const& direction)
+{
+
+}
+
+void Composite::scale(glm::vec3 const& scale)
+{
+
+}

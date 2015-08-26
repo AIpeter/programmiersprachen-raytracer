@@ -27,6 +27,9 @@ public:
 
         Color getLight(float & d, Ray const& r, Light const& light) const;
 
+        void translate(glm::vec3 const& direction);
+        void scale(glm::vec3 const& scale);
+
 private:
         std::shared_ptr<const Node> root_;
 };

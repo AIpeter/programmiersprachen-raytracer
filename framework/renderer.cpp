@@ -67,7 +67,7 @@ void Renderer::render() {
   ppm_.save(filename_);
 }
 
-void Renderer::render(std::vector<Shape*> const& shapes, std::vector<Light> const& lights)
+void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
 {
   float aspect = (float) width_ / (float) height_;
   for (unsigned y = 0; y < height_; ++y) 
@@ -83,11 +83,11 @@ void Renderer::render(std::vector<Shape*> const& shapes, std::vector<Light> cons
       Shape* closest_o = NULL;
       for(auto i : shapes) 
       {
-        if(i->intersect(r, t) == true)
+        if(i.second->intersect(r, t) == true)
         {
           if(t < tmin) {
             tmin = t;
-            closest_o = i;
+            closest_o = i.second;
           }
           /*
           if(i->closer_z() > tmin) 

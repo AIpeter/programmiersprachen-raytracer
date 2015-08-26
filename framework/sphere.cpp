@@ -57,3 +57,13 @@ Color Sphere::getLight(float & d, Ray const& r, Light const& light) const
                 + (light.getla()* mat_.ka());
   return licht;
 }
+
+void Sphere::translate(glm::vec3 const& direction)
+{
+  center_ = center_ + direction;
+}
+
+void Sphere::scale(glm::vec3 const& scale)
+{
+  radius_ = radius_ * scale.x;
+}

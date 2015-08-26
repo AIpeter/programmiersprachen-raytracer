@@ -34,7 +34,7 @@ TEST_CASE("read a file", "[file]")
     std::cout << i.second << "\n";
   }
   for(auto i : scene->shapes) {
-    std::cout << *i << "\n";
+    std::cout << *i.second << "\n";
   }
   delete scene;
 }
