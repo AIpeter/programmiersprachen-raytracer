@@ -67,14 +67,68 @@ void Renderer::render() {
   ppm_.save(filename_);
 }
 
-void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
+void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights, bool aa)
+{
+  for (unsigned y = 0; y < height_; ++y)
+  {
+    for (unsigned x = 0; x < width_; ++x)
+    {
+      Pixel p(x,y);
+
+      if(aa == true)
+      {
+        std::vector<Color> colors;
+        
+        colors.push_back(render(x, y, shapes, lights));
+        colors.push_back(render(x-1, y-1, shapes, lights));
+        colors.push_back(render(x+1, y-1, shapes, lights));
+        colors.push_back(render(x-1, y+1, shapes, lights));
+        colors.push_back(render(x+1, y+1, shapes, lights));
+
+        Color accumulate{0.0, 0.0, 0.0};
+
+        for (auto i: colors)
+        {
+          accumulate += i;
+          // std::cout << "colors: " << i.r << ", " << i.g << ", " << i.b << "\n";
+        }
+
+        p.color = accumulate / 5.f;
+        colorNorm(p.color);
+        // std::cout << "average color: " << p.color.r << ", " << p.color.g << ", " << p.color.b << "\n";
+      }
+      else
+      {
+        p.color = render(x, y, shapes, lights);
+      }
+      write(p);
+    }
+  }
+  ppm_.save(filename_);
+}
+
+void Renderer::colorNorm(Color & color)
+{
+  color.r = std::min(color.r, 1.f);
+  color.g = std::min(color.g, 1.f);
+  color.b = std::min(color.b, 1.f);
+  color.r = std::max(color.r, 0.f);
+  color.g = std::max(color.g, 0.f);
+  color.b = std::max(color.b, 0.f);
+}
+
+// void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
+Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
 {
   float aspect = (float) width_ / (float) height_;
+  /*
   for (unsigned y = 0; y < height_; ++y) 
   {
     for (unsigned x = 0; x < width_; ++x) 
     {
       Pixel p(x,y);
+      */
+      Color c{0.0, 0.0, 0.0};
       Ray r = ComputeCameraRay(x*aspect, y);
       //std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << "\n";
       float infinity = std::numeric_limits<float>::infinity();
@@ -128,18 +182,20 @@ void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<L
               shade = 0;
             }
           } 
-          p.color += closest_o->getLight(tmin, r, i, shade);
+          c += closest_o->getLight(tmin, r, i, shade);
         }
       }
       else 
       {
-        p.color = Color{0.0, 0.0, 0.0};
+        c = Color{0.0, 0.0, 0.0};
       }
+      /*
       write(p);
     }
   }
   ppm_.save(filename_);
-
+*/
+  return c;
 }
 
 void Renderer::write(Pixel const& p)
