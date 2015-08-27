@@ -3,7 +3,7 @@
 float computeDiffuseArc(Sphere const& sphere, float & d, Ray const& r, Light const& light)
 {
   glm::vec3 surfacePoint{d*r.direction};
-  // std::cout << "SurfacePoint: " << surfacePoint.x << surfacePoint.y << surfacePoint->z << std::endl;
+  //std::cout << "SurfacePoint: " << surfacePoint.x << surfacePoint.y << surfacePoint.z << std::endl;
   Ray n{sphere.center(), sphere.center() - surfacePoint}; //Normalenvektor
   Ray l{surfacePoint, surfacePoint - light.getposition()};
   float n_length = glm::length(n.direction);
@@ -69,94 +69,60 @@ float computeDiffuseArc(Box const& box, float & d, Ray const& r, Light const& li
 {
   glm::vec3 n;
   glm::vec3 surfacePoint{d*r.direction};
+  //std::cout << "d: " << d << std::endl;
+  std::cout << surfacePoint.x << ", " << surfacePoint.y << ", " << surfacePoint.z << std::endl;
   Ray l{surfacePoint, glm::normalize(surfacePoint - light.getposition())};
 
-//if surfacepoint on x-min-plane glm::vec3 n{-1, 0, 0}
-  if( surfacePoint.x >= box.min().x && 
-    surfacePoint.x <= box.max().x && 
-    surfacePoint.y >= box.min().y && 
-    surfacePoint.y <= box.max().y && 
-    surfacePoint.z >= box.min().z && 
-    surfacePoint.z <= box.max().z)
+//test x plane
+  if( surfacePoint.y >= box.min().y &&
+      surfacePoint.y <= box.max().y &&
+      surfacePoint.z >= box.min().z &&
+      surfacePoint.z <= box.max().z)
   {
-    //std::cout << "i'm here" << std::endl;
-    /*n.x = -1;
-    n.y = 0;
-    n.z = 0;*/
-    glm::vec3 n{-1, 0, 0};
+    if (surfacePoint.x < box.max().x)
+    {//if surfacepoint on x-min-plane glm::vec3 n{-1, 0, 0}
+      n = glm::normalize(glm::vec3{box.min().x, box.max().y, box.max().z}-box.max());
+    }
+    if (surfacePoint.x > box.min().x)
+    { //if surfacepoint on x-max-plane glm::vec3 n{1, 0, 0}
+      n = glm::normalize(box.max() - glm::vec3{box.min().x, box.max().y, box.max().z});
+    }
   }
-//if surfacepoint on x-max-plane glm::vec3 n{1, 0, 0}
-  if( surfacePoint.x >= box.min().x && 
-    surfacePoint.x <= box.max().x && 
-    surfacePoint.y >= box.min().y && 
-    surfacePoint.y <= box.max().y && 
-    surfacePoint.z >= box.min().z && 
-    surfacePoint.z <= box.max().z)
+  //test y plane
+  if( surfacePoint.x <= box.max().x &&
+    surfacePoint.x >= box.min().x &&
+    surfacePoint.z <= box.max().z &&
+    surfacePoint.z >= box.min().z)
   {
+    if(surfacePoint.y < box.max().y)
+    { //if surfpoint on y-min-plane:
+      n = glm::normalize(glm::vec3{box.max().x, box.min().y, box.max().z} - box.max());
+    }
+    if(surfacePoint.y > box.min().y)
+    { //if surfpoint on y-max plane
+      n = glm::normalize(box.max() - glm::vec3{box.max().x, box.min().y, box.max().z});
+    }
     //std::cout << "i'm here" << std::endl;
-    /*n.x = 1;
-    n.y = 0;
-    n.z = 0;*/
-    glm::vec3 n{1, 0, 0};
-  }
-
-  //if surfacepoint on y-min-plane glm::vec3 n{0, -1, 0}
-  if( surfacePoint.x >= box.min().x && 
-    surfacePoint.x <= box.max().x &&
-    surfacePoint.y >= box.min().y && 
-    surfacePoint.y <= box.max().y && 
-    surfacePoint.z >= box.min().z && 
-    surfacePoint.z <= box.max().z)
-  {
-    //std::cout << "i'm here" << std::endl;
-    /*n.x = 0;
-    n.y = -1;
-    n.z = 0;*/
-    glm::vec3 n{0, -1, 0};
-  }
-  //if surfacepoint on y-max-plane glm::vec3 n{0, 1, 0}
-  if( surfacePoint.x >= box.min().x && 
-    surfacePoint.x <= box.max().x && 
-    surfacePoint.y >= box.min().y && 
-    surfacePoint.y <= box.max().y && 
-    surfacePoint.z >= box.min().z && 
-    surfacePoint.z <= box.max().z)
-  {
-    //std::cout << "i'm here" << std::endl;
-    /*n.x = 0;
-    n.y = 1;
-    n.z = 0;*/
-    glm::vec3 n{0, 1, 0};
+    
   }
 
-  //if surfacepoint on z-min-plane glm::vec3 n{0, 0, -1}
-  if( surfacePoint.x >= box.min().x && 
-    surfacePoint.x <= box.max().x && 
-    surfacePoint.y >= box.min().y && 
+//tests z plane
+  if (surfacePoint.x <= box.max().x &&
+    surfacePoint.x >= box.min().x &&
     surfacePoint.y <= box.max().y &&
-    surfacePoint.z >= box.min().z&& 
-    surfacePoint.z <= box.max().z)
+    surfacePoint.y >= box.min().y)
   {
-    //std::cout << "i'm here" << std::endl;
-    /*n.x = 0;
-    n.y = 0;
-    n.z = -1;*/
-    glm::vec3 n{0, 0, -1};
+    if(surfacePoint.z < box.max().z)
+    {
+      //if on z min plane:
+      n = glm::normalize(glm::vec3{box.max().x, box.max().y, box.min().z} - box.max());
+    }
+    if(surfacePoint.z > box.min().z)
+    { //if on z max plane
+      n = glm::normalize(box.max() - glm::vec3{box.max().x, box.max().y, box.min().z});
+    }
   }
-  //if surfacepoint on z-max-plane glm::vec3 n{0, 0, 1}
-  if( surfacePoint.x >= box.min().x && 
-    surfacePoint.x <= box.max().x && 
-    surfacePoint.y >= box.min().y && 
-    surfacePoint.y <= box.max().y && 
-    surfacePoint.z >= box.min().z && 
-    surfacePoint.z <= box.max().z)
-  {
-    //std::cout << "i'm here" << std::endl;
-    /*n.x = 0;
-    n.y = 0;
-    n.z = 1;*/
-    glm::vec3 n{0, 0, 1};
-  }
+
 
   std::cout << n.x << n.y << n.z << std::endl;
   float n_length = glm::length(n);

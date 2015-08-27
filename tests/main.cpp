@@ -61,7 +61,10 @@ TEST_CASE("animation", "[renderer]") {
 */
 TEST_CASE("jetzt wird's ernst", "[renderer]") {
   Scene* scene = loadSDF("sdfdatei.sdf");
-  scene->render.render(scene->shapes, scene->lights);
+  // AA an: bool true
+  // scene->render.render(scene->shapes, scene->lights, true);
+  // AA aus: bool false
+  scene->render.render(scene->shapes, scene->lights, false);
 }
 /*
 TEST_CASE("composite", "[composite]") {
