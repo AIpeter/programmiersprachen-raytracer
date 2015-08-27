@@ -32,12 +32,12 @@ public:
   Renderer();
   Renderer(unsigned w, unsigned h, std::string const& file);
   Renderer(unsigned w, unsigned h,
-            std::string const& file, Camera cam);
+            std::string const& file, Camera cam, bool aa);
 
   Ray ComputeCameraRay(float i, float j);
   void filename(std::string const& filename);
   void render();
-  void render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights, bool aa);
+  void render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights);
   Color render(float x, float y, std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights);
   // void render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights);
   void write(Pixel const& p);
@@ -51,6 +51,7 @@ public:
 private:
   unsigned width_;
   unsigned height_;
+  bool aa;
   std::vector<Color> colorbuffer_;
   std::string filename_;
   PpmWriter ppm_;

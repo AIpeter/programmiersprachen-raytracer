@@ -15,7 +15,8 @@ Renderer::Renderer():
   colorbuffer_(width_*height_, Color{0.0, 0.0, 0.0}),
   filename_("standard.ppm"),
   ppm_(width_, height_),
-  cam_(Camera())
+  cam_(Camera()),
+  aa(false)
   {}
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file):
@@ -24,17 +25,19 @@ Renderer::Renderer(unsigned w, unsigned h, std::string const& file):
   colorbuffer_(w*h, Color(0.0, 0.0, 0.0)),
   filename_(file),
   ppm_(width_, height_),
-  cam_(Camera())
+  cam_(Camera()),
+  aa(false)
   {}
 
 Renderer::Renderer(unsigned w, unsigned h,
-                    std::string const& file, Camera cam):
+                    std::string const& file, Camera cam, bool aa):
   width_(w),
   height_(h),
   colorbuffer_(w*h, Color(0.0, 0.0, 0.0)),
   filename_(file),
   ppm_(width_, height_),
-  cam_(cam)
+  cam_(cam),
+  aa(aa)
   {}
 
 Ray Renderer::ComputeCameraRay(float i, float j)
@@ -67,7 +70,7 @@ void Renderer::render() {
   ppm_.save(filename_);
 }
 
-void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights, bool aa)
+void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
 {
   for (unsigned y = 0; y < height_; ++y)
   {

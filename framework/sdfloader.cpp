@@ -109,12 +109,18 @@ Scene* loadSDF(std::string const& file) {
                 
                 else if(words[0] == "render")
                 {
+                        bool aa = false;
+                        if(words[5] == "aa")
+                        {
+                                aa = true;
+                        }
                         out->render = Renderer
                         {
                                 (unsigned int) std::stof(words[3]),
                                 (unsigned int) std::stof(words[4]), 
                                 words[2],
-                                out->cameras[words[1]]
+                                out->cameras[words[1]],
+                                aa
                         };
                 }
 
