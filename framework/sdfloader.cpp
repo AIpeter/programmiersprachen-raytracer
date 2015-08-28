@@ -65,6 +65,19 @@ Scene* loadSDF(std::string const& file) {
                                                 words[3],
                                                 out->materials[words[10]]};
                                 }
+                                else if(words[2] == "triangle") {
+                                        glm::vec3 left{std::stof(words[4]),
+                                                std::stof(words[5]),
+                                                std::stof(words[6])};
+                                        glm::vec3 right{std::stof(words[7]),
+                                                std::stof(words[8]),
+                                                std::stof(words[9])};
+                                        glm::vec3 top{std::stof(words[10]),
+                                                std::stof(words[11]),
+                                                std::stof(words[12])};
+                                        out->shapes[words[3]] = new Triangle{left, 
+                                                right, top, words[3], out->materials[words[13]]};
+                                }
                                 else {
                                         std::cout << "Syntax error in line " << 
                                         i << "!" << std::endl;

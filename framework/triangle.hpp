@@ -16,7 +16,6 @@ class Triangle : public Shape
     Triangle(Triangle const& triangle);
     Triangle(glm::vec3 const& left, glm::vec3 const& right, glm::vec3 const& top,
            std::string const& name, Material const& mat);
-
     glm::vec3 const& getleft() const;
     glm::vec3 const& getright() const;
     glm::vec3 const& gettop() const;
