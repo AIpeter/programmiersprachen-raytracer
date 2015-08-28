@@ -56,17 +56,17 @@ float Triangle::volume() const // override
         return os;
 }
 
-bool Triangle::intersect(Ray const& r, float & d)
+bool Triangle::intersect(Ray const& r, float & d) // !! Attention only parallel to x-axis!!!
 {
 	bool cut = false;
 	auto dir = glm::normalize(r.direction);
-	glm::vec3 dvec = {0, 0, left_.z};
+	glm::vec3 dvec = {0, 0, d};
 
-	if(left_.z == right_.z && left_.z == top_.z) // only if parallel to x-axis
-	{
+	//if(left_.z == right_.z && left_.z == top_.z) // only if parallel to x-axis
+	//{
 		cut = glm::intersectRayTriangle(r.origin, dir, left_, right_, top_, dvec);
-		d = dir.z;
-	}
+		d = dvec.z;
+	//}
 
 	return cut;
 }
