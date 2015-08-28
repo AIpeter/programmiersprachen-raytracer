@@ -45,10 +45,7 @@ TEST_CASE("animation", "[renderer]") {
   int picturecount = 0;
   for (int i = 0; i <= 360; ++i)
   {
-    for (auto j: scene->shapes)
-    {
-      j.second->rotate(1, {0,0,1});
-    }
+    scene->shapes["rsphere"]->rotate(1, {0,1,0});
     for (int k = 0; k < 2; ++k)
     {
       std::string filename = "image" + std::to_string(picturecount) + ".ppm";
@@ -59,10 +56,12 @@ TEST_CASE("animation", "[renderer]") {
   }
 }
 */
+
 TEST_CASE("jetzt wird's ernst", "[renderer]") {
   Scene* scene = loadSDF("sdfdatei.sdf");
   scene->render.render(scene->shapes, scene->lights);
 }
+
 /*
 TEST_CASE("composite", "[composite]") {
   Material m{"Testmaterial", Color{1,0,0}, Color{0,1,0}, Color{0,0,1}, 15};
