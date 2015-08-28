@@ -111,10 +111,10 @@ void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<L
         std::vector<Color> colors;
         
         colors.push_back(render(x, y, shapes, lights));
-        colors.push_back(render(x-1, y-1, shapes, lights));
-        colors.push_back(render(x+1, y-1, shapes, lights));
-        colors.push_back(render(x-1, y+1, shapes, lights));
-        colors.push_back(render(x+1, y+1, shapes, lights));
+        colors.push_back(render(x-0.25, y-0.25, shapes, lights));
+        colors.push_back(render(x+0.25, y-0.25, shapes, lights));
+        colors.push_back(render(x-0.25, y+0.25, shapes, lights));
+        colors.push_back(render(x+0.25, y+0.25, shapes, lights));
 
         Color accumulate{0.0, 0.0, 0.0};
 
