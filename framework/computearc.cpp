@@ -158,6 +158,39 @@ float computeDiffuseArc(Triangle const& triangle, float & d, Ray const& r, Light
   return diffuseArc;
 }
 
-
+float computeSpecularArc(Triangle const& triangle, float & d, Ray const& r, Light const& light)
+{
+  glm::vec3 surfacePoint{d*r.direction};
+  glm::vec3 right{triangle.getright().x - triangle.getleft().x,
+              triangle.getright().y - triangle.getleft().y, 
+              triangle.getright().z - triangle.getleft().z}; // direction of triangleplane
+  glm::vec3 top{triangle.gettop().x - triangle.getleft().x,  
+              triangle.gettop().y - triangle.getleft().y,
+              triangle.gettop().z - triangle.getleft().z}; // direction of triangleplane
+  glm::vec3 n = glm::cross(right, top);//Normalenvektor
+  Ray l{surfacePoint, glm::normalize(surfacePoint - light.getposition())};
+  // glm::vec3 s = glm::reflect(l.direction, n.direction);
+  /*
+  glm::vec3 s{n.direction.x - l.direction.x + n.direction.x,
+              n.direction.y - l.direction.y + n.direction.y,
+              n.direction.z - l.direction.z + n.direction.z};
+  */
+  //glm::vec3 s = (2 * glm::dot(l.direction, n.direction))*n.direction - l.direction;
+  glm::vec3 s = (2 * std::max(glm::dot(n, l.direction), 0.0f))*n - l.direction;
+  s = glm::normalize(s);
+  auto c = glm::normalize(r.direction);
+  float specularCos = glm::dot(s, c);
+  float specularArc = glm::acos(specularCos);
+  float specularSin = glm::sin(specularArc);
+  // std::cout << specularArc << std::endl;
+  if(specularSin > 0) 
+  {
+    return specularCos;
+  }
+  else 
+  {
+    return (0 - specularCos);
+  }
+}
 
 

@@ -56,17 +56,14 @@ float Triangle::volume() const // override
         return os;
 }
 
-bool Triangle::intersect(Ray const& r, float & d) // !! Attention only parallel to x-axis!!!
+bool Triangle::intersect(Ray const& r, float & d)
 {
 	bool cut = false;
 	auto dir = glm::normalize(r.direction);
 	glm::vec3 dvec = {0, 0, d};
 
-	//if(left_.z == right_.z && left_.z == top_.z) // only if parallel to x-axis
-	//{
-		cut = glm::intersectRayTriangle(r.origin, dir, left_, right_, top_, dvec);
-		d = dvec.z;
-	//}
+	cut = glm::intersectRayTriangle(r.origin, dir, left_, right_, top_, dvec);
+	d = dvec.z;
 
 	return cut;
 }
@@ -78,9 +75,20 @@ float Triangle::closer_z() const // override
 
 Color Triangle::getLight(float & d, Ray const& r, Light const& light, float shade) const // override
 {
+	if(shade == 0) // Schatten
+  	{
+    Color licht = (light.getla()* mat_.ka());
+    return licht;
+  	}
+  	else
+  	{
 	float diffuseCos = computeDiffuseArc(*this, d, r, light);
-  	Color licht = (light.getld() * mat_.kd() * diffuseCos) + (light.getla()* mat_.ka());
+	float specularCos = computeSpecularArc(*this, d, r, light);
+  	Color licht = (light.getld() * mat_.kd() * diffuseCos) 
+  					+ (light.getld() * mat_.ks() * (pow(specularCos, mat_.m())))
+  					+ (light.getla()* mat_.ka());
    	return licht;
+   }
 }
     
 void Triangle::translate(glm::vec3 const& direction)

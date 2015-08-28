@@ -19,7 +19,7 @@ float computeSpecularArc(Sphere const& sphere, float & d, Ray const& r, Light co
 float computeDiffuseArc(Box const& box, float & d, Ray const& r, Light const& light);
 float computeSpecularArc(Box const& box, float & d, Ray const& r, Light const& light);
 float computeDiffuseArc(Triangle const& triangle, float & d, Ray const& r, Light const& light);
-//float computeSpecularArc(Triangle const& triangle, float & d, Ray const& r, Light const& light);
+float computeSpecularArc(Triangle const& triangle, float & d, Ray const& r, Light const& light);
 
 
 #endif // BUW_COMPUTEARC_HPP
