@@ -9,6 +9,7 @@
 
 #ifndef BUW_RENDERER_HPP
 #define BUW_RENDERER_HPP
+#define _USE_MATH_DEFINES
 
 #include "color.hpp"
 #include "pixel.hpp"
@@ -17,12 +18,14 @@
 #include "box.hpp"
 #include "sphere.hpp"
 #include "camera.hpp"
+#include <cmath>
 #include <map>
 #include <vector>
 #include <cstdlib>
 #include <string>
 #include <limits>
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
 #include <iostream>
 #include <light.hpp>
 

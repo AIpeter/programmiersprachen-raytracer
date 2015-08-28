@@ -44,14 +44,42 @@ Ray Renderer::ComputeCameraRay(float i, float j)
 {
   float norm_i = (i/width_) - 0.5;
   float norm_j = (j/height_) - 0.5;
-  glm::vec3 image_point = norm_i * cam_.getCamRight()
-                        + norm_j * cam_.getCamUp()
-                        + cam_.getPosition()
+  float aspect = (float) width_/ (float) height_;
+  /*
+  float alpha = (cam_.getFov_x()/2.0f)*(M_PI/180.0f);
+  float beta = (180 - ((cam_.getFov_x()/2.0f)+90)) * (M_PI/180.0f);
+  float d = (width_/2.0f) * (glm::sin(beta)/glm::sin(alpha));
+  */
+  float fov = cam_.getFov_x() * (M_PI/180.0);
+  // std::cout << "FOV x: " << fovx << "\n";
+  // std::cout << "FOV y: " << fovy << "\n";
+  glm::vec3 image_point = norm_i * aspect * glm::tan(fov/2.0f) * cam_.getCamRight()
+                        + norm_j * glm::tan(fov/2.0f) * cam_.getCamUp()
                         + cam_.getDirection();
-  glm::vec3 ray_dir = image_point - cam_.getPosition();
-  return Ray{cam_.getPosition(), ray_dir}; 
+  
+  // glm::vec3 image_point{norm_i, norm_j, -d};
+  // std::cout << "Image Point: " << glm::to_string(image_point) << "\n";
+  return Ray{cam_.getPosition(), image_point};
 }
 
+/*
+Ray Renderer::ComputeCameraRay(float i, float j) 
+{
+  glm::vec3 coi{i, j, 0};
+  coi += cam_.getDirection();
+  glm::vec3 bigN{cam_.getPosition() - coi};
+  glm::vec3 n = glm::normalize(bigN);
+  glm::vec3 u = glm::normalize(glm::cross(cam_.getCamUp(), n));
+  glm::vec3 v = glm::cross(n,u);
+  float d = glm::distance(cam_.getPosition(), cam_.getDirection());
+  glm::vec3 center = (cam_.getPosition() - n) * d;
+  glm::vec3 l = ((center - u) * (width_/2.0f)) - (v * (height_/2.0f));
+  float aspect_ratio = width_ / (float) height_;
+  float w = height_ * aspect_ratio;
+  glm::vec3 ray_dir = l + (u*i*(w/width_)) + (v*j);
+  return Ray{cam_.getPosition(), ray_dir};
+}
+*/
 void Renderer::render() {
   const std::size_t checkersize = 20;
 
@@ -132,7 +160,7 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
       Pixel p(x,y);
       */
       Color c{0.0, 0.0, 0.0};
-      Ray r = ComputeCameraRay(x*aspect, y);
+      Ray r = ComputeCameraRay(x, y);
       //std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << "\n";
       float infinity = std::numeric_limits<float>::infinity();
       float t;
