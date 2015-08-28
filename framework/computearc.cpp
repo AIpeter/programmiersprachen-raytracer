@@ -71,7 +71,7 @@ float computeDiffuseArc(Box const& box, float & d, Ray const& r, Light const& li
   glm::vec3 surfacePoint{d*r.direction};
   //std::cout << "d: " << d << std::endl;
   // std::cout << surfacePoint.x << ", " << surfacePoint.y << ", " << surfacePoint.z << std::endl;
-  Ray l{surfacePoint, (surfacePoint, surfacePoint - light.getposition())};
+  Ray l{surfacePoint, surfacePoint - light.getposition()};
 
 //test x plane
   if( surfacePoint.y >= box.min().y &&
@@ -138,3 +138,26 @@ float computeSpecularArc(Box const& box, float & d, Ray const& r, Light const& l
 {
 
 }
+
+float computeDiffuseArc(Triangle const& triangle, float & d, Ray const& r, Light const& light)
+{
+  glm::vec3 surfacePoint{d*r.direction};
+  //std::cout << "SurfacePoint: " << surfacePoint.x << surfacePoint.y << surfacePoint.z << std::endl;
+  glm::vec3 right{triangle.getright().x - triangle.getleft().x,
+              triangle.getright().y - triangle.getleft().y, 
+              triangle.getright().z - triangle.getleft().z}; // direction of triangleplane
+  glm::vec3 top{triangle.gettop().x - triangle.getleft().x,  
+              triangle.gettop().y - triangle.getleft().y,
+              triangle.gettop().z - triangle.getleft().z}; // direction of triangleplane
+  glm::vec3 n = glm::cross(right, top);//Normalenvektor
+  Ray l{surfacePoint, surfacePoint - light.getposition()};
+  float n_length = glm::length(n);
+  float l_length = glm::length(l.direction);
+  float diffuseArc = (std::max(glm::dot(n, l.direction), 0.0f))/(n_length*l_length);
+
+  return diffuseArc;
+}
+
+
+
+
