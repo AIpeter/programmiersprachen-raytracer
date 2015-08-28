@@ -6,10 +6,21 @@
 #include "material.hpp"
 #include "sdfloader.hpp"
 #include "composite.hpp"
+#include "triangle.hpp"
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 #include <renderer.hpp>
+
+/*
+TEST_CASE("intersectTriangle", "[intersectTriangle]") {
+        Triangle t{};
+        Ray r{{0.5, 0.25, 1}, {0, 0, -1}};
+        float d = 1; 
+        t.intersect(r, d);
+        REQUIRE(t.intersect(r, d) == true);
+}
+*/
 /*
 TEST_CASE("streamoperator class Material", "[operator<<]")
 {

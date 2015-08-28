@@ -70,8 +70,8 @@ float computeDiffuseArc(Box const& box, float & d, Ray const& r, Light const& li
   glm::vec3 n;
   glm::vec3 surfacePoint{d*r.direction};
   //std::cout << "d: " << d << std::endl;
-  std::cout << surfacePoint.x << ", " << surfacePoint.y << ", " << surfacePoint.z << std::endl;
-  Ray l{surfacePoint, glm::normalize(surfacePoint - light.getposition())};
+  // std::cout << surfacePoint.x << ", " << surfacePoint.y << ", " << surfacePoint.z << std::endl;
+  Ray l{surfacePoint, (surfacePoint, surfacePoint - light.getposition())};
 
 //test x plane
   if( surfacePoint.y >= box.min().y &&
@@ -124,11 +124,13 @@ float computeDiffuseArc(Box const& box, float & d, Ray const& r, Light const& li
   }
 
 
-  std::cout << n.x << n.y << n.z << std::endl;
+  // std::cout << n.x << n.y << n.z << std::endl;
   float n_length = glm::length(n);
   float l_length = glm::length(l.direction);
   float diffuseArc = (std::max(glm::dot(n, l.direction), 0.0f))/(n_length*l_length);
-
+  if (!(glm::isnan(diffuseArc))) {
+    std::cout << "diffusearc: " << diffuseArc << std::endl;
+  }
   return diffuseArc;
 }
 
