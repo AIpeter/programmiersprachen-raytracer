@@ -72,7 +72,7 @@ bool Triangle::intersect(Ray const& r, float & d)
     
 float Triangle::closer_z() const // override
 {
-	return left_.z;
+	return std::max(std::max(left_.z, right_.z), top_.z);
 }
 
 Color Triangle::getLight(float & d, Ray const& r, Light const& light, float shade) const // override
@@ -82,12 +82,16 @@ Color Triangle::getLight(float & d, Ray const& r, Light const& light, float shad
     
 void Triangle::translate(glm::vec3 const& direction)
 {
-
+	left_ = left_ + direction;
+	right_ = right_ + direction;
+	top_ = top_ + direction;
 }
     
 void Triangle::scale(glm::vec3 const& scale)
 {
-
+	left_ = left_ * scale;
+	right_ = right_ * scale;
+	top_ = top_ * scale;
 }
 
 void Triangle::rotate(float angle, glm::vec3 const& axis)
