@@ -122,19 +122,42 @@ Scene* loadSDF(std::string const& file) {
                 
                 else if(words[0] == "render")
                 {
-                        bool aa = false;
-                        if(words[5] == "aa")
+                        if(words.size() == 6) 
                         {
-                                aa = true;
+                                bool aa = false;
+                                if(words[5] == "aa")
+                                {
+                                        aa = true;
+                                }
+                                else if(words[5] == "noaa")
+                                {
+                                        aa = false;
+                                }
+                                else
+                                {
+                                        std::cout << "Syntax error in line "
+                                        << i << "!" << std::endl;
+                                        std::cout << "Unknown expression: "
+                                        << words[5] << std::endl;
+                                        std::cout << "Defaulting to no AA."
+                                        << std::endl;
+                                }
+                                out->render = Renderer
+                                {
+                                        (unsigned int) std::stof(words[3]),
+                                        (unsigned int) std::stof(words[4]), 
+                                        words[2],
+                                        out->cameras[words[1]],
+                                        aa
+                                };
                         }
-                        out->render = Renderer
+                        else
                         {
-                                (unsigned int) std::stof(words[3]),
-                                (unsigned int) std::stof(words[4]), 
-                                words[2],
-                                out->cameras[words[1]],
-                                aa
-                        };
+                                std::cout << "Syntax error in line " << i
+                                << "!" << std::endl;
+                                std::cout << "Invalid number of arguments."
+                                << std::endl;
+                        }      
                 }
 
                 else if(words[0] == "transform") {
