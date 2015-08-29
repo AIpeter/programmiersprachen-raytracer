@@ -5,8 +5,8 @@
 
 int main(int argc, char* argv[])
 {
-  unsigned const width = 600;
-  unsigned const height = 600;
+  unsigned const width = 480;
+  unsigned const height = 320;
   std::string const filename = "./image.ppm";
   std::string const sdfname = "sdfdatei.sdf";
   Scene* scene = loadSDF(sdfname);
