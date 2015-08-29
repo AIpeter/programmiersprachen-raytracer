@@ -1,16 +1,17 @@
 #include <thread>
 #include <renderer.hpp>
+#include <sdfloader.hpp>
 #include <fensterchen.hpp>
 
 int main(int argc, char* argv[])
 {
   unsigned const width = 600;
   unsigned const height = 600;
-  std::string const filename = "./checkerboard.ppm";
+  std::string const filename = "./image.ppm";
+  std::string const sdfname = "sdfdatei.sdf";
+  Scene* scene = loadSDF(sdfname);
 
-  Renderer app(width, height, filename);
-
-  std::thread thr([&app]() { app.render(); });
+  std::thread thr([&scene]() { scene->render.render(scene->shapes, scene->lights); });
 
   Window win(glm::ivec2(width,height));
 
@@ -20,7 +21,7 @@ int main(int argc, char* argv[])
     }
 
     glDrawPixels( width, height, GL_RGB, GL_FLOAT
-                , app.colorbuffer().data());
+                , scene->render.colorbuffer().data());
 
     win.update();
   }
