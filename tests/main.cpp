@@ -71,6 +71,7 @@ TEST_CASE("animation", "[renderer]") {
 TEST_CASE("jetzt wird's ernst", "[renderer]") {
   Scene* scene = loadSDF("sdfdatei.sdf");
   scene->render.render(scene->shapes, scene->lights);
+  delete scene;
 }
 
 /*
