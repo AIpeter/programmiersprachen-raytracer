@@ -25,8 +25,6 @@ class Shape
     virtual float volume() const = 0; // pure virtual
     virtual bool intersect(Ray const& r, float& t) = 0; // pure virtual
     virtual float closer_z() const = 0; // pure virtual getter
-    virtual glm::vec3 const& center() const;
-    virtual float radius() const;
     virtual std::ostream& print(std::ostream& os) const;
 
     virtual Color getLight(float & d, Ray const& r, Light const& light, float shade) const = 0; //pure virtual

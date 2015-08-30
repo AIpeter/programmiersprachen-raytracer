@@ -35,13 +35,3 @@ std::ostream& operator<<(std::ostream& os, Shape const& s)
   s.print(os);
   return os;
 }
-
-glm::vec3 const& Shape::center() const
-{
-  return glm::vec3{0,0,0};
-}
-
-float Shape::radius() const
-{
-  return 0;
-}
