@@ -1,8 +1,12 @@
 #ifndef BUW_BOX_HPP
 #define BUW_BOX_HPP
+#define _USE_MATH_DEFINES
+#define GLM_FORCE_RADIANS
 
 #include <limits>
+#include <cmath>
 #include <glm/vec3.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include "shape.hpp"
 #include "computearc.hpp"
 

@@ -39,94 +39,11 @@ glm::vec3 Box::max() const {return max_;}
         return os;
 }
 
-// bool Box::intersect(Ray const& r, float & t)
-// {
-//   float tmin = std::numeric_limits<float>::infinity();
-//   bool cut = false;
-//   auto v = glm::normalize(r.direction);
-//   if (glm::intersectRayPlane(r.origin, v, min_,
-//     glm::normalize(glm::vec3{min_.x, max_.y, max_.z}-max_),
-//     t) == true)
-//   {
-//     if(t < tmin)
-//     {
-//       //std::cout << "t1 = " << t << std::endl;
-//       tmin = t;
-//     }
-//     cut = true;
-//   }
-//   if (glm::intersectRayPlane(r.origin, v, max_,
-//     glm::normalize(max_ - glm::vec3{min_.x, max_.y, max_.z}),
-//     t) == true)
-//   {
-//     if(t < tmin)
-//     {
-//       //std::cout << "t2 = " << t << std::endl;
-//       tmin = t;
-//     }
-//     cut = true;
-//   }
-//   if (glm::intersectRayPlane(r.origin, v, min_,
-//     glm::normalize(glm::vec3{max_.x, min_.y, max_.z} - max_),
-//     t) == true)
-//   {
-//     if(t < tmin)
-//     {
-//       //std::cout << "t3 = " << t << std::endl;
-//       tmin = t;
-//     }
-//     cut = true;
-//   }
-//   if (glm::intersectRayPlane(r.origin, v, max_,
-//     glm::normalize(max_ - glm::vec3{max_.x, min_.y, max_.z}),
-//     t) == true)
-//   {
-//     if(t < tmin)
-//     {
-//       //std::cout << "t5 = " << t << std::endl;
-//       tmin = t;
-//     }
-//     cut = true;
-//   }
-//   if (glm::intersectRayPlane(r.origin, v, min_,
-//     glm::normalize(glm::vec3{max_.x, max_.y, min_.z} - max_),
-//     t) == true)
-//   {
-//     if(t < tmin)
-//     {
-//       //std::cout << "t6 = " << t << std::endl;
-//       tmin = t;
-//     }
-//     cut = true;
-//   }
-//   if (glm::intersectRayPlane(r.origin, v, max_,
-//     glm::normalize(max_ - glm::vec3{max_.x, max_.y, min_.z}),
-//     t) == true)
-//   {
-//     if(t < tmin)
-//     {
-//       //std::cout << "t7 = " << t << std::endl;
-//       tmin = t;
-//     }
-//     cut = true;
-//   }
-
-//   if(tmin != std::numeric_limits<float>::infinity())
-//   {
-//     //std::cout << "t8 = " << t << std::endl;
-//     t = tmin;
-//   }
-
-//   // std::cout << "tmin: " << tmin << std::endl;
-
-//   return cut;
-// }
-
 bool Box::intersect(Ray const& r, float & t)
 {
   float tmin = std::numeric_limits<float>::infinity();
   bool cut = false;
-  auto d = glm::normalize(r.direction);
+  auto d = /*glm::normalize*/(r.direction);
   //check x_min-plane:
   t = (min_.x - r.origin.x)/(d.x); //parameter zur berechnung d schnittpunkts x-ebene =po + t * d
   glm::vec3 intersection_xmin = r.origin+(t*d);
@@ -258,11 +175,8 @@ bool Box::intersect(Ray const& r, float & t)
     cut = true;
     
   }
-  if(tmin != std::numeric_limits<float>::infinity())
-  {
-    //std::cout << "t8 = " << t << std::endl;
-    t = tmin;
-  }
+  
+  t = tmin;
 
   // std::cout << "tmin: " << tmin << std::endl;
   
@@ -281,9 +195,20 @@ float Box::closer_z() const
 
 Color Box::getLight(float & d, Ray const& r, Light const& light, float shade) const
 {
+  if(shade == 0) // Schatten
+  {
+    Color licht = (light.getla()* mat_.ka());
+    return licht;
+  }
+  else
+  {
     float diffuseCos = computeDiffuseArc(*this, d, r, light);
-  Color licht = (light.getld() * mat_.kd() * diffuseCos) + (light.getla()* mat_.ka());
-   return licht;
+    float specularCos = computeSpecularArc(*this, d, r, light);
+    Color licht = (light.getld() * mat_.kd() * diffuseCos)
+                  + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m()))) 
+                  + (light.getla()* mat_.ka());
+    return licht;
+  }
 }
 
 void Box::translate(glm::vec3 const& direction)
