@@ -170,8 +170,8 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
           shade = 0;
         }
       }
-      Hit tmp = closest_o->intersect(r, t);
-      std::cout << "normal: " << glm::to_string(tmp.normal) << std::endl;
+      Hit tmp = closest_o->intersect(r, tmin);
+      // std::cout << "normal: " << glm::to_string(tmp.normal) << std::endl;
       auto col = closest_o->getLight(tmp, r, i, shade);
       // std::cout << "Color: " << col.r << ", " << col.g << ", " << col.b << std::endl;
       c += col;
