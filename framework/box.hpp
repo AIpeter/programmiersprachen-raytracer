@@ -24,10 +24,7 @@ class Box : public Shape
     float area() const; // override
     float volume() const; // override
     std::ostream& print(std::ostream& os) const; // override
-    bool intersect(Ray const& r, float& t);
-    float closer_z() const; // override
-
-    Color getLight(float & d, Ray const& r, Light const& light, float shade) const; // override
+    Hit intersect(Ray const& r, float& t);
 
     void translate(glm::vec3 const& direction);
     void scale(glm::vec3 const& scale);

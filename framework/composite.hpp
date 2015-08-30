@@ -21,11 +21,8 @@ public:
         bool isEmpty() const;
         float area() const;
         float volume() const;
-        bool intersect(Ray const& r, float & t);
-        float closer_z() const;
+        Hit intersect(Ray const& r, float & t);
         std::ostream& print(std::ostream& os) const;
-
-        Color getLight(float & d, Ray const& r, Light const& light, float shade) const;
 
         void translate(glm::vec3 const& direction);
         void scale(glm::vec3 const& scale);

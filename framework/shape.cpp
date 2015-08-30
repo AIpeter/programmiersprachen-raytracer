@@ -24,6 +24,24 @@ Shape::Shape(std::string const& name, Material const& mat):
 std::string const& Shape::name() const {return name_;}
 Material const& Shape::mat() const {return mat_;}
 
+Color Shape::getLight(Hit const& hit, Ray const& r, Light const& light, float shade) const
+{
+  if(shade == 0) // Schatten
+  {
+    Color licht = (light.getla()* mat_.ka());
+    return licht;
+  }
+  else
+  {
+    float diffuseCos = computeDiffuseArc(hit, light);
+    float specularCos = computeSpecularArc(hit, r, light);
+    Color licht = (light.getld() * mat_.kd() * diffuseCos)
+                  + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m()))) 
+                  + (light.getla()* mat_.ka());
+    return licht;
+  }
+}
+
 std::ostream& Shape::print(std::ostream& os) const
     {
       os<<"Name: "<<name_<<"\n"<<"Material: "<<mat_<<"\n";

@@ -39,17 +39,15 @@ glm::vec3 Box::max() const {return max_;}
         return os;
 }
 
-bool Box::intersect(Ray const& r, float & t)
+Hit Box::intersect(Ray const& r, float & t)
 {
+  Hit hit;
   float tmin = std::numeric_limits<float>::infinity();
   bool cut = false;
-  auto d = /*glm::normalize*/(r.direction);
+  auto d = r.direction;
   //check x_min-plane:
   t = (min_.x - r.origin.x)/(d.x); //parameter zur berechnung d schnittpunkts x-ebene =po + t * d
   glm::vec3 intersection_xmin = r.origin+(t*d);
-  /*std::cout << "intersection_xmin.x = " << intersection_xmin.x << std::endl;
-  std::cout << "intersection_xmin.y = " << intersection_xmin.y << std::endl;
-  std::cout << "intersection_xmin.z = " << intersection_xmin.z << std::endl;*/
   
   if( intersection_xmin.x >= min_.x && 
     intersection_xmin.x <= max_.x && 
@@ -68,9 +66,6 @@ bool Box::intersect(Ray const& r, float & t)
   //check x_max-plane
   t = (max_.x - r.origin.x)/(d.x);
   glm::vec3 intersection_xmax = r.origin+(t*d);
-  /*std::cout << "intersection_xmax.x = " << intersection_xmax.x << std::endl;
-  std::cout << "intersection_xmax.y = " << intersection_xmax.y << std::endl;
-  std::cout << "intersection_xmax.z = " << intersection_xmax.z << std::endl;*/
 
   if( intersection_xmax.x >= min_.x && 
     intersection_xmax.x <= max_.x && 
@@ -91,10 +86,7 @@ bool Box::intersect(Ray const& r, float & t)
   //check y-min-plane
   t = (min_.y - r.origin.y)/(d.y); //parameter zur berechnung d schnittpunkts x-ebene =po + t * d
   glm::vec3 intersection_ymin = r.origin+(t*d);
-  /*std::cout << "intersection_ymin.x = " << intersection_ymin.x << std::endl;
-  std::cout << "intersection_ymin.y = " << intersection_ymin.y << std::endl;
-  std::cout << "intersection_ymin.z = " << intersection_ymin.z << std::endl;*/
-  
+
   if( intersection_ymin.x >= min_.x && 
     intersection_ymin.x <= max_.x && 
     intersection_ymin.y >= min_.y && 
@@ -113,9 +105,6 @@ bool Box::intersect(Ray const& r, float & t)
   //check y_max-plane
   t = (max_.y - r.origin.y)/(d.y);
   glm::vec3 intersection_ymax = r.origin+(t*d);
-  /*std::cout << "intersection_ymax.x = " << intersection_ymax.x << std::endl;
-  std::cout << "intersection_ymax.y = " << intersection_ymax.y << std::endl;
-  std::cout << "intersection_ymax.z = " << intersection_ymax.z << std::endl;*/
 
   if( intersection_ymax.x >= min_.x && 
     intersection_ymax.x <= max_.x && 
@@ -135,9 +124,6 @@ bool Box::intersect(Ray const& r, float & t)
   //check z_min-plane
   t = (min_.z - r.origin.z)/(d.z); //parameter zur berechnung d schnittpunkts x-ebene =po + t * d
   glm::vec3 intersection_zmin = r.origin+(t*d);
-  /*std::cout << "intersection_zmin.x = " << intersection_zmin.x << std::endl;
-  std::cout << "intersection_zmin.y = " << intersection_zmin.y << std::endl;
-  std::cout << "intersection_zmin.z = " << intersection_zmin.z << std::endl;*/
   
   if( intersection_zmin.x >= min_.x && 
     intersection_zmin.x <= max_.x && 
@@ -157,9 +143,6 @@ bool Box::intersect(Ray const& r, float & t)
   //check z_max-plane
   t = (max_.z - r.origin.z)/(d.z);
   glm::vec3 intersection_zmax = r.origin+(t*d);
-  /*std::cout << "intersection_zmax.x = " << intersection_zmax.x << std::endl;
-  std::cout << "intersection_zmax.y = " << intersection_zmax.y << std::endl;
-  std::cout << "intersection_zmax.z = " << intersection_zmax.z << std::endl;*/
 
   if( intersection_zmax.x >= min_.x && 
     intersection_zmax.x <= max_.x && 
@@ -175,40 +158,67 @@ bool Box::intersect(Ray const& r, float & t)
     cut = true;
     
   }
-  
-  t = tmin;
 
-  // std::cout << "tmin: " << tmin << std::endl;
-  
-  return cut;
-}
-
-float Box::closer_z() const
-{
-  if (max_.z > min_.z) {
-    return min_.z;
-  }
-  else {
-    return max_.z;
-  }
-}
-
-Color Box::getLight(float & d, Ray const& r, Light const& light, float shade) const
-{
-  if(shade == 0) // Schatten
+  if (cut == true)
   {
-    Color licht = (light.getla()* mat_.ka());
-    return licht;
+    t = tmin;
+    hit.intersectionPoint = r.origin + (t * d);
+
+    glm::vec3 n;
+    //test x plane
+    if( hit.intersectionPoint.y >= min_.y &&
+        hit.intersectionPoint.y <= max_.y &&
+        hit.intersectionPoint.z >= min_.z &&
+        hit.intersectionPoint.z <= max_.z)
+    {
+      if (hit.intersectionPoint.x < max_.x)
+      {//if hit.intersectionPoint on x-min-plane glm::vec3 n{-1, 0, 0}
+        n = glm::normalize(glm::vec3{min_.x, max_.y, max_.z}-max_);
+      }
+      if (hit.intersectionPoint.x > min_.x)
+      { //if hit.intersectionPoint on x-max-plane glm::vec3 n{1, 0, 0}
+        n = glm::normalize(max_ - glm::vec3{min_.x, max_.y, max_.z});
+      }
+    }
+    //test y plane
+    if( hit.intersectionPoint.x <= max_.x &&
+      hit.intersectionPoint.x >= min_.x &&
+      hit.intersectionPoint.z <= max_.z &&
+      hit.intersectionPoint.z >= min_.z)
+    {
+      if(hit.intersectionPoint.y < max_.y)
+      { //if surfpoint on y-min-plane:
+        n = glm::normalize(glm::vec3{max_.x, min_.y, max_.z} - max_);
+      }
+      if(hit.intersectionPoint.y > min_.y)
+      { //if surfpoint on y-max plane
+        n = glm::normalize(max_ - glm::vec3{max_.x, min_.y, max_.z});
+      }
+    }
+
+  //tests z plane
+    if (hit.intersectionPoint.x <= max_.x &&
+      hit.intersectionPoint.x >= min_.x &&
+      hit.intersectionPoint.y <= max_.y &&
+      hit.intersectionPoint.y >= min_.y)
+    {
+      if(hit.intersectionPoint.z < max_.z)
+      {
+        //if on z min plane:
+        n = glm::normalize(glm::vec3{max_.x, max_.y, min_.z} - max_);
+      }
+      if(hit.intersectionPoint.z > min_.z)
+      { //if on z max plane
+        n = glm::normalize(max_ - glm::vec3{max_.x, max_.y, min_.z});
+      }
+    }
+
+    hit.normal = n;
   }
-  else
-  {
-    float diffuseCos = computeDiffuseArc(*this, d, r, light);
-    float specularCos = computeSpecularArc(*this, d, r, light);
-    Color licht = (light.getld() * mat_.kd() * diffuseCos)
-                  + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m()))) 
-                  + (light.getla()* mat_.ka());
-    return licht;
-  }
+
+  hit.intersect = cut;
+  
+  return hit;
 }
 
 void Box::translate(glm::vec3 const& direction)

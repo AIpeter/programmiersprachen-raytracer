@@ -5,6 +5,8 @@
 
 #include "material.hpp"
 #include "ray.hpp"
+#include "hit.hpp"
+#include "computearc.hpp"
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
 #include <string>
@@ -23,11 +25,10 @@ class Shape
     Material const& mat() const; // getter
     virtual float area() const = 0; // pure virtual
     virtual float volume() const = 0; // pure virtual
-    virtual bool intersect(Ray const& r, float& t) = 0; // pure virtual
-    virtual float closer_z() const = 0; // pure virtual getter
+    virtual Hit intersect(Ray const& r, float& t) = 0; // pure virtual
     virtual std::ostream& print(std::ostream& os) const;
 
-    virtual Color getLight(float & d, Ray const& r, Light const& light, float shade) const = 0; //pure virtual
+    Color getLight(Hit const& hit, Ray const& r, Light const& light, float shade) const;
 
     virtual void translate(glm::vec3 const& direction) = 0; // pure virtual
     virtual void scale(glm::vec3 const& scale) = 0; // pure virtual

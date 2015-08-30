@@ -17,6 +17,7 @@
 #include "ray.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
+#include "triangle.hpp"
 #include "camera.hpp"
 #include <cmath>
 #include <map>
@@ -42,7 +43,6 @@ public:
   void render();
   void render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights);
   Color render(float x, float y, std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights);
-  // void render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights);
   void write(Pixel const& p);
   void colorNorm(Color & color);
 

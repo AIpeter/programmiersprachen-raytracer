@@ -78,42 +78,32 @@ Composite Composite::insert(std::shared_ptr<Shape> shape) const {
         return volume;
 }
 
-/* virtual */ bool Composite::intersect(Ray const& r, float & t) {
-        bool intersect = root()->shape_->intersect(r, t);
-        if (intersect == true) {
+/* virtual */ Hit Composite::intersect(Ray const& r, float & t) {
+        Hit intersect = root()->shape_->intersect(r, t);
+        if (intersect.intersect == true) {
                 return intersect;
         }
         else {
                 auto n = root();
                 if (n) {
-                        if (left().intersect(r, t)) {
-                                return true;
+                        if (left().intersect(r, t).intersect) {
+                                return left().intersect(r, t);
                         }
-                        else if (right().intersect(r, t)) {
-                                return true;
+                        else if (right().intersect(r, t).intersect) {
+                                return left().intersect(r, t);
                         }
                         else {
-                                return false;
+                                Hit hit;
+                                hit.intersect = false;
+                                return hit;
                         }
                 }
                 else {
-                        return false;
+                        Hit hit;
+                        hit.intersect = false;
+                        return hit;
                 }
         }
-}
-
-/* virtual */ float Composite::closer_z() const {
-        float z = root()->shape_->closer_z();
-        auto n = root();
-        if (n) {
-                if (left().closer_z() < z) {
-                        z = left().closer_z();
-                }
-                else if (right().closer_z() < z) {
-                        z = right().closer_z();
-                }
-        }
-        return z;
 }
 
 /* virtual */ std::ostream& Composite::print(std::ostream& os) const {
@@ -130,11 +120,6 @@ std::ostream& operator<<(std::ostream& os, Composite const& c) {
         c.print(os);
         return os;
 } */
-
-Color Composite::getLight(float & d, Ray const& r, Light const& light, float shade) const
-{
-
-}
 
 void Composite::translate(glm::vec3 const& direction)
 {

@@ -33,14 +33,3 @@ Color const& Light::getld() const
 {
 	return ld_;
 }
-/*
-Color const& Light::getLight(float & d, Ray const& r, Shape* const& shape) const
-{
-	Sphere sphere{shape->center(), shape->radius(), shape->name(), shape->mat()};
-	float diffuseCos = computeDiffuseArc(sphere, d, r, *this);
-  float specularCos = computeSpecularArc(sphere, d, r, *this);
-  auto light = (ld_ * sphere.mat().kd() * diffuseCos)
-                + (ld_ * sphere.mat().ks() * (pow(specularCos, sphere.mat().m()))
-                + (la_* sphere.mat().ka()));
-  return light;
-}*/

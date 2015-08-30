@@ -45,41 +45,13 @@ Ray Renderer::ComputeCameraRay(float i, float j)
   float norm_i = (i/width_) - 0.5;
   float norm_j = (j/height_) - 0.5;
   float aspect = (float) width_/ (float) height_;
-  /*
-  float alpha = (cam_.getFov_x()/2.0f)*(M_PI/180.0f);
-  float beta = (180 - ((cam_.getFov_x()/2.0f)+90)) * (M_PI/180.0f);
-  float d = (width_/2.0f) * (glm::sin(beta)/glm::sin(alpha));
-  */
   float fov = cam_.getFov_x() * (M_PI/180.0);
-  // std::cout << "FOV x: " << fovx << "\n";
-  // std::cout << "FOV y: " << fovy << "\n";
   glm::vec3 image_point = norm_i * aspect * glm::tan(fov/2.0f) * cam_.getCamRight()
                         + norm_j * glm::tan(fov/2.0f) * cam_.getCamUp()
                         + cam_.getDirection();
-  
-  // glm::vec3 image_point{norm_i, norm_j, -d};
-  // std::cout << "Image Point: " << glm::to_string(image_point) << "\n";
   return Ray{cam_.getPosition(), image_point};
 }
 
-/*
-Ray Renderer::ComputeCameraRay(float i, float j) 
-{
-  glm::vec3 coi{i, j, 0};
-  coi += cam_.getDirection();
-  glm::vec3 bigN{cam_.getPosition() - coi};
-  glm::vec3 n = glm::normalize(bigN);
-  glm::vec3 u = glm::normalize(glm::cross(cam_.getCamUp(), n));
-  glm::vec3 v = glm::cross(n,u);
-  float d = glm::distance(cam_.getPosition(), cam_.getDirection());
-  glm::vec3 center = (cam_.getPosition() - n) * d;
-  glm::vec3 l = ((center - u) * (width_/2.0f)) - (v * (height_/2.0f));
-  float aspect_ratio = width_ / (float) height_;
-  float w = height_ * aspect_ratio;
-  glm::vec3 ray_dir = l + (u*i*(w/width_)) + (v*j);
-  return Ray{cam_.getPosition(), ray_dir};
-}
-*/
 void Renderer::render() {
   const std::size_t checkersize = 20;
 
@@ -121,12 +93,10 @@ void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<L
         for (auto i: colors)
         {
           accumulate += i;
-          // std::cout << "colors: " << i.r << ", " << i.g << ", " << i.b << "\n";
         }
 
         p.color = accumulate / 5.f;
         colorNorm(p.color);
-        // std::cout << "average color: " << p.color.r << ", " << p.color.g << ", " << p.color.b << "\n";
       }
       else
       {
@@ -148,84 +118,64 @@ void Renderer::colorNorm(Color & color)
   color.b = std::max(color.b, 0.f);
 }
 
-// void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
 Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
 {
   float aspect = (float) width_ / (float) height_;
-  /*
-  for (unsigned y = 0; y < height_; ++y) 
+  Color c{0.0, 0.0, 0.0};
+  Ray r = ComputeCameraRay(x, y);
+  float infinity = std::numeric_limits<float>::infinity();
+  float t;
+  float tmin = infinity;
+  Shape* closest_o = NULL;
+  for(auto i : shapes) 
   {
-    for (unsigned x = 0; x < width_; ++x) 
+    if(i.second->intersect(r, t).intersect == true)
     {
-      Pixel p(x,y);
-      */
-      Color c{0.0, 0.0, 0.0};
-      Ray r = ComputeCameraRay(x, y);
-      //std::cout << "Direction = " << r.direction.x << "; " << r.direction.y << "; " << r.direction.z << "\n";
-      float infinity = std::numeric_limits<float>::infinity();
-      float t;
-      float tmin = infinity;
-      Shape* closest_o = NULL;
-      for(auto i : shapes) 
-      {
-        if(i.second->intersect(r, t) == true)
-        {
-          if(t < tmin) {
-            tmin = t;
-            closest_o = i.second;
-          }
-          /*
-          if(i->closer_z() > tmin) 
-          {
-            tmin = i->closer_z();
-            closest_o = i;
-          }
-          */
-          // std::cout << t << std::endl;
-        }
+      if(t < tmin) {
+        tmin = t;
+        closest_o = i.second;
       }
-      if(closest_o != NULL) 
-      {
-        for(auto i: lights)
-        {
-          float shade = 1; // kein Schatten
-          glm::vec3 surfacePoint{tmin*r.direction};
-          Ray shadowRay{i.getposition(), glm::normalize(surfacePoint - i.getposition())};
-          float d;
-          float dmin = infinity;
-          Shape* closest_o_light = NULL;
-
-          if(closest_o->intersect(shadowRay, d) == true)
-          {
-            for(auto j : shapes) 
-            {
-              if(j.second->intersect(shadowRay, d) == true)
-              {
-                if(d < dmin) 
-                {
-                  dmin = d;
-                  closest_o_light = j.second;
-                }
-              }
-            }
-            if(closest_o_light != closest_o)
-            {
-              shade = 0;
-            }
-          } 
-          c += closest_o->getLight(tmin, r, i, shade);
-        }
-      }
-      else 
-      {
-        c = Color{0.0, 0.0, 0.0};
-      }
-      /*
-      write(p);
     }
   }
-  ppm_.save(filename_);
-*/
+  if(closest_o != NULL) 
+  {
+    for(auto i: lights)
+    {
+      float shade = 1; // kein Schatten
+      float closest_o_t = tmin;
+      Hit closest_o_hit = closest_o->intersect(r, closest_o_t);
+      Ray shadowRay{i.getposition(), 
+                    glm::normalize(closest_o_hit.intersectionPoint
+                                    - i.getposition())};
+      float d;
+      float dmin = infinity;
+      Shape* closest_o_light = NULL;
+
+      if(closest_o->intersect(shadowRay, d).intersect == true)
+      {
+        for(auto j : shapes) 
+        {
+          if(j.second->intersect(shadowRay, d).intersect == true)
+          {
+            if(d < dmin) 
+            {
+              dmin = d;
+              closest_o_light = j.second;
+            }
+          }
+        }
+        if(closest_o_light != closest_o)
+        {
+          shade = 0;
+        }
+      } 
+      c += closest_o->getLight(closest_o_hit, r, i, shade);
+    }
+  }
+  else 
+  {
+    c = Color{0.0, 0.0, 0.0};
+  }
   return c;
 }
 

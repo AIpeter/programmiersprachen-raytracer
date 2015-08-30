@@ -19,7 +19,6 @@ public:
 	glm::vec3 const& getposition() const;
 	Color const& getla() const;
 	Color const& getld() const;
-	// Color const& getLight(float & d, Ray const& r, Shape* const& shape) const;
 
 private:
 	std::string name_;
