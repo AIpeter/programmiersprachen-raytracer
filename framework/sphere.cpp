@@ -43,7 +43,7 @@ Hit Sphere::intersect(Ray const& r, float & d) {
         if (hit_.intersect == true)
         {
           hit_.intersectionPoint = r.origin + (d * r.direction);
-          hit_.normal = hit_.intersectionPoint - center_;
+          hit_.normal = glm::normalize(hit_.intersectionPoint - center_);
         }
         return hit_;
 }
