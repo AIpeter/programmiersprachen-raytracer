@@ -120,7 +120,6 @@ void Renderer::colorNorm(Color & color)
 
 Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
 {
-  float aspect = (float) width_ / (float) height_;
   Color c{0.0, 0.0, 0.0};
   Ray r = ComputeCameraRay(x, y);
   float infinity = std::numeric_limits<float>::infinity();
@@ -142,11 +141,13 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
     for(auto i: lights)
     {
       float shade = 1; // kein Schatten
-      float closest_o_t = tmin;
-      Hit closest_o_hit = closest_o->intersect(r, closest_o_t);
-      Ray shadowRay{i.getposition(), 
-                    glm::normalize(closest_o_hit.intersectionPoint
-                                    - i.getposition())};
+      glm::vec3 surfacePoint{tmin*r.direction};
+      Ray shadowRay{i.getposition(), glm::normalize(surfacePoint - i.getposition())}; 
+      // float closest_o_t = tmin;
+      // Hit closest_o_hit = closest_o->intersect(r, closest_o_t);
+      // Ray shadowRay{i.getposition(), 
+      //               glm::normalize(closest_o_hit.intersectionPoint
+      //                               - i.getposition())};
       float d;
       float dmin = infinity;
       Shape* closest_o_light = NULL;
@@ -168,8 +169,12 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
         {
           shade = 0;
         }
-      } 
-      c += closest_o->getLight(closest_o_hit, r, i, shade);
+      }
+      Hit tmp = closest_o->intersect(r, t);
+      std::cout << "normal: " << glm::to_string(tmp.normal) << std::endl;
+      auto col = closest_o->getLight(tmp, r, i, shade);
+      // std::cout << "Color: " << col.r << ", " << col.g << ", " << col.b << std::endl;
+      c += col;
     }
   }
   else 

@@ -34,7 +34,9 @@ Color Shape::getLight(Hit const& hit, Ray const& r, Light const& light, float sh
   else
   {
     float diffuseCos = computeDiffuseArc(hit, light);
+    // std::cout << "diffuseCos: " << diffuseCos << "\n";
     float specularCos = computeSpecularArc(hit, r, light);
+    // std::cout << "specularCos: " << specularCos << std::endl;
     Color licht = (light.getld() * mat_.kd() * diffuseCos)
                   + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m()))) 
                   + (light.getla()* mat_.ka());

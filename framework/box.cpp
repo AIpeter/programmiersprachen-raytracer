@@ -38,6 +38,143 @@ glm::vec3 Box::max() const {return max_;}
                 << "," << max_.z << ")" << "\n" << mat();
         return os;
 }
+/*
+Hit Box::intersect(Ray const& r, float & t) 
+{
+  Hit hit;
+  glm::vec3 ray_direction_inverted = 1.0f / r.direction;
+  float tmin = (min_.x - r.origin.x) * ray_direction_inverted.x;
+  float tmax = (max_.x - r.origin.x) * ray_direction_inverted.x;
+
+  if (ray_direction_inverted.x >= 0) 
+  {
+    tmin = (min_.x - r.origin.x) * ray_direction_inverted.x;
+    tmax = (max_.x - r.origin.x) * ray_direction_inverted.x;
+  }
+  else 
+  {
+    tmin = (max_.x - r.origin.x) * ray_direction_inverted.x;
+    tmax = (min_.x - r.origin.x) * ray_direction_inverted.x;
+  } 
+
+  float tymin = (min_.y - r.origin.y) * ray_direction_inverted.y;
+  float tymax = (max_.y - r.origin.y) * ray_direction_inverted.y;
+
+  if (ray_direction_inverted.y >= 0) 
+  {
+    tymin = (min_.y - r.origin.y) * ray_direction_inverted.y;
+    tymax = (max_.y - r.origin.y) * ray_direction_inverted.y;
+  }
+  else 
+  {
+    tymin = (max_.y - r.origin.y) * ray_direction_inverted.y;
+    tymax = (min_.y - r.origin.y) * ray_direction_inverted.y;
+  } 
+
+  if ((tmin > tymax) || (tymin > tmax))
+  {
+    hit.intersect = false;
+  }
+
+  if (tymin > tmin)
+  {
+    tmin = tymin;
+  }
+
+  if (tymax < tmax)
+  {
+    tmax = tymax;
+  }
+
+  float tzmin = (min_.z - r.origin.z) * ray_direction_inverted.z;
+  float tzmax = (max_.z - r.origin.z) * ray_direction_inverted.z;
+
+  if (ray_direction_inverted.z >= 0) 
+  {
+    tzmin = (min_.z - r.origin.z) * ray_direction_inverted.z;
+    tzmax = (max_.z - r.origin.z) * ray_direction_inverted.z;
+  }
+  else 
+  {
+    tzmin = (max_.z - r.origin.z) * ray_direction_inverted.z;
+    tzmax = (min_.z - r.origin.z) * ray_direction_inverted.z;
+  } 
+
+  if ((tmin > tzmax) || (tzmin > tmax))
+  {
+    hit.intersect = false;
+  }
+
+  if (tzmin > tmin)
+  {
+    tmin = tzmin;
+  }
+
+  if (tzmax < tmax)
+  {
+    tmax = tzmax;
+  }
+
+  hit.intersect = true;
+
+  if (hit.intersect == true)
+  {
+    hit.intersectionPoint = r.origin + (tmin * r.direction);
+    glm::vec3 n;
+    //test x plane
+    if( hit.intersectionPoint.y >= min_.y &&
+        hit.intersectionPoint.y <= max_.y &&
+        hit.intersectionPoint.z >= min_.z &&
+        hit.intersectionPoint.z <= max_.z)
+    {
+      if (hit.intersectionPoint.x < max_.x)
+      {//if hit.intersectionPoint on x-min-plane glm::vec3 n{-1, 0, 0}
+        n = glm::normalize(glm::vec3{min_.x, max_.y, max_.z}-max_);
+      }
+      if (hit.intersectionPoint.x > min_.x)
+      { //if hit.intersectionPoint on x-max-plane glm::vec3 n{1, 0, 0}
+        n = glm::normalize(max_ - glm::vec3{min_.x, max_.y, max_.z});
+      }
+    }
+    //test y plane
+    if( hit.intersectionPoint.x <= max_.x &&
+      hit.intersectionPoint.x >= min_.x &&
+      hit.intersectionPoint.z <= max_.z &&
+      hit.intersectionPoint.z >= min_.z)
+    {
+      if(hit.intersectionPoint.y < max_.y)
+      { //if surfpoint on y-min-plane:
+        n = glm::normalize(glm::vec3{max_.x, min_.y, max_.z} - max_);
+      }
+      if(hit.intersectionPoint.y > min_.y)
+      { //if surfpoint on y-max plane
+        n = glm::normalize(max_ - glm::vec3{max_.x, min_.y, max_.z});
+      }
+    }
+
+  //tests z plane
+    if (hit.intersectionPoint.x <= max_.x &&
+      hit.intersectionPoint.x >= min_.x &&
+      hit.intersectionPoint.y <= max_.y &&
+      hit.intersectionPoint.y >= min_.y)
+    {
+      if(hit.intersectionPoint.z < max_.z)
+      {
+        //if on z min plane:
+        n = glm::normalize(glm::vec3{max_.x, max_.y, min_.z} - max_);
+      }
+      if(hit.intersectionPoint.z > min_.z)
+      { //if on z max plane
+        n = glm::normalize(max_ - glm::vec3{max_.x, max_.y, min_.z});
+      }
+    }
+
+    hit.normal = n;
+  }
+  t = tmin;
+  return hit;
+}
+*/
 
 Hit Box::intersect(Ray const& r, float & t)
 {
