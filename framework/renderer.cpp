@@ -131,7 +131,7 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
     glm::vec4 r_origin_4 = i.second->world_transformation_inv() * glm::vec4{r.origin, 1};
     glm::vec4 r_direction_4 = i.second->world_transformation_inv() * glm::vec4{r.direction, 0};
     r.origin = glm::vec3{r_origin_4};
-    r.direction = glm::normalize(glm::vec3{r_direction_4});
+    r.direction = glm::vec3{r_direction_4};
     if(i.second->intersect(r, t).intersect == true)
     {
       if(t < tmin) {
@@ -175,6 +175,10 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
         }
       }
       Hit tmp = closest_o->intersect(r, tmin);
+      glm::vec4 normal_4{tmp.normal, 0};
+      normal_4 = glm::transpose(closest_o->world_transformation_inv()) * normal_4;
+      tmp.normal = glm::vec3{normal_4};
+      tmp.normal = glm::normalize(tmp.normal);
       // std::cout << "normal: " << glm::to_string(tmp.normal) << std::endl;
       auto col = closest_o->getLight(tmp, r, i, shade);
       // std::cout << "Color: " << col.r << ", " << col.g << ", " << col.b << std::endl;

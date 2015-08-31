@@ -142,6 +142,7 @@ Material const& Shape::mat() const {return mat_;}
 
 Color Shape::getLight(Hit const& hit, Ray const& r, Light const& light, float shade) const
 {
+  
   if(shade == 0) // Schatten
   {
     Color licht = (light.getla()* mat_.ka());
@@ -149,15 +150,12 @@ Color Shape::getLight(Hit const& hit, Ray const& r, Light const& light, float sh
   }
   else
   {
-    glm::vec4 r_origin_4 = world_transformation_inv_ * glm::vec4{r.origin, 1};
-    glm::vec4 r_direction_4 = world_transformation_inv_ * glm::vec4{r.direction, 0};
-    Ray transf{glm::vec3{r_origin_4}, glm::vec3{r_direction_4}};
     float diffuseCos = computeDiffuseArc(hit, light);
     // std::cout << "diffuseCos: " << diffuseCos << "\n";
-    float specularCos = computeSpecularArc(hit, transf, light);
+    float specularCos = computeSpecularArc(hit, r, light);
     // std::cout << "specularCos: " << specularCos << std::endl;
     Color licht = (light.getld() * mat_.kd() * diffuseCos)
-                  + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m()))) 
+                  + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m())))
                   + (light.getla()* mat_.ka());
     return licht;
   }
@@ -169,6 +167,7 @@ Color Shape::getLight(Hit const& hit, Ray const& r, Light const& light, float sh
   licht.b = hit.normal.z;
   return licht;
   */
+  
 }
 
 glm::mat4 Shape::world_transformation() {return world_transformation_;}
@@ -191,9 +190,11 @@ void Shape::rotate(float angle, glm::vec3 const& axis)
   // float old_value_11 = world_transformation_[1][1];
   //float old_value_22 = world_transformation_[2][2];
   world_transformation_ *= glm::rotate(angle, axis);
+  std::cout << "world_transformation_: " << glm::to_string(world_transformation_) << "\n";
   // world_transformation_[1][1] -= old_value_11;
   // world_transformation_[2][2] -= old_value_22;
   world_transformation_inv_ = glm::inverse(world_transformation_);
+  std::cout << "world_transformation_inv_: " << glm::to_string(world_transformation_inv_) << std::endl;
 }
 
 std::ostream& Shape::print(std::ostream& os) const

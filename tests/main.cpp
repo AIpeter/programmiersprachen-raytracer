@@ -56,7 +56,7 @@ TEST_CASE("animation", "[renderer]") {
   int picturecount = 0;
   for (int i = 0; i <= 360; ++i)
   {
-    scene->shapes["rsphere"]->rotate(1, {0,1,0});
+    scene->shapes["rsphere"]->rotate(1, {0,0,1});
     for (int k = 0; k < 2; ++k)
     {
       std::string filename = "image" + std::to_string(picturecount) + ".ppm";
