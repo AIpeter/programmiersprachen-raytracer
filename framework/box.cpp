@@ -549,6 +549,7 @@ Hit Box::intersect(Ray const& r, float & t)
   return hit;
 }
 */
+/*
 void Box::translate(glm::vec3 const& direction)
 {
   min_ = min_ + direction;
@@ -573,3 +574,4 @@ void Box::rotate(float angle, glm::vec3 const& axis)
   min_ = newMin;
   max_ = newMax;
 }
+*/

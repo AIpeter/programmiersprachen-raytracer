@@ -2,23 +2,139 @@
 
 Shape::Shape(): // default constructor
       name_{},
-      mat_{}
-      {}
+      mat_{},
+      world_transformation_{},
+      world_transformation_inv_{}
+      {
+        // matrizenname[Spalte][Zeile]
+        // 1 0 0 0
+        // 0 1 0 0
+        // 0 0 1 0
+        // 0 0 0 1
+        world_transformation_[0][0] = 1;
+        world_transformation_[1][0] = 0;
+        world_transformation_[2][0] = 0;
+        world_transformation_[3][0] = 0;
+
+        world_transformation_[0][1] = 0;
+        world_transformation_[1][1] = 1;
+        world_transformation_[2][1] = 0;
+        world_transformation_[3][1] = 0;
+
+        world_transformation_[0][2] = 0;
+        world_transformation_[1][2] = 0;
+        world_transformation_[2][2] = 1;
+        world_transformation_[3][2] = 0;
+
+        world_transformation_[0][3] = 0;
+        world_transformation_[1][3] = 0;
+        world_transformation_[2][3] = 0;
+        world_transformation_[3][3] = 1;
+
+        world_transformation_inv_ = glm::inverse(world_transformation_);
+      }
 
 Shape::Shape(Shape const& s):
       name_{s.name()},
-      mat_{s.mat()}
-      {}
+      mat_{s.mat()},
+      world_transformation_{},
+      world_transformation_inv_{}
+      {
+        // matrizenname[Spalte][Zeile]
+        // 1 0 0 0
+        // 0 1 0 0
+        // 0 0 1 0
+        // 0 0 0 1
+        world_transformation_[0][0] = 1;
+        world_transformation_[1][0] = 0;
+        world_transformation_[2][0] = 0;
+        world_transformation_[3][0] = 0;
+
+        world_transformation_[0][1] = 0;
+        world_transformation_[1][1] = 1;
+        world_transformation_[2][1] = 0;
+        world_transformation_[3][1] = 0;
+
+        world_transformation_[0][2] = 0;
+        world_transformation_[1][2] = 0;
+        world_transformation_[2][2] = 1;
+        world_transformation_[3][2] = 0;
+
+        world_transformation_[0][3] = 0;
+        world_transformation_[1][3] = 0;
+        world_transformation_[2][3] = 0;
+        world_transformation_[3][3] = 1;
+
+        world_transformation_inv_ = glm::inverse(world_transformation_);
+      }
 
 Shape::Shape(std::string const& name):
       name_{name},
-      mat_{}
-      {}
+      mat_{},
+      world_transformation_{},
+      world_transformation_inv_{}
+      {
+        // matrizenname[Spalte][Zeile]
+        // 1 0 0 0
+        // 0 1 0 0
+        // 0 0 1 0
+        // 0 0 0 1
+        world_transformation_[0][0] = 1;
+        world_transformation_[1][0] = 0;
+        world_transformation_[2][0] = 0;
+        world_transformation_[3][0] = 0;
+
+        world_transformation_[0][1] = 0;
+        world_transformation_[1][1] = 1;
+        world_transformation_[2][1] = 0;
+        world_transformation_[3][1] = 0;
+
+        world_transformation_[0][2] = 0;
+        world_transformation_[1][2] = 0;
+        world_transformation_[2][2] = 1;
+        world_transformation_[3][2] = 0;
+
+        world_transformation_[0][3] = 0;
+        world_transformation_[1][3] = 0;
+        world_transformation_[2][3] = 0;
+        world_transformation_[3][3] = 1;
+
+        world_transformation_inv_ = glm::inverse(world_transformation_);
+      }
 
 Shape::Shape(std::string const& name, Material const& mat):
       name_{name},
-      mat_{mat}
-      {}
+      mat_{mat},
+      world_transformation_{},
+      world_transformation_inv_{}
+      {
+        // matrizenname[Spalte][Zeile]
+        // 1 0 0 0
+        // 0 1 0 0
+        // 0 0 1 0
+        // 0 0 0 1
+        world_transformation_[0][0] = 1;
+        world_transformation_[1][0] = 0;
+        world_transformation_[2][0] = 0;
+        world_transformation_[3][0] = 0;
+
+        world_transformation_[0][1] = 0;
+        world_transformation_[1][1] = 1;
+        world_transformation_[2][1] = 0;
+        world_transformation_[3][1] = 0;
+
+        world_transformation_[0][2] = 0;
+        world_transformation_[1][2] = 0;
+        world_transformation_[2][2] = 1;
+        world_transformation_[3][2] = 0;
+
+        world_transformation_[0][3] = 0;
+        world_transformation_[1][3] = 0;
+        world_transformation_[2][3] = 0;
+        world_transformation_[3][3] = 1;
+
+        world_transformation_inv_ = glm::inverse(world_transformation_);
+      }
       
 
 std::string const& Shape::name() const {return name_;}
@@ -33,9 +149,12 @@ Color Shape::getLight(Hit const& hit, Ray const& r, Light const& light, float sh
   }
   else
   {
+    glm::vec4 r_origin_4 = world_transformation_inv_ * glm::vec4{r.origin, 1};
+    glm::vec4 r_direction_4 = world_transformation_inv_ * glm::vec4{r.direction, 0};
+    Ray transf{glm::vec3{r_origin_4}, glm::vec3{r_direction_4}};
     float diffuseCos = computeDiffuseArc(hit, light);
     // std::cout << "diffuseCos: " << diffuseCos << "\n";
-    float specularCos = computeSpecularArc(hit, r, light);
+    float specularCos = computeSpecularArc(hit, transf, light);
     // std::cout << "specularCos: " << specularCos << std::endl;
     Color licht = (light.getld() * mat_.kd() * diffuseCos)
                   + (light.getld() * mat_.ks() * (pow(specularCos, mat_.m()))) 
@@ -50,6 +169,31 @@ Color Shape::getLight(Hit const& hit, Ray const& r, Light const& light, float sh
   licht.b = hit.normal.z;
   return licht;
   */
+}
+
+glm::mat4 Shape::world_transformation() {return world_transformation_;}
+glm::mat4 Shape::world_transformation_inv() {return world_transformation_inv_;}
+
+void Shape::translate(glm::vec3 const& direction)
+{
+  world_transformation_ += glm::translate(direction);
+  world_transformation_inv_ = glm::inverse(world_transformation_);
+}
+
+void Shape::scale(glm::vec3 const& scale)
+{
+  world_transformation_ *= glm::scale(scale);
+  world_transformation_inv_ = glm::inverse(world_transformation_);
+}
+
+void Shape::rotate(float angle, glm::vec3 const& axis)
+{
+  // float old_value_11 = world_transformation_[1][1];
+  //float old_value_22 = world_transformation_[2][2];
+  world_transformation_ *= glm::rotate(angle, axis);
+  // world_transformation_[1][1] -= old_value_11;
+  // world_transformation_[2][2] -= old_value_22;
+  world_transformation_inv_ = glm::inverse(world_transformation_);
 }
 
 std::ostream& Shape::print(std::ostream& os) const

@@ -120,18 +120,3 @@ std::ostream& operator<<(std::ostream& os, Composite const& c) {
         c.print(os);
         return os;
 } */
-
-void Composite::translate(glm::vec3 const& direction)
-{
-
-}
-
-void Composite::scale(glm::vec3 const& scale)
-{
-
-}
-
-void Composite::rotate(float angle, glm::vec3 const& axis)
-{
-        
-}

@@ -7,11 +7,13 @@
 #include "ray.hpp"
 #include "hit.hpp"
 #include "computearc.hpp"
+#include "light.hpp"
 #include <glm/glm.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat4x4.hpp>
 #include <glm/gtx/transform.hpp>
 #include <string>
 #include <iostream>
-#include "light.hpp"
 
 class Shape
 {
@@ -30,13 +32,17 @@ class Shape
 
     Color getLight(Hit const& hit, Ray const& r, Light const& light, float shade) const;
 
-    virtual void translate(glm::vec3 const& direction) = 0; // pure virtual
-    virtual void scale(glm::vec3 const& scale) = 0; // pure virtual
-    virtual void rotate(float angle, glm::vec3 const& axis) = 0; // pure virtual
+    glm::mat4 world_transformation();
+    glm::mat4 world_transformation_inv();
+    void translate(glm::vec3 const& direction);
+    void scale(glm::vec3 const& scale);
+    void rotate(float angle, glm::vec3 const& axis);
 
   protected:
     std::string name_;
     Material mat_;
+    glm::mat4 world_transformation_;
+    glm::mat4 world_transformation_inv_;
 };
 
 std::ostream& operator<<(std::ostream& os, Shape const& s);

@@ -128,6 +128,10 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
   Shape* closest_o = NULL;
   for(auto i : shapes) 
   {
+    glm::vec4 r_origin_4 = i.second->world_transformation_inv() * glm::vec4{r.origin, 1};
+    glm::vec4 r_direction_4 = i.second->world_transformation_inv() * glm::vec4{r.direction, 0};
+    r.origin = glm::vec3{r_origin_4};
+    r.direction = glm::normalize(glm::vec3{r_direction_4});
     if(i.second->intersect(r, t).intersect == true)
     {
       if(t < tmin) {
