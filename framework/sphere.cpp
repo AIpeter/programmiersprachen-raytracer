@@ -43,14 +43,19 @@ Hit Sphere::intersect(Ray const& r, float & d) {
         if (hit_.intersect == true)
         {
           hit_.intersectionPoint = r.origin + (d * r.direction);
-          hit_.normal = glm::normalize(hit_.intersectionPoint - center_);
+          hit_.normal = (hit_.intersectionPoint - center_);
+          glm::vec4 normal_4{hit_.normal, 0};
+          normal_4 = glm::transpose(world_transformation_inv_) * normal_4;
+          hit_.normal = glm::vec3{normal_4};
+          hit_.normal = glm::normalize(hit_.normal);
         }
         return hit_;
 }
-
+/*
 void Sphere::translate(glm::vec3 const& direction)
 {
   center_ = center_ + direction;
+
 }
 
 void Sphere::scale(glm::vec3 const& scale)
@@ -64,4 +69,4 @@ void Sphere::rotate(float angle, glm::vec3 const& axis)
   glm::vec4 rotatedCenter = glm::rotate((angle * (float) (M_PI/180.0f)), axis) * c4;
   glm::vec3 newCenter{rotatedCenter};
   center_ = newCenter;
-}
+}*/

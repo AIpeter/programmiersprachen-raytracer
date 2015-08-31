@@ -351,7 +351,10 @@ Hit Box::intersect(Ray const& r, float & t)
       }
     }
 
-    hit.normal = n;
+    glm::vec4 normal_4{n, 0};
+    normal_4 = glm::transpose(world_transformation_inv_) * normal_4;
+    n = glm::vec3{normal_4};
+    hit.normal = glm::normalize(n);
   }
   // std::cout << "normal: " << glm::to_string(hit.normal) << "\n";
   hit.intersect = cut;
@@ -501,6 +504,7 @@ Hit Box::intersect(Ray const& r, float & t)
   return hit;
 }
 */
+/*
 void Box::translate(glm::vec3 const& direction)
 {
   min_ = min_ + direction;
@@ -525,3 +529,4 @@ void Box::rotate(float angle, glm::vec3 const& axis)
   min_ = newMin;
   max_ = newMax;
 }
+*/

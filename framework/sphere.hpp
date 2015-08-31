@@ -24,10 +24,6 @@ class Sphere : public Shape
     std::ostream& print(std::ostream& os) const; // override
     Hit intersect(Ray const& r, float & d);
 
-    void translate(glm::vec3 const& direction);
-    void scale(glm::vec3 const& scale);
-    void rotate(float angle, glm::vec3 const& axis);
-
   private:
     glm::vec3 center_;
     float radius_;

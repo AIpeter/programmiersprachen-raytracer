@@ -13,5 +13,6 @@ float computeSpecularArc(Hit const& hit, Ray const& r, Light const& light)
   s = glm::normalize(s);
   auto c = glm::normalize(r.direction);
   float specularCos = std::max(glm::dot(s, c), 0.0f);
+  // std::cout << specularCos << std::endl;
   return specularCos;
 }

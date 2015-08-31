@@ -193,7 +193,8 @@ Scene* loadSDF(std::string const& file) {
                                                 std::stof(words[5]),
                                                 std::stof(words[6])};
                                 out->shapes[words[1]]->rotate(
-                                                        std::stof(words[3]),
+                                                        (std::stof(words[3])
+                                                        * (M_PI/180.0f)),
                                                         axis);
                         }
                         else {
