@@ -42,6 +42,14 @@ Color Shape::getLight(Hit const& hit, Ray const& r, Light const& light, float sh
                   + (light.getla()* mat_.ka());
     return licht;
   }
+  
+  /*
+  Color licht{0, 0, 0};
+  licht.r = hit.normal.x;
+  licht.g = hit.normal.y;
+  licht.b = hit.normal.z;
+  return licht;
+  */
 }
 
 std::ostream& Shape::print(std::ostream& os) const

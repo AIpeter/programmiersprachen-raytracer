@@ -301,8 +301,43 @@ Hit Box::intersect(Ray const& r, float & t)
   {
     t = tmin;
     hit.intersectionPoint = r.origin + (t * d);
-
     glm::vec3 n;
+
+    if((hit.intersectionPoint.x == min_.x) || (hit.intersectionPoint.x == max_.x))
+    {
+      if(hit.intersectionPoint.x == min_.x)
+      {
+        n = glm::normalize(glm::vec3{min_.x, max_.y, max_.z}-max_);
+      }
+      else if(hit.intersectionPoint.x == max_.x)
+      {
+        n = glm::normalize(max_ - glm::vec3{min_.x, max_.y, max_.z});
+      }
+    }
+    else if((hit.intersectionPoint.y == min_.y) || (hit.intersectionPoint.y == max_.y))
+    {
+      if(hit.intersectionPoint.y == min_.y)
+      {
+        n = glm::normalize(glm::vec3{max_.x, min_.y, max_.z} - max_);
+      }
+      else if(hit.intersectionPoint.y == max_.y)
+      {
+        n = glm::normalize(max_ - glm::vec3{max_.x, min_.y, max_.z});
+      }
+    }
+    else if((hit.intersectionPoint.z == min_.z) || (hit.intersectionPoint.z == max_.z))
+    {
+      if(hit.intersectionPoint.z == min_.z)
+      {
+        n = glm::normalize(glm::vec3{max_.x, max_.y, min_.z} - max_);
+      }
+      else if(hit.intersectionPoint.z == max_.z)
+      {
+        n = glm::normalize(max_ - glm::vec3{max_.x, max_.y, min_.z});
+      }
+    }
+
+    /*
     //test x plane
     if( hit.intersectionPoint.y >= min_.y &&
         hit.intersectionPoint.y <= max_.y &&
@@ -311,11 +346,13 @@ Hit Box::intersect(Ray const& r, float & t)
     {
       if (hit.intersectionPoint.x < max_.x)
       {//if hit.intersectionPoint on x-min-plane glm::vec3 n{-1, 0, 0}
-        n = glm::normalize(glm::vec3{min_.x, max_.y, max_.z}-max_);
+        // n = glm::normalize(glm::vec3{min_.x, max_.y, max_.z}-max_);
+        n = {-1, 0, 0};
       }
       else if (hit.intersectionPoint.x > min_.x)
       { //if hit.intersectionPoint on x-max-plane glm::vec3 n{1, 0, 0}
-        n = glm::normalize(max_ - glm::vec3{min_.x, max_.y, max_.z});
+        // n = glm::normalize(max_ - glm::vec3{min_.x, max_.y, max_.z});
+        n = {1, 0, 0};
       }
     }
     //test y plane
@@ -326,11 +363,13 @@ Hit Box::intersect(Ray const& r, float & t)
     {
       if(hit.intersectionPoint.y < max_.y)
       { //if surfpoint on y-min-plane:
-        n = glm::normalize(glm::vec3{max_.x, min_.y, max_.z} - max_);
+        // n = glm::normalize(glm::vec3{max_.x, min_.y, max_.z} - max_);
+        n = {0, -1, 0};
       }
       else if(hit.intersectionPoint.y > min_.y)
       { //if surfpoint on y-max plane
-        n = glm::normalize(max_ - glm::vec3{max_.x, min_.y, max_.z});
+        // n = glm::normalize(max_ - glm::vec3{max_.x, min_.y, max_.z});
+        n = {0, 1, 0};
       }
     }
 
@@ -343,15 +382,24 @@ Hit Box::intersect(Ray const& r, float & t)
       if(hit.intersectionPoint.z < max_.z)
       {
         //if on z min plane:
-        n = glm::normalize(glm::vec3{max_.x, max_.y, min_.z} - max_);
+        // n = glm::normalize(glm::vec3{max_.x, max_.y, min_.z} - max_);
+        n = {0, 0, -1};
       }
       else if(hit.intersectionPoint.z > min_.z)
       { //if on z max plane
-        n = glm::normalize(max_ - glm::vec3{max_.x, max_.y, min_.z});
+        // n = glm::normalize(max_ - glm::vec3{max_.x, max_.y, min_.z});
+        n = {0, 0, 1};
       }
     }
+    */
 
     hit.normal = n;
+    /*
+    std::cout << "intersectionPoint: " << glm::to_string(hit.intersectionPoint) << "\n";
+    std::cout << "min_: " << glm::to_string(min_) << "\n";
+    std::cout << "max_: " << glm::to_string(max_) << "\n";
+    std::cout << "normal: " << glm::to_string(hit.normal) << std::endl;
+    */
   }
   // std::cout << "normal: " << glm::to_string(hit.normal) << "\n";
   hit.intersect = cut;
