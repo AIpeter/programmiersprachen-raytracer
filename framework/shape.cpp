@@ -190,11 +190,11 @@ void Shape::rotate(float angle, glm::vec3 const& axis)
   // float old_value_11 = world_transformation_[1][1];
   //float old_value_22 = world_transformation_[2][2];
   world_transformation_ *= glm::rotate(angle, axis);
-  std::cout << "world_transformation_: " << glm::to_string(world_transformation_) << "\n";
+  // std::cout << "world_transformation_: " << glm::to_string(world_transformation_) << "\n";
   // world_transformation_[1][1] -= old_value_11;
   // world_transformation_[2][2] -= old_value_22;
   world_transformation_inv_ = glm::inverse(world_transformation_);
-  std::cout << "world_transformation_inv_: " << glm::to_string(world_transformation_inv_) << std::endl;
+  // std::cout << "world_transformation_inv_: " << glm::to_string(world_transformation_inv_) << std::endl;
 }
 
 std::ostream& Shape::print(std::ostream& os) const

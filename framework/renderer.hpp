@@ -41,8 +41,11 @@ public:
   Ray ComputeCameraRay(float i, float j);
   void filename(std::string const& filename);
   void render();
-  void render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights);
-  Color render(float x, float y, std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights);
+  void render(std::map<std::string, std::shared_ptr<Shape>> const& shapes,
+              std::vector<Light> const& lights);
+  Color render(float x, float y, std::map<std::string, 
+                std::shared_ptr<Shape>> const& shapes, 
+                std::vector<Light> const& lights);
   void write(Pixel const& p);
   void colorNorm(Color & color);
 

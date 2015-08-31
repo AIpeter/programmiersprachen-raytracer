@@ -70,7 +70,9 @@ void Renderer::render() {
   ppm_.save(filename_);
 }
 
-void Renderer::render(std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
+void Renderer::render(std::map<std::string, 
+                      std::shared_ptr<Shape>> const& shapes,
+                      std::vector<Light> const& lights)
 {
   for (unsigned y = 0; y < height_; ++y)
   {
@@ -118,25 +120,29 @@ void Renderer::colorNorm(Color & color)
   color.b = std::max(color.b, 0.f);
 }
 
-Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& shapes, std::vector<Light> const& lights)
+Color Renderer::render(float x, float y, std::map<std::string,
+                        std::shared_ptr<Shape>> const& shapes,
+                        std::vector<Light> const& lights)
 {
   Color c{0.0, 0.0, 0.0};
   Ray r = ComputeCameraRay(x, y);
   float infinity = std::numeric_limits<float>::infinity();
   float t;
   float tmin = infinity;
-  Shape* closest_o = NULL;
+  std::shared_ptr<Shape> closest_o = NULL;
   for(auto i : shapes) 
   {
+    /*
     glm::vec4 r_origin_4 = i.second->world_transformation_inv() * glm::vec4{r.origin, 1};
     glm::vec4 r_direction_4 = i.second->world_transformation_inv() * glm::vec4{r.direction, 0};
     r.origin = glm::vec3{r_origin_4};
     r.direction = glm::vec3{r_direction_4};
-    if(i.second->intersect(r, t).intersect == true)
+    */
+    if(i.second->intersect(r,t).intersect == true)
     {
       if(t < tmin) {
         tmin = t;
-        closest_o = i.second;
+        closest_o = i.second;      
       }
     }
   }
@@ -145,7 +151,17 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
     for(auto i: lights)
     {
       float shade = 1; // kein Schatten
-      glm::vec3 surfacePoint{tmin*r.direction};
+      glm::vec4 r_origin_4{r.origin, 1};
+      glm::vec4 r_direction_4{r.direction, 0};
+      r_origin_4 = closest_o->world_transformation_inv() * r_origin_4;
+      r_direction_4 = closest_o->world_transformation_inv() * r_direction_4;
+      glm::vec3 r_origin_3{r_origin_4};
+      glm::vec3 r_direction_3{r_direction_4};
+      r_direction_3 = glm::normalize(r_direction_3);
+      /*glm::vec4 surfacePoint_4{r_origin_3 + (tmin*r_direction_3), 1};
+      surfacePoint_4 = closest_o->world_transformation_inv() * surfacePoint_4;
+      glm::vec3 surfacePoint{surfacePoint_4};*/
+      glm::vec3 surfacePoint{r_origin_3 + (tmin * r_direction_3)};
       Ray shadowRay{i.getposition(), glm::normalize(surfacePoint - i.getposition())}; 
       // float closest_o_t = tmin;
       // Hit closest_o_hit = closest_o->intersect(r, closest_o_t);
@@ -154,7 +170,7 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
       //                               - i.getposition())};
       float d;
       float dmin = infinity;
-      Shape* closest_o_light = NULL;
+      std::shared_ptr<Shape> closest_o_light = NULL;
 
       if(closest_o->intersect(shadowRay, d).intersect == true)
       {
@@ -174,11 +190,17 @@ Color Renderer::render(float x, float y, std::map<std::string, Shape*> const& sh
           shade = 0;
         }
       }
+      std::cout << shade << std::endl;
       Hit tmp = closest_o->intersect(r, tmin);
+      /*
+      glm::vec4 intersectionPoint_4{tmp.intersectionPoint, 1};
+      intersectionPoint_4 = closest_o->world_transformation() * intersectionPoint_4;
+      tmp.intersectionPoint = glm::vec3{intersectionPoint_4};
       glm::vec4 normal_4{tmp.normal, 0};
       normal_4 = glm::transpose(closest_o->world_transformation_inv()) * normal_4;
       tmp.normal = glm::vec3{normal_4};
       tmp.normal = glm::normalize(tmp.normal);
+      */
       // std::cout << "normal: " << glm::to_string(tmp.normal) << std::endl;
       auto col = closest_o->getLight(tmp, r, i, shade);
       // std::cout << "Color: " << col.r << ", " << col.g << ", " << col.b << std::endl;

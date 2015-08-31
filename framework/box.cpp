@@ -182,7 +182,11 @@ Hit Box::intersect(Ray const& r, float & t)
   Hit hit;
   float tmin = std::numeric_limits<float>::infinity();
   bool cut = false;
-  auto d = r.direction;
+  glm::vec4 r_origin_4{r.origin, 1};
+  glm::vec4 r_direction_4{r.direction, 0};
+  r_origin_4 = world_transformation_inv_ * r_origin_4;
+  r_direction_4 = world_transformation_inv_ * r_direction_4;
+  auto d = glm::vec3{r_direction_4};
   //check x_min-plane:
   t = (min_.x - r.origin.x)/(d.x); //parameter zur berechnung d schnittpunkts x-ebene =po + t * d
   glm::vec3 intersection_xmin = r.origin+(t*d);
@@ -307,33 +311,33 @@ Hit Box::intersect(Ray const& r, float & t)
     {
       if(hit.intersectionPoint.x == min_.x)
       {
-        n = glm::normalize(glm::vec3{min_.x, max_.y, max_.z}-max_);
+        n = /*glm::normalize*/(glm::vec3{min_.x, max_.y, max_.z}-max_);
       }
       else if(hit.intersectionPoint.x == max_.x)
       {
-        n = glm::normalize(max_ - glm::vec3{min_.x, max_.y, max_.z});
+        n = /*glm::normalize*/(max_ - glm::vec3{min_.x, max_.y, max_.z});
       }
     }
     else if((hit.intersectionPoint.y == min_.y) || (hit.intersectionPoint.y == max_.y))
     {
       if(hit.intersectionPoint.y == min_.y)
       {
-        n = glm::normalize(glm::vec3{max_.x, min_.y, max_.z} - max_);
+        n = /*glm::normalize*/(glm::vec3{max_.x, min_.y, max_.z} - max_);
       }
       else if(hit.intersectionPoint.y == max_.y)
       {
-        n = glm::normalize(max_ - glm::vec3{max_.x, min_.y, max_.z});
+        n = /*glm::normalize*/(max_ - glm::vec3{max_.x, min_.y, max_.z});
       }
     }
     else if((hit.intersectionPoint.z == min_.z) || (hit.intersectionPoint.z == max_.z))
     {
       if(hit.intersectionPoint.z == min_.z)
       {
-        n = glm::normalize(glm::vec3{max_.x, max_.y, min_.z} - max_);
+        n = /*glm::normalize*/(glm::vec3{max_.x, max_.y, min_.z} - max_);
       }
       else if(hit.intersectionPoint.z == max_.z)
       {
-        n = glm::normalize(max_ - glm::vec3{max_.x, max_.y, min_.z});
+        n = /*glm::normalize*/(max_ - glm::vec3{max_.x, max_.y, min_.z});
       }
     }
 
@@ -393,7 +397,9 @@ Hit Box::intersect(Ray const& r, float & t)
     }
     */
 
-    hit.normal = n;
+    glm::vec4 n_4{n, 0};
+    n_4 = glm::transpose(world_transformation_inv_) * n_4;
+    hit.normal = glm::normalize(glm::vec3{n_4});
     /*
     std::cout << "intersectionPoint: " << glm::to_string(hit.intersectionPoint) << "\n";
     std::cout << "min_: " << glm::to_string(min_) << "\n";

@@ -12,7 +12,7 @@
 
 struct Scene {
         std::map<std::string, Material> materials;
-        std::map<std::string, Shape*> shapes;
+        std::map<std::string, std::shared_ptr<Shape>> shapes;
         std::vector<Light> lights;
         std::map<std::string, Camera> cameras;
         Renderer render;

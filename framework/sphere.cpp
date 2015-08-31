@@ -36,14 +36,19 @@ float Sphere::radius() const {return radius_;}
 }
 
 Hit Sphere::intersect(Ray const& r, float & d) {
-        auto v = glm::normalize(r.direction);
+        glm::vec4 r_origin_4{r.origin, 1};
+        glm::vec4 r_direction_4{r.direction, 0};
+        r_origin_4 = world_transformation_inv_ * r_origin_4;
+        r_direction_4 = world_transformation_inv_ * r_direction_4;
         Hit hit_;
-        hit_.intersect = glm::intersectRaySphere(r.origin, v, center_,
-                radius_*radius_, d);
+        hit_.intersect = glm::intersectRaySphere(glm::vec3{r_origin_4},
+                          glm::normalize(glm::vec3{r_direction_4}), center_,
+                          radius_*radius_, d);
         if (hit_.intersect == true)
         {
-          hit_.intersectionPoint = r.origin + (d * r.direction);
-          hit_.normal = (hit_.intersectionPoint - center_);
+          hit_.intersectionPoint = glm::vec3{r_origin_4}
+                                    + (d * glm::vec3{r_direction_4});
+          hit_.normal = hit_.intersectionPoint - center_;
           glm::vec4 normal_4{hit_.normal, 0};
           normal_4 = glm::transpose(world_transformation_inv_) * normal_4;
           hit_.normal = glm::vec3{normal_4};

@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
   unsigned const height = 320;
   std::string const filename = "./image.ppm";
   std::string const sdfname = "sdfdatei.sdf";
-  Scene* scene = loadSDF(sdfname);
+  std::shared_ptr<Scene> scene = loadSDF(sdfname);
 
   std::thread thr([&scene]() { scene->render.render(scene->shapes, scene->lights); });
 

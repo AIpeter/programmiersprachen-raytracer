@@ -1,7 +1,7 @@
 #include "sdfloader.hpp"
 
-Scene* loadSDF(std::string const& file) {
-        Scene* out = new Scene;
+std::shared_ptr<Scene> loadSDF(std::string const& file) {
+        std::shared_ptr<Scene> out = std::make_shared<Scene>();
         std::ifstream sdf;
         std::vector<std::string> lines;
         sdf.open(file);
@@ -50,9 +50,9 @@ Scene* loadSDF(std::string const& file) {
                                         glm::vec3 center{std::stof(words[4]),
                                                 std::stof(words[5]),
                                                 std::stof(words[6])};
-                                        out->shapes[words[3]] = new Sphere{center,
+                                        out->shapes[words[3]] = std::make_shared<Sphere>(center,
                                                 std::stof(words[7]), words[3],
-                                                out->materials[words[8]]};
+                                                out->materials[words[8]]);
                                 }
                                 else if(words[2] == "box") {
                                         glm::vec3 min{std::stof(words[4]),
@@ -61,9 +61,9 @@ Scene* loadSDF(std::string const& file) {
                                         glm::vec3 max{std::stof(words[7]),
                                                 std::stof(words[8]),
                                                 std::stof(words[9])};
-                                        out->shapes[words[3]] = new Box{min, max,
+                                        out->shapes[words[3]] = std::make_shared<Box>(min, max,
                                                 words[3],
-                                                out->materials[words[10]]};
+                                                out->materials[words[10]]);
                                 }
                                 else if(words[2] == "triangle") {
                                         glm::vec3 left{std::stof(words[4]),
@@ -75,8 +75,8 @@ Scene* loadSDF(std::string const& file) {
                                         glm::vec3 top{std::stof(words[10]),
                                                 std::stof(words[11]),
                                                 std::stof(words[12])};
-                                        out->shapes[words[3]] = new Triangle{left, 
-                                                right, top, words[3], out->materials[words[13]]};
+                                        out->shapes[words[3]] = std::make_shared<Triangle>(left, 
+                                                right, top, words[3], out->materials[words[13]]);
                                 }
                                 else {
                                         std::cout << "Syntax error in line " << 
