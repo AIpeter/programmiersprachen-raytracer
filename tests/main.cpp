@@ -69,7 +69,7 @@ TEST_CASE("animation", "[renderer]") {
 */
 
 TEST_CASE("jetzt wird's ernst", "[renderer]") {
-  std::shared_ptr<Scene> scene = loadSDF("sdfdatei.sdf");
+  std::shared_ptr<Scene> scene = loadSDF("sdfdatei2.sdf");
   scene->render.render(scene->shapes, scene->lights);
 }
 

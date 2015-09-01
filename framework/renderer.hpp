@@ -21,6 +21,7 @@
 #include "camera.hpp"
 #include <cmath>
 #include <map>
+#include <memory>
 #include <vector>
 #include <cstdlib>
 #include <string>

@@ -190,7 +190,7 @@ Color Renderer::render(float x, float y, std::map<std::string,
           shade = 0;
         }
       }
-      std::cout << shade << std::endl;
+      // std::cout << shade << std::endl;
       Hit tmp = closest_o->intersect(r, tmin);
       /*
       glm::vec4 intersectionPoint_4{tmp.intersectionPoint, 1};

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <memory>
 #include "scene.hpp"
 
 std::shared_ptr<Scene> loadSDF(std::string const& file);

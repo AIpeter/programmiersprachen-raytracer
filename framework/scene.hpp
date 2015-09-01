@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <memory>
 #include "material.hpp"
 #include "sphere.hpp"
 #include "box.hpp"
